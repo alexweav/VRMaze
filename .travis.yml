@@ -4,7 +4,7 @@ rvm:
 - 2.2
 before_install:
 - chmod a+x ./Scripts/install.sh
-- chmod a+x ./Scripts.build.sh
+- chmod a+x ./Scripts/build.sh
 install:
 - ./Scripts/install.sh
 script:
