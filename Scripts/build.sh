@@ -8,7 +8,7 @@ echo "Building $project for Windows"
   -nographics \
   -silent-crashes \
   -logFile $(pwd)/unity.log \
-  -projectPath $(pwd) \
+  -projectPath $(pwd)/VR\ Maze \
   -buildWindowsPlayer "$(pwd)/Build/windows/$project.exe" \
   -quit
 
