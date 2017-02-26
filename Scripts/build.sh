@@ -7,7 +7,7 @@ echo "Building $project for Windows"
   -batchmode \
   -nographics \
   -silent-crashes \
-  -logFile $(pwd) \
+  -logFile $(pwd)/unity.log \
   -projectPath $(pwd) \
   -buildWindowsPlayer "$(pwd)/Build/windows/$project.exe" \
   -quit
