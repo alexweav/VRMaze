@@ -49,8 +49,14 @@ public class MazeGenerate : MonoBehaviour {
 		maze1.addMazeCell (1, 4, true, true);
 		maze1.addMazeCell (2, 4, true, true);
 		maze1.addMazeCell (3, 4, true, false);
-		maze1.addMazeCell (4, 4, true, false);
+		maze1.addMazeCell (4, 4, true, true);
 
+		//Addition Test Rows 
+		maze1.addMazeCell (5, 5, true, true);
+
+		maze1.addMazeCell (6, 6, true, true);
+
+		//Generates Maze
 		maze1.generateMaze ();
 	}
 	// Update is called once per frame
