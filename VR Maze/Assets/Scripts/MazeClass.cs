@@ -77,33 +77,34 @@ public class Maze : MazeGenerate  {
 		if (northPath == false) {
 			scaleV = new Vector3 (11f, 2, 1);
 			posV = new Vector3 (x + 5,1,z);
-			generateWall (posV, scaleV, cell, "North Path");
+			generateWall (posV, scaleV, cell, "North Wall");
 
 		}
 
 		if (eastPath == false) {
 			scaleV = new Vector3 (1, 2, 11f);
 			posV = new Vector3 (x + 10f, 1, z - 5f);
-			generateWall (posV, scaleV, cell, "East Path");
+			generateWall (posV, scaleV, cell, "East Wall");
 		}
 
 		if (southPath == false) {
 			scaleV = new Vector3 (11f, 2, 1);
 			posV = new Vector3 (x + 5f, 1, z - 10);
-			generateWall (posV, scaleV, cell, "South Path");
+			generateWall (posV, scaleV, cell, "South Wall");
 		}
 
 		if (westPath == false) {
 			scaleV = new Vector3 (1, 2, 11f);
 			posV = new Vector3 (x,1,z - 5);
-			generateWall (posV, scaleV, cell, "West Path");
+			generateWall (posV, scaleV, cell, "West Wall");
 		}	
 
 
 }
 
-	public void generateWall(Vector3 position, Vector3 scale, GameObject cell){
+	public void generateWall(Vector3 position, Vector3 scale, GameObject cell, string wallName){
 		GameObject wall = GameObject.CreatePrimitive (PrimitiveType.Cube);
+		wall.name = wallName;
 		wall.SetActive (true);
 		wall.transform.position = position;
 		wall.transform.localScale = scale;
@@ -112,6 +113,7 @@ public class Maze : MazeGenerate  {
 
 	public void generateFloor(float x, float z, GameObject cell){
 		GameObject mazeFloor = GameObject.CreatePrimitive (PrimitiveType.Plane);
+		mazeFloor.name = "Cell Floor";
 		mazeFloor.SetActive(true);
 		mazeFloor.transform.position = new Vector3 (x + 5, 0, z - 5);
 		mazeFloor.transform.localScale = new Vector3 (1, 1, 1);
