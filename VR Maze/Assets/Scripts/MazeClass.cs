@@ -6,7 +6,8 @@ public class Maze : MazeGenerate  {
 
 	List<mazeCell> mazeCellList = new List<mazeCell> ();
 		
-
+	GameObject totalMaze; 
+	//private string mazeName;
 	private int MazeSizeX;
 	private int MazeSizeZ;
 
@@ -15,12 +16,15 @@ public class Maze : MazeGenerate  {
 	public Maze(){
 		MazeSizeX = 0; //Sets maze size x
 		MazeSizeZ = 0; //Sets maze size z
+
 	}
 
 	//Maze Constructor: 2 arguments
 	public Maze(int mazeSizeX, int mazeSizeZ){
 		MazeSizeX =mazeSizeX; //Set maze dimision x 
 		MazeSizeZ =mazeSizeZ; //Set maze dimision z
+		totalMaze = new GameObject("Maze");
+
 	} 
 
 	//Creates and adds a maze cell to a list of mazeCells  
@@ -42,7 +46,7 @@ public class Maze : MazeGenerate  {
 
 
 		for (int count = 0; count < mazeCellList.Count; count++) {
-			//Creates and empty parents objects call cell which contains the path walls and cell floor for each cell
+			//Creates an empty parent game object cell which contains the path walls and cell floor for each cell
 			cell = new GameObject ("Maze Cell (" + mazeCellList[count].cellLocationX.ToString() + "," + mazeCellList[count].cellLocationZ.ToString() + ")");
 
 			//Creates the position for the wall also passes the cell game object the walls are associated
@@ -128,7 +132,8 @@ public class Maze : MazeGenerate  {
 		wall.SetActive (true);
 		wall.transform.position = position;
 		wall.transform.localScale = scale;
-		wall.transform.parent = cell.transform; 
+		wall.transform.parent = cell.transform;
+		cell.transform.SetParent (totalMaze.transform);
 	}
 
 	//Creates a floor for a cell given a (x,z) coordinate
@@ -140,6 +145,7 @@ public class Maze : MazeGenerate  {
 		mazeFloor.transform.position = new Vector3 (x + 5, 0, z - 5);
 		mazeFloor.transform.localScale = new Vector3 (1, 1, 1);
 		mazeFloor.transform.parent = cell.transform;
+		cell.transform.SetParent (totalMaze.transform);
 	}
 }
 
