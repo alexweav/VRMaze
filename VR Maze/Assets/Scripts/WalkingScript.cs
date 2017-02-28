@@ -3,22 +3,20 @@ using System;
 
 public class WalkingScript : MonoBehaviour {
 
-	public Rigidbody  myRigidBody;
-	public Rigidbody playerRigBody;
-	public GameObject myHead;
-	public GameObject camView;
+	public GameObject cameraView;
+	public Rigidbody playerRigidbody;
+	public CapsuleCollider playerCollider;
 
 
 	private bool isWalking;
 	private float speed;
 	private float camViewRotX;	//The value of the camera when you look up or doww
 
-	void Start(){
-
-	}
-
 	void Update(){
-		camViewRotX = camView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
+
+		camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
+
+
 
 		speed = (float) Math.Pow(0.00001, (double)1/camViewRotX); //Formula that increase the speed the more you look down
 
@@ -32,14 +30,23 @@ public class WalkingScript : MonoBehaviour {
 		else{
 			isWalking = false;
 		}
-		
+
 		if (isWalking) {
-			myRigidBody.position = transform.position + camView.transform.forward * speed;
-			playerRigBody.position = transform.position + camView.transform.forward * speed;
+			
+			Vector3 cameraDirection = new Vector3 (cameraView.transform.forward.x, 0, cameraView.transform.forward.z).normalized * 2 * Time.deltaTime; //2 = speed
+			Quaternion cameraRotation = Quaternion.Euler (new Vector3 (0, -transform.rotation.eulerAngles.y, 0));
+			transform.Translate (cameraRotation * cameraDirection);
+
 		}
 		else{
-			myRigidBody.velocity = Vector3.zero;	//Keep both the PlayerModel and Camera still 
-			playerRigBody.velocity = Vector3.zero;	// whenever there is no movement.
+			
+		}
+	}
+
+	void OnCollisionEnter(Collision collision){
+		if (collision.gameObject.tag == "wall") {
+
+			print ("Hit a dang wall!");
 		}
 	}
 }
