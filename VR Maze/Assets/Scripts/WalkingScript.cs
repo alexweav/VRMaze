@@ -17,7 +17,7 @@ public class WalkingScript : MonoBehaviour {
 		camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 
 
-		speed = 3; //Temp for 
+		speed = 5; //Temp for 
 		//speed = (float) Math.Pow(0.00001, (double)1/camViewRotX); //Formula that increase the speed the more you look down
 
 		//Testing purposes: Alter the speed and downward angle ratio
