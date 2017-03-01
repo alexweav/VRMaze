@@ -12,7 +12,7 @@ namespace Assets.Scripts
     class GraphNode<T>
     {
         private T data;
-        private List<T> neighbors;
+        private List<GraphNode<T>> neighbors;
 
         /// <summary>
         /// Empty constructor. Use this to create an arbitrary dataless node
@@ -42,19 +42,15 @@ namespace Assets.Scripts
             }
         }
 
-        public List<T> Neighbors
+        public List<GraphNode<T>> Neighbors
         {
             get
             {
                 if (neighbors == null)
                 {
-                    return new List<T>();
+                    return new List<GraphNode<T>>();
                 }
                 return neighbors;
-            }
-            set
-            {
-                neighbors = value;
             }
         }
     }
