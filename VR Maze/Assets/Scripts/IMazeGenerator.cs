@@ -10,6 +10,6 @@ namespace Assets.Scripts
     /// </summary>
     interface IMazeGenerator
     {
-        Maze generate(int width, int height);
+       // Maze generate(int width, int height);
     }
 }
