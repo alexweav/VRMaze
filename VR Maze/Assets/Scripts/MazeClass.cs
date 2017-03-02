@@ -24,7 +24,11 @@ namespace Assets.Scripts
 
         }
 
-        //Maze Constructor: 2 arguments
+        /// <summary>
+        /// Constructs
+        /// </summary>
+        /// <param name="mazeSizeX">width of maze</param>
+        /// <param name="mazeSizeZ">height of maze</param>
         public Maze(int mazeSizeX, int mazeSizeZ)
         {
             MazeSizeX = mazeSizeX; //Set maze dimision x 
