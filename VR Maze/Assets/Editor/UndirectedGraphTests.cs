@@ -61,5 +61,16 @@ namespace Assets.Scripts.Tests
             graph.AddEdge(item1, item1);
             Assert.IsTrue(graph.AreConnected(item1, item1));
         }
+
+        [Test]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void UndirectedGraphTest_InvalidItemThrowsException()
+        {
+            int item1 = 5;
+            int item2 = 10;
+            UndirectedGraph<int> graph = new UndirectedGraph<int>();
+            graph.AddNode(item1);
+            graph.AddEdge(item1, item2);
+        }
     }
 }
