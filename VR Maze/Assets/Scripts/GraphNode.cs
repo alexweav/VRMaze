@@ -9,17 +9,10 @@ namespace Assets.Scripts
     /// A node in a graph
     /// </summary>
     /// <typeparam name="T">The data type that the graph node contains</typeparam>
-    class GraphNode<T>
+    public class GraphNode<T>
     {
         private T data;
         private List<GraphNode<T>> neighbors;
-
-        /// <summary>
-        /// Empty constructor. Use this to create an arbitrary dataless node
-        /// </summary>
-        public GraphNode()
-        {
-        }
 
         /// <summary>
         /// Creates a graph node containing the given object
@@ -28,6 +21,12 @@ namespace Assets.Scripts
         public GraphNode(T data)
         {
             this.data = data;
+            neighbors = new List<GraphNode<T>>();
+        }
+
+        public void AddNeighbor(GraphNode<T> item)
+        {
+            neighbors.Add(item);
         }
 
         public T Data
@@ -46,10 +45,6 @@ namespace Assets.Scripts
         {
             get
             {
-                if (neighbors == null)
-                {
-                    return new List<GraphNode<T>>();
-                }
                 return neighbors;
             }
         }
