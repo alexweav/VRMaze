@@ -42,9 +42,20 @@ namespace Assets.Scripts
             inMaze.Add(startCell);
             while (inMaze.Count < graph.Count)
             {
+                List<Pair<Pair<int, int>, Pair<int, int>>> candidateEdges = FindCandidateEdges(graph, inMaze);
                 throw new NotImplementedException();
             }
             return graph;
+        }
+
+        private List<Pair<Pair<int, int>, Pair<int, int>>> FindCandidateEdges(UndirectedGraph<Pair<int, int>> graph, List<Pair<int, int>> inMaze)
+        {
+            List<Pair<Pair<int, int>, Pair<int, int>>> candidates = new List<Pair<Pair<int, int>, Pair<int, int>>>();
+            foreach (var node in inMaze)
+            {
+                throw new NotImplementedException();
+            }
+            return candidates;
         }
     }
 }
