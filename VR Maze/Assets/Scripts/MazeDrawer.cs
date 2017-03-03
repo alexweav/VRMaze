@@ -18,7 +18,7 @@ namespace Assets.Scripts
 
         public MazeDrawer(Maze MazeToDraw)
         {
-            mazeCellList = (List<MazeCell>)MazeToDraw.cellinMaze;
+            mazeCellList = (List<MazeCell>)MazeToDraw.CellInMaze;
             totalMaze = new GameObject("Maze");
         }
 

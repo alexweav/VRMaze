@@ -8,12 +8,14 @@ namespace Assets.Scripts
 
     public class Maze : MonoBehaviour
     {
-        private List<MazeCell> CellsInMaze = new List<MazeCell>();
+        private List<MazeCell> cellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
+        private Vector3 ScaleVectorMultiplier;
+        private string mazeName;
 
         public Maze()
         {
-            
+            ScaleVectorMultiplier = new Vector3(1f, 1f, 1f);
         }
 
         /// <summary>
@@ -26,17 +28,47 @@ namespace Assets.Scripts
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
             MazeCell currentCell = new MazeCell(x, z, southPath, eastPath);  //Creates new mazeCell
-            CellsInMaze.Add(currentCell);      //Adds mazeCell to list
+            cellsInMaze.Add(currentCell);      //Adds mazeCell to list
         }
 
-        public object cellinMaze
+        /// <summary>
+        /// Returns a list of CellsInMaze.  Needs to be Type Cast as List of Maze Cells when assigning to another variable
+        /// </summary>
+        public object CellInMaze
         {
 
             get
             {
-                return CellsInMaze;
+                return cellsInMaze;
             }
 
+        }
+
+        /// <summary>
+        /// MazeName(Set; Get;) method  
+        /// </summary>
+        public string MazeName
+        {
+            get
+            {
+                return mazeName;
+            }
+
+            set
+            {
+                mazeName = value;
+            }
+        }
+
+        /// <summary>
+        /// Allows Maze Scale to be change in the X,Y, and Z directions
+        /// </summary>
+        /// <param name="x"> x scale multiplier</param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        public void SetXYZMazeScale(int x, int y, int z)
+        {
+           ScaleVectorMultiplier = new Vector3(x, y, z);
         }
 
         /// <summary>
