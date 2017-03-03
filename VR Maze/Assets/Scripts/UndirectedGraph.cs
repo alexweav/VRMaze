@@ -9,7 +9,7 @@ namespace Assets.Scripts
     /// Represents an undirected graph with nodes containing a generic type
     /// </summary>
     /// <typeparam name="T">The type of object that the nodes contain</typeparam>
-    class UndirectedGraph<T>
+    public class UndirectedGraph<T>
     {
         private List<GraphNode<T>> nodes;
 
@@ -39,8 +39,8 @@ namespace Assets.Scripts
         {
             GraphNode<T> fromNode = getNode(from);
             GraphNode<T> toNode = getNode(to);
-            fromNode.Neighbors.Add(toNode);
-            toNode.Neighbors.Add(fromNode);
+            fromNode.AddNeighbor(toNode);
+            toNode.AddNeighbor(fromNode);
         }
 
         /// <summary>
@@ -53,7 +53,40 @@ namespace Assets.Scripts
         {
             GraphNode<T> fromNode = getNode(from);
             GraphNode<T> toNode = getNode(to);
-            return fromNode.Neighbors.Contains(toNode);
+            return fromNode.Neighbors.Contains(toNode) || toNode.Neighbors.Contains(fromNode);
+        }
+
+        /// <summary>
+        /// Returns whether or not an item is in graph
+        /// </summary>
+        /// <param name="item">The item to test</param>
+        /// <returns>True if item is in the graph</returns>
+        public bool Contains(T item)
+        {
+            foreach (GraphNode<T> node in nodes)
+            {
+                if (node.Data.Equals(item))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Returns all items directly connected to the given item in the graph
+        /// </summary>
+        /// <param name="item">The item to check</param>
+        /// <returns>A list of all items connected to item</returns>
+        public List<T> Neighbors(T item)
+        {
+            List<T> items = new List<T>();
+            GraphNode<T> itemNode = getNode(item);
+            foreach (var node in itemNode.Neighbors)
+            {
+                items.Add(node.Data);
+            }
+            return items;
         }
 
         /// <summary>
