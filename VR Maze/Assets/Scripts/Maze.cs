@@ -8,7 +8,8 @@ namespace Assets.Scripts
 
     public class Maze
     {
-        private List<MazeCell> CellsInMaze = new List<MazeCell>();
+        private UndirectedGraph<Pair<int, int>> graph;
+        private List<MazeCell> cellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
 
         public Maze()
@@ -22,7 +23,15 @@ namespace Assets.Scripts
         /// <param name="graph">The grid-shaped graph</param>
         public Maze(UndirectedGraph<Pair<int, int>> graph)
         {
-            
+            this.graph = graph;
+            foreach(var node in graph)
+            {
+                Pair<int, int> southNode = new Pair<int, int>(node.First + 1, node.Second);
+                Pair<int, int> eastNode = new Pair<int, int>(node.First, node.Second + 1);
+                bool southPath = graph.Contains(southNode) && graph.AreConnected(node, southNode);
+                bool eastPath = graph.Contains(eastNode) && graph.AreConnected(node, eastNode);
+                addMazeCell(node.Second, node.First, eastPath, southPath);
+            }
         }
 
         /// <summary>
@@ -35,10 +44,10 @@ namespace Assets.Scripts
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
             MazeCell currentCell = new MazeCell(x, z, southPath, eastPath);  //Creates new mazeCell
-            CellsInMaze.Add(currentCell);      //Adds mazeCell to list
+            cellsInMaze.Add(currentCell);      //Adds mazeCell to list
         }
 
-        public object cellinMaze
+        public List<MazeCell> CellsInMaze
         {
 
             get
@@ -56,10 +65,5 @@ namespace Assets.Scripts
             Drawer = new MazeDrawer(this);
             Drawer.drawMaze();
         }
-
-
     }
-
-
-
 }

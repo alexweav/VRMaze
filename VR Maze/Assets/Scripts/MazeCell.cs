@@ -8,7 +8,7 @@ namespace Assets.Scripts
     /// <summary>
     /// A single cell of a maze
     /// </summary>
-    class MazeCell
+    public class MazeCell
     {
         private bool startCell;
         private bool finishCell;
