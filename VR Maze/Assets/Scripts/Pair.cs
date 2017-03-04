@@ -10,7 +10,7 @@ namespace Assets.Scripts
     /// </summary>
     /// <typeparam name="T">Type of the first object in the pair</typeparam>
     /// <typeparam name="U">Type of the second object in the pair</typeparam>
-    class Pair<T, U>
+    public class Pair<T, U>
     {
         /// <summary>
         /// Constructs a pair of the two objects

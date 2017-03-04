@@ -6,12 +6,21 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public class Maze : MonoBehaviour
+    public class Maze
     {
         private List<MazeCell> CellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
 
         public Maze()
+        {
+            
+        }
+
+        /// <summary>
+        /// Constructs a maze from a grid-shaped graph. Passageways between cells are connections in the graph.
+        /// </summary>
+        /// <param name="graph">The grid-shaped graph</param>
+        public Maze(UndirectedGraph<Pair<int, int>> graph)
         {
             
         }
