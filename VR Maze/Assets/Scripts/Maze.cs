@@ -43,7 +43,7 @@ namespace Assets.Scripts
         /// <param name="southPath"> bool value if a south path exist to another cell </param>
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
-            MazeCell currentCell = new MazeCell(x, z, southPath, eastPath);  //Creates new mazeCell
+            MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
             cellsInMaze.Add(currentCell);      //Adds mazeCell to list
         }
 
@@ -55,6 +55,18 @@ namespace Assets.Scripts
                 return cellsInMaze;
             }
 
+        }
+
+        public bool ContainsCell(MazeCell cell)
+        {
+            foreach (var currentCell in cellsInMaze)
+            {
+                if (currentCell.Equals(cell))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>

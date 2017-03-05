@@ -116,7 +116,27 @@ namespace Assets.Scripts
             {
                 eastPath = EastPath;
             }
+        }
 
+        public override bool Equals(object other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            MazeCell cell = other as MazeCell;
+            if (cell == null)
+            {
+                return false;
+            }
+            return (this.startCell == cell.StartCell) && (this.finishCell == cell.finishCell)
+                && (this.southPath == cell.southPath) && (this.eastPath == cell.eastPath)
+                && (this.cellLocationX == cell.cellLocationX) && (this.cellLocationZ == cell.cellLocationZ);
+        }
+        
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
