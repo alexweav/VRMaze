@@ -52,7 +52,7 @@ namespace Assets.Scripts
 
             get
             {
-                return CellsInMaze;
+                return cellsInMaze;
             }
 
         }
