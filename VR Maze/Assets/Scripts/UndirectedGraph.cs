@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Assets.Scripts
     /// Represents an undirected graph with nodes containing a generic type
     /// </summary>
     /// <typeparam name="T">The type of object that the nodes contain</typeparam>
-    public class UndirectedGraph<T>
+    public class UndirectedGraph<T> : IEnumerable<T>
     {
         private List<GraphNode<T>> nodes;
 
@@ -97,6 +98,25 @@ namespace Assets.Scripts
             get
             {
                 return nodes.Count;
+            }
+        }
+
+        /// <inheritdoc/>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return nodes.GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach (GraphNode<T> node in nodes)
+            {
+                if (node == null)
+                {
+                    break;
+                }
+                yield return node.Data;
             }
         }
 
