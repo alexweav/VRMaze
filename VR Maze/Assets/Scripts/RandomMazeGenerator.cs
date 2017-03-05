@@ -14,12 +14,8 @@ namespace Assets.Scripts
         {
             UndirectedGraph<Pair<int, int>> graph = CreateUnconnectedGridGraph(width, height);
             graph = BuildRandomGridSpanningTree(graph);
-
-            //Here we would convert the above graph to a Maze
-            //That constructor hasnt been written yet, so note as not implemented and throw exception
-            //Maze maze = new Maze(graph);
-            //return maze;
-            throw new NotImplementedException();
+            Maze maze = new Maze(graph);
+            return maze;
         }
 
         /// <summary>
