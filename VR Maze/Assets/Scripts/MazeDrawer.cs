@@ -9,17 +9,14 @@ namespace Assets.Scripts
     {
 
         List<MazeCell> mazeCellList = new List<MazeCell>();
-
-        GameObject totalMaze;
-        //private string mazeName;
-        private int MazeSizeX;
-        private int MazeSizeZ;
+        private string CurrentMazeName;
+        
 
 
         public MazeDrawer(Maze MazeToDraw)
         {
             mazeCellList = (List<MazeCell>)MazeToDraw.CellInMaze;
-            totalMaze = new GameObject("Maze");
+            CurrentMazeName = MazeToDraw.MazeName;
         }
 
         //Generates the Maze: Generates Interior of Maze, then the remaining borders
@@ -134,7 +131,7 @@ namespace Assets.Scripts
             wall.transform.position = position;
             wall.transform.localScale = scale;
             wall.transform.parent = cell.transform;
-            cell.transform.SetParent(totalMaze.transform);
+            cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
 
         //Creates a floor for a cell given a (x,z) coordinate
@@ -148,7 +145,7 @@ namespace Assets.Scripts
             mazeFloor.transform.position = new Vector3(x + 5, 0, z - 5);
             mazeFloor.transform.localScale = new Vector3(1, 1, 1);
             mazeFloor.transform.parent = cell.transform;
-            cell.transform.SetParent(totalMaze.transform);
+            cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
     }
 }

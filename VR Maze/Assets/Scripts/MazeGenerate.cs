@@ -12,7 +12,8 @@ namespace Assets.Scripts
         void Start()
         {
 
-            Maze maze1 = new Maze(); //Intializes new Maze and Maze size
+            Maze maze1 = new Maze("Maze 1"); //Intializes new Maze and Maze size
+           //maze1.SetXYZPosition(1, 1, 1);
 
             //This portion adds a cell for each position in the mmaze
 

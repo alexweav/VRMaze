@@ -8,14 +8,20 @@ namespace Assets.Scripts
 
     public class Maze : MonoBehaviour
     {
+        GameObject ThisMaze;
+        private Vector3 ThisMazeScale;
+        private Vector3 ThisMazePosition;
         private List<MazeCell> cellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
-        private Vector3 ScaleVectorMultiplier;
         private string mazeName;
 
-        public Maze()
+
+        public Maze(string MazeName)
         {
-            ScaleVectorMultiplier = new Vector3(1f, 1f, 1f);
+            mazeName = MazeName;
+            ThisMaze = new GameObject(mazeName);
+            ThisMazeScale = new Vector3(.5f, 10f, .5f);
+            ThisMazePosition = new Vector3(0f, 0f, 0f);
         }
 
         /// <summary>
@@ -66,9 +72,14 @@ namespace Assets.Scripts
         /// <param name="x"> x scale multiplier</param>
         /// <param name="y"></param>
         /// <param name="z"></param>
-        public void SetXYZMazeScale(int x, int y, int z)
+        public void SetXYZScale(float x, float y, float z)
         {
-           ScaleVectorMultiplier = new Vector3(x, y, z);
+            ThisMazeScale = new Vector3(x, y, z);
+        }
+
+        public void SetXYZPosition(float x, float y, float z)
+        {
+            ThisMazePosition = new Vector3(x, y, z);
         }
 
         /// <summary>
@@ -78,6 +89,8 @@ namespace Assets.Scripts
         {
             Drawer = new MazeDrawer(this);
             Drawer.drawMaze();
+            ThisMaze.transform.localScale = ThisMazeScale;
+            ThisMaze.transform.position = ThisMazePosition;
         }
 
 
