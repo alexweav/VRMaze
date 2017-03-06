@@ -9,17 +9,14 @@ namespace Assets.Scripts
     {
 
         List<MazeCell> mazeCellList = new List<MazeCell>();
-
-        GameObject totalMaze;
-        //private string mazeName;
-        private int MazeSizeX;
-        private int MazeSizeZ;
+        private string CurrentMazeName;
+        
 
 
         public MazeDrawer(Maze MazeToDraw)
         {
             mazeCellList = MazeToDraw.CellsInMaze;
-            totalMaze = new GameObject("Maze");
+            CurrentMazeName = MazeToDraw.MazeName;
         }
 
         //Generates the Maze: Generates Interior of Maze, then the remaining borders
@@ -27,6 +24,7 @@ namespace Assets.Scripts
         {
             generateInnerOfMaze(); //Method Call to generate the inside of a maze
             generateBorderOfMaze(); //Method Call to generate the border of a maze
+            addLights();
         }
 
         //Generates the Interior of the maze
@@ -134,7 +132,7 @@ namespace Assets.Scripts
             wall.transform.position = position;
             wall.transform.localScale = scale;
             wall.transform.parent = cell.transform;
-            cell.transform.SetParent(totalMaze.transform);
+            cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
 
         //Creates a floor for a cell given a (x,z) coordinate
@@ -148,7 +146,53 @@ namespace Assets.Scripts
             mazeFloor.transform.position = new Vector3(x + 5, 0, z - 5);
             mazeFloor.transform.localScale = new Vector3(1, 1, 1);
             mazeFloor.transform.parent = cell.transform;
-            cell.transform.SetParent(totalMaze.transform);
+            cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
+
+        /// <summary>
+        /// Finds which cells to put spot lights over
+        /// </summary>
+        private void addLights()
+        {
+            int mcStart = -1;
+            bool everyOther = true;
+            foreach (MazeCell mc in mazeCellList )
+            {               
+               if(everyOther)
+                {
+                    addLight(mc);
+                    everyOther = false;
+                }
+                else
+                {
+                    everyOther = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create a spot light with the proper attributes
+        /// </summary>
+        /// <param name="mc">This is the Maze Cell a light is created over</param>
+        public void addLight(MazeCell mc)
+        {
+            GameObject lightGameObject = new GameObject("Light");
+            Light CellLight = lightGameObject.AddComponent<Light>();
+            Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
+
+            CellLight.type = LightType.Spot;
+            CellLight.range = 31f;
+            CellLight.intensity = 6;
+            lightGameObject.transform.position = new Vector3(pos.x, 1.2f, pos.z);
+            lightGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
+            lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
+            
+
+
+
+        }
+
+
+
     }
 }
