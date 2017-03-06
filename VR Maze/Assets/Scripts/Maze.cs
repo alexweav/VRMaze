@@ -8,29 +8,22 @@ namespace Assets.Scripts
 
     public class Maze
     {
-        GameObject ThisMaze;
+        public List<MazeCell> CellsInMaze = new List<MazeCell>();
+        private GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
-        public List<MazeCell> CellsInMaze = new List<MazeCell>();
         private UndirectedGraph<Pair<int, int>> graph;
         private MazeDrawer Drawer;
         private string mazeName;
 
         public Maze()
         {
-            mazeName = "Maze";
-            mazeName = MazeName;
-            ThisMaze = new GameObject(mazeName);
-            ThisMazeScale = new Vector3(.5f, 10f, .5f);
-            ThisMazePosition = new Vector3(0f, 0f, 0f);
+            IntializeMaze("Maze");
         }
 
         public Maze(string MazeName)
         {
-            mazeName = MazeName;
-            ThisMaze = new GameObject(mazeName);
-            ThisMazeScale = new Vector3(.5f, 10f, .5f);
-            ThisMazePosition = new Vector3(0f, 0f, 0f);
+            IntializeMaze(MazeName);
         }
 
         /// <summary>
@@ -39,6 +32,7 @@ namespace Assets.Scripts
         /// <param name="graph">The grid-shaped graph</param>
         public Maze(UndirectedGraph<Pair<int, int>> graph)
         {
+            IntializeMaze("Maze");
             this.graph = graph;
             foreach(var node in graph)
             {
@@ -59,21 +53,8 @@ namespace Assets.Scripts
         /// <param name="southPath"> bool value if a south path exist to another cell </param>
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
-            MazeCell currentCell = new MazeCell(x, z, southPath, eastPath);  //Creates new mazeCell
+            MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
             CellsInMaze.Add(currentCell);      //Adds mazeCell to list
-        }
-
-        /// <summary>
-        /// Returns a list of CellsInMaze.  Needs to be Type Cast as List of Maze Cells when assigning to another variable
-        /// </summary>
-        public object cellsInMaze
-        {
-
-            get
-            {
-                return CellsInMaze;
-            }
-
         }
 
         /// <summary>
@@ -136,6 +117,14 @@ namespace Assets.Scripts
             Drawer.drawMaze();
             ThisMaze.transform.localScale = ThisMazeScale;
             ThisMaze.transform.position = ThisMazePosition;
+        }
+
+        private void IntializeMaze(string MazeName)
+        {
+            mazeName = MazeName;
+            ThisMaze = new GameObject(mazeName);
+            ThisMazeScale = new Vector3(.5f, 10f, .5f);
+            ThisMazePosition = new Vector3(0f, 0f, 0f);
         }
     }
 }

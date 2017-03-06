@@ -121,10 +121,7 @@ namespace Assets.Scripts
                 this.Cell2 = cell2; 
             }
 
-            public Pair<int, int> Cell1
-            {
-                get; set;
-            }
+            public Pair<int, int> Cell1{get; set;}
             public Pair<int, int> Cell2 { get; set; }
         }
     }

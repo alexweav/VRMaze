@@ -15,7 +15,7 @@ namespace Assets.Scripts
 
         public MazeDrawer(Maze MazeToDraw)
         {
-            mazeCellList = (List<MazeCell>)MazeToDraw.cellsInMaze;
+            mazeCellList = MazeToDraw.CellsInMaze;
             CurrentMazeName = MazeToDraw.MazeName;
         }
 
