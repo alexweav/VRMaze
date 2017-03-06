@@ -12,6 +12,8 @@ namespace Assets.Scripts
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
         private List<MazeCell> cellsInMaze = new List<MazeCell>();
+        private UndirectedGraph<Pair<int, int>> graph;
+        private List<MazeCell> cellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
         private string mazeName;
 
@@ -104,6 +106,9 @@ namespace Assets.Scripts
                 }
             }
             return false;
+        public void SetXYZPosition(float x, float y, float z)
+        {
+            ThisMazePosition = new Vector3(x, y, z);
         }
 
         /// <summary>
