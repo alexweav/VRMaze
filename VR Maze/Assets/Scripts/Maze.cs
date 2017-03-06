@@ -8,13 +8,22 @@ namespace Assets.Scripts
 
     public class Maze
     {
+        public List<MazeCell> CellsInMaze = new List<MazeCell>();
+        private GameObject ThisMaze;
+        private Vector3 ThisMazeScale;
+        private Vector3 ThisMazePosition;
         private UndirectedGraph<Pair<int, int>> graph;
-        private List<MazeCell> cellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
+        private string mazeName;
 
         public Maze()
         {
-            
+            IntializeMaze("Maze");
+        }
+
+        public Maze(string MazeName)
+        {
+            IntializeMaze(MazeName);
         }
 
         /// <summary>
@@ -23,6 +32,7 @@ namespace Assets.Scripts
         /// <param name="graph">The grid-shaped graph</param>
         public Maze(UndirectedGraph<Pair<int, int>> graph)
         {
+            IntializeMaze("Maze");
             this.graph = graph;
             foreach(var node in graph)
             {
@@ -44,22 +54,40 @@ namespace Assets.Scripts
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
             MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
-            cellsInMaze.Add(currentCell);      //Adds mazeCell to list
+            CellsInMaze.Add(currentCell);      //Adds mazeCell to list
         }
 
-        public List<MazeCell> CellsInMaze
+        /// <summary>
+        /// MazeName(Set; Get;) method  
+        /// </summary>
+        public string MazeName
         {
-
             get
             {
-                return cellsInMaze;
+                return mazeName;
             }
 
+            set
+            {
+                mazeName = value;
+            }
         }
 
+        /// <summary>
+        /// Allows Maze Scale to be change in the X,Y, and Z directions
+        /// </summary>
+        /// <param name="x"> x scale multiplier</param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        public void SetXYZScale(float x, float y, float z)
+        {
+            ThisMazeScale = new Vector3(x, y, z);
+        }
+
+        
         public bool ContainsCell(MazeCell cell)
         {
-            foreach (var currentCell in cellsInMaze)
+            foreach (var currentCell in CellsInMaze)
             {
                 if (currentCell.Equals(cell))
                 {
@@ -70,12 +98,33 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// Sets XYZ Position of the maze
+        /// </summary>
+        /// <param name="x"> x position</param>
+        /// <param name="y"> y position</param>
+        /// <param name="z"> z position</param>
+        public void SetXYZPosition(float x, float y, float z)
+        {
+            ThisMazePosition = new Vector3(x, y, z);
+        }
+
+        /// <summary>
         /// Draws maze using the Maze Drawer class
         /// </summary>
         public void Draw()
         {
             Drawer = new MazeDrawer(this);
             Drawer.drawMaze();
+            ThisMaze.transform.localScale = ThisMazeScale;
+            ThisMaze.transform.position = ThisMazePosition;
+        }
+
+        private void IntializeMaze(string MazeName)
+        {
+            mazeName = MazeName;
+            ThisMaze = new GameObject(mazeName);
+            ThisMazeScale = new Vector3(.5f, 10f, .5f);
+            ThisMazePosition = new Vector3(0f, 0f, 0f);
         }
     }
 }
