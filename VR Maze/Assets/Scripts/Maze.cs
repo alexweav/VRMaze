@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public class Maze : MonoBehaviour
+    public class Maze
     {
         GameObject ThisMaze;
         private Vector3 ThisMazeScale;
@@ -22,6 +22,23 @@ namespace Assets.Scripts
             ThisMaze = new GameObject(mazeName);
             ThisMazeScale = new Vector3(.5f, 10f, .5f);
             ThisMazePosition = new Vector3(0f, 0f, 0f);
+        }
+
+        /// <summary>
+        /// Constructs a maze from a grid-shaped graph. Passageways between cells are connections in the graph.
+        /// </summary>
+        /// <param name="graph">The grid-shaped graph</param>
+        public Maze(UndirectedGraph<Pair<int, int>> graph)
+        {
+            this.graph = graph;
+            foreach(var node in graph)
+            {
+                Pair<int, int> southNode = new Pair<int, int>(node.First + 1, node.Second);
+                Pair<int, int> eastNode = new Pair<int, int>(node.First, node.Second + 1);
+                bool southPath = graph.Contains(southNode) && graph.AreConnected(node, southNode);
+                bool eastPath = graph.Contains(eastNode) && graph.AreConnected(node, eastNode);
+                addMazeCell(node.Second, node.First, eastPath, southPath);
+            }
         }
 
         /// <summary>
@@ -77,9 +94,16 @@ namespace Assets.Scripts
             ThisMazeScale = new Vector3(x, y, z);
         }
 
-        public void SetXYZPosition(float x, float y, float z)
+        public bool ContainsCell(MazeCell cell)
         {
-            ThisMazePosition = new Vector3(x, y, z);
+            foreach (var currentCell in cellsInMaze)
+            {
+                if (currentCell.Equals(cell))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -92,10 +116,5 @@ namespace Assets.Scripts
             ThisMaze.transform.localScale = ThisMazeScale;
             ThisMaze.transform.position = ThisMazePosition;
         }
-
-
     }
-
-
-
 }

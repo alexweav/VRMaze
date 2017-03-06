@@ -19,6 +19,7 @@ namespace Assets.Scripts
 
             //Row 1 cell
 
+            
             maze1.addMazeCell(0, 0, true, true);
             maze1.addMazeCell(1, 0, false, true);
             maze1.addMazeCell(2, 0, false, true);
@@ -58,6 +59,7 @@ namespace Assets.Scripts
             maze1.addMazeCell(5, 5, true, true);
 
             maze1.addMazeCell(6, 6, true, true);
+            
 
             //Generates Maze
             maze1.Draw();
