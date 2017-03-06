@@ -12,7 +12,7 @@ namespace Assets.Scripts
         void Start()
         {
 
-            Maze maze1 = new Maze(5, 5); //Intializes new Maze and Maze size
+            Maze maze1 = new Maze(); //Intializes new Maze and Maze size
 
             //This portion adds a cell for each position in the mmaze
 
@@ -59,7 +59,7 @@ namespace Assets.Scripts
             maze1.addMazeCell(6, 6, true, true);
 
             //Generates Maze
-            maze1.generateMaze();
+            maze1.Draw();
         }
         // Update is called once per frame
         void Update()
