@@ -16,6 +16,14 @@ namespace Assets.Scripts
         private MazeDrawer Drawer;
         private string mazeName;
 
+        public Maze()
+        {
+            mazeName = "Maze";
+            mazeName = MazeName;
+            ThisMaze = new GameObject(mazeName);
+            ThisMazeScale = new Vector3(.5f, 10f, .5f);
+            ThisMazePosition = new Vector3(0f, 0f, 0f);
+        }
 
         public Maze(string MazeName)
         {
@@ -95,6 +103,7 @@ namespace Assets.Scripts
             ThisMazeScale = new Vector3(x, y, z);
         }
 
+        
         public bool ContainsCell(MazeCell cell)
         {
             foreach (var currentCell in CellsInMaze)
@@ -106,6 +115,13 @@ namespace Assets.Scripts
             }
             return false;
         }
+
+        /// <summary>
+        /// Sets XYZ Position of the maze
+        /// </summary>
+        /// <param name="x"> x position</param>
+        /// <param name="y"> y position</param>
+        /// <param name="z"> z position</param>
         public void SetXYZPosition(float x, float y, float z)
         {
             ThisMazePosition = new Vector3(x, y, z);

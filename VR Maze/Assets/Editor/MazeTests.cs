@@ -10,7 +10,7 @@ namespace Assets.Scripts.Tests {
 
         [Test]
         public void MazeTests_NewMazeEmpty() {
-            Maze maze = new Maze("Maze");
+            Maze maze = new Maze();
             Assert.IsEmpty(maze.CellsInMaze);
         }
 

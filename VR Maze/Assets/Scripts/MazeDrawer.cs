@@ -181,7 +181,7 @@ namespace Assets.Scripts
             Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
 
             CellLight.type = LightType.Spot;
-            CellLight.range = 33.03f;
+            CellLight.range = 31f;
             CellLight.intensity = 6;
             lightGameObject.transform.position = new Vector3(pos.x, 1.2f, pos.z);
             lightGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
