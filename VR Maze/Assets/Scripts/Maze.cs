@@ -11,7 +11,7 @@ namespace Assets.Scripts
         GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
-        private List<MazeCell> CellsInMaze = new List<MazeCell>();
+        public List<MazeCell> CellsInMaze = new List<MazeCell>();
         private UndirectedGraph<Pair<int, int>> graph;
         private MazeDrawer Drawer;
         private string mazeName;
@@ -58,7 +58,7 @@ namespace Assets.Scripts
         /// <summary>
         /// Returns a list of CellsInMaze.  Needs to be Type Cast as List of Maze Cells when assigning to another variable
         /// </summary>
-        public object CellInMaze
+        public object cellsInMaze
         {
 
             get

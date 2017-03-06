@@ -10,14 +10,14 @@ namespace Assets.Scripts.Tests {
 
         [Test]
         public void MazeTests_NewMazeEmpty() {
-            Maze maze = new Maze();
+            Maze maze = new Maze("Maze");
             Assert.IsEmpty(maze.CellsInMaze);
         }
 
         [Test]
         public void MazeTests_AddCellsHardcodedMethodTest()
         {
-            Maze maze = new Maze();
+            Maze maze = new Maze("Maze");
             Assert.IsEmpty(maze.CellsInMaze);
             maze.addMazeCell(1, 1, false, true);
             maze.addMazeCell(2, 1, true, true);

@@ -15,7 +15,7 @@ namespace Assets.Scripts
 
         public MazeDrawer(Maze MazeToDraw)
         {
-            mazeCellList = (List<MazeCell>)MazeToDraw.CellInMaze;
+            mazeCellList = (List<MazeCell>)MazeToDraw.cellsInMaze;
             CurrentMazeName = MazeToDraw.MazeName;
         }
 
@@ -149,32 +149,50 @@ namespace Assets.Scripts
             cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
 
+        /// <summary>
+        /// Finds which cells to put spot lights over
+        /// </summary>
         private void addLights()
         {
             int mcStart = -1;
+            bool everyOther = true;
             foreach (MazeCell mc in mazeCellList )
-            {
-                GameObject lightGameObject = new GameObject("Light");
-                Light CellLight = lightGameObject.AddComponent<Light>();
-                Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
-                lightGameObject.transform.position = new Vector3(pos.x, 1, pos.z);
-
-
-                if (mc.cellLocationZ != mcStart)
+            {               
+               if(everyOther)
                 {
-                    lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
+                    addLight(mc);
+                    everyOther = false;
                 }
                 else
                 {
-                    if((mc.cellLocationX % 2) != 0)
-                    {
-                        lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
-                    }
+                    everyOther = true;
                 }
-
-                
-
             }
         }
+
+        /// <summary>
+        /// Create a spot light with the proper attributes
+        /// </summary>
+        /// <param name="mc">This is the Maze Cell a light is created over</param>
+        public void addLight(MazeCell mc)
+        {
+            GameObject lightGameObject = new GameObject("Light");
+            Light CellLight = lightGameObject.AddComponent<Light>();
+            Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
+
+            CellLight.type = LightType.Spot;
+            CellLight.range = 33.03f;
+            CellLight.intensity = 6;
+            lightGameObject.transform.position = new Vector3(pos.x, 1.2f, pos.z);
+            lightGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
+            lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
+            
+
+
+
+        }
+
+
+
     }
 }
