@@ -24,6 +24,7 @@ namespace Assets.Scripts
         {
             generateInnerOfMaze(); //Method Call to generate the inside of a maze
             generateBorderOfMaze(); //Method Call to generate the border of a maze
+            addLights();
         }
 
         //Generates the Interior of the maze
@@ -146,6 +147,34 @@ namespace Assets.Scripts
             mazeFloor.transform.localScale = new Vector3(1, 1, 1);
             mazeFloor.transform.parent = cell.transform;
             cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
+        }
+
+        private void addLights()
+        {
+            int mcStart = -1;
+            foreach (MazeCell mc in mazeCellList )
+            {
+                GameObject lightGameObject = new GameObject("Light");
+                Light CellLight = lightGameObject.AddComponent<Light>();
+                Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
+                lightGameObject.transform.position = new Vector3(pos.x, 1, pos.z);
+
+
+                if (mc.cellLocationZ != mcStart)
+                {
+                    lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
+                }
+                else
+                {
+                    if((mc.cellLocationX % 2) != 0)
+                    {
+                        lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
+                    }
+                }
+
+                
+
+            }
         }
     }
 }
