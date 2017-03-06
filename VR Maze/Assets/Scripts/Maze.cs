@@ -11,9 +11,8 @@ namespace Assets.Scripts
         GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
-        private List<MazeCell> cellsInMaze = new List<MazeCell>();
+        private List<MazeCell> CellsInMaze = new List<MazeCell>();
         private UndirectedGraph<Pair<int, int>> graph;
-        private List<MazeCell> cellsInMaze = new List<MazeCell>();
         private MazeDrawer Drawer;
         private string mazeName;
 
@@ -53,7 +52,7 @@ namespace Assets.Scripts
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
             MazeCell currentCell = new MazeCell(x, z, southPath, eastPath);  //Creates new mazeCell
-            cellsInMaze.Add(currentCell);      //Adds mazeCell to list
+            CellsInMaze.Add(currentCell);      //Adds mazeCell to list
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace Assets.Scripts
 
             get
             {
-                return cellsInMaze;
+                return CellsInMaze;
             }
 
         }
@@ -98,7 +97,7 @@ namespace Assets.Scripts
 
         public bool ContainsCell(MazeCell cell)
         {
-            foreach (var currentCell in cellsInMaze)
+            foreach (var currentCell in CellsInMaze)
             {
                 if (currentCell.Equals(cell))
                 {
@@ -106,6 +105,7 @@ namespace Assets.Scripts
                 }
             }
             return false;
+        }
         public void SetXYZPosition(float x, float y, float z)
         {
             ThisMazePosition = new Vector3(x, y, z);
