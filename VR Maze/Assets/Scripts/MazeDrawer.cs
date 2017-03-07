@@ -146,51 +146,5 @@ namespace Assets.Scripts
             mazeFloor.transform.parent = cell.transform;
             cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
-
-        /// <summary>
-        /// Finds every other maze cell in a maze. So lights can be added to that maze cell
-        /// </summary>
-        public void addLights()
-        {
-            
-            bool everyOther = true;
-            foreach (MazeCell mc in mazeCellList )
-            {               
-               if(everyOther)
-                {
-                    addLight(mc);
-                    everyOther = false;
-                }
-                else
-                {
-                    everyOther = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Create a spot light with the proper attributes
-        /// </summary>
-        /// <param name="mc">This is the Maze Cell a light is created over</param>
-        public void addLight(MazeCell mc)
-        {
-            GameObject lightGameObject = new GameObject("Light");
-            Light CellLight = lightGameObject.AddComponent<Light>();
-            Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
-
-            CellLight.type = LightType.Spot;
-            CellLight.range = 31f;
-            CellLight.intensity = 6;
-            lightGameObject.transform.position = new Vector3(pos.x, 1.2f, pos.z);
-            lightGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
-            lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
-            
-
-
-
-        }
-
-
-
     }
 }
