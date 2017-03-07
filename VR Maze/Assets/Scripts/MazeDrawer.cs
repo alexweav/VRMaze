@@ -31,19 +31,17 @@ namespace Assets.Scripts
         private void generateInnerOfMaze()
         {
             //Intialize Empty Game Object cell
-            GameObject cell;
-
-
-            for (int count = 0; count < mazeCellList.Count; count++)
+            
+            foreach (MazeCell cell in mazeCellList )
             {
                 //Creates an empty parent game object cell which contains the path walls and cell floor for each cell
-                cell = new GameObject("Maze Cell (" + mazeCellList[count].cellLocationX.ToString() + "," + mazeCellList[count].cellLocationZ.ToString() + ")");
+                cell.mazeCellGO = new GameObject("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
 
                 //Creates the position for the wall also passes the cell game object the walls are associated
-                positionWall(mazeCellList[count].cellLocationX, mazeCellList[count].cellLocationZ, true, mazeCellList[count].EastPath, mazeCellList[count].SouthPath, true, cell);
+                positionWall(cell.cellLocationX, cell.cellLocationZ, true, cell.EastPath, cell.SouthPath, true, cell.mazeCellGO);
 
                 //Generates the Floor for the current cell and passes the cell game object the floor walls are associated with
-                generateFloor((mazeCellList[count].cellLocationX * 10) - 25, 25 - (mazeCellList[count].cellLocationZ * 10), cell);
+                generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), cell.mazeCellGO);
             }
         }
 
