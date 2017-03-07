@@ -20,10 +20,11 @@ public class WalkingScript : MonoBehaviour {
 			speedUp (camViewRotX);
 
 		}
-		if (camViewRotX < 345 && camViewRotX > 270){
+		if (camViewRotX < 355 && camViewRotX > 270){
 			slowDown ();
 		}
 		walk (currentSpeed);
+
 	}
 
 	public void walk(float speed){
