@@ -150,7 +150,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Finds which cells to put spot lights over
+        /// Finds every other maze cell in a maze. So lights can be added to that maze cell
         /// </summary>
         public void addLights()
         {

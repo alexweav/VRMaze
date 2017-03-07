@@ -16,11 +16,18 @@ namespace Assets.Scripts
         private MazeDrawer Drawer;
         private string mazeName;
 
+        /// <summary>
+        /// Intializes the maze
+        /// </summary>
         public Maze()
         {
             IntializeMaze("Maze");
         }
 
+        /// <summary>
+        /// Intializes the maze given a name for the maze
+        /// </summary>
+        /// <param name="MazeName"> name of the maze</param>
         public Maze(string MazeName)
         {
             IntializeMaze(MazeName);
@@ -119,6 +126,10 @@ namespace Assets.Scripts
             ThisMaze.transform.position = ThisMazePosition;
         }
 
+        /// <summary>
+        /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
+        /// </summary>
+        /// <param name="MazeName"></param>
         private void IntializeMaze(string MazeName)
         {
             mazeName = MazeName;
