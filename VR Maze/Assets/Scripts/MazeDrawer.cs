@@ -152,9 +152,9 @@ namespace Assets.Scripts
         /// <summary>
         /// Finds which cells to put spot lights over
         /// </summary>
-        private void addLights()
+        public void addLights()
         {
-            int mcStart = -1;
+            
             bool everyOther = true;
             foreach (MazeCell mc in mazeCellList )
             {               
