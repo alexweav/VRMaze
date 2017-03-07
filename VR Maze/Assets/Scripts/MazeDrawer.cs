@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public class MazeDrawer : MazeGenerate
+    public class MazeDrawer
     {
 
         List<MazeCell> mazeCellList = new List<MazeCell>();
