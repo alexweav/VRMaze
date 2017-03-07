@@ -117,6 +117,12 @@ namespace Assets.Scripts
             Drawer.drawMaze();
             ThisMaze.transform.localScale = ThisMazeScale;
             ThisMaze.transform.position = ThisMazePosition;
+            placePlayer();
+        }
+
+        private void placePlayer()
+        {
+            GameObject.Find("Main Camera").transform.position = GameObject.Find("Maze Cell (0,0)").transform.GetChild(0).transform.position;
         }
 
         private void IntializeMaze(string MazeName)
