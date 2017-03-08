@@ -80,6 +80,14 @@ namespace Assets.Scripts
             }
         }
 
+        public UndirectedGraph<Pair<int, int>> Graph
+        {
+            get
+            {
+                return this.graph;
+            }
+        }
+
         /// <summary>
         /// Allows Maze Scale to be change in the X,Y, and Z directions
         /// </summary>
