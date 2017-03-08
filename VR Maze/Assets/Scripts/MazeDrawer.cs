@@ -24,7 +24,7 @@ namespace Assets.Scripts
         {
             generateInnerOfMaze(); //Method Call to generate the inside of a maze
             generateBorderOfMaze(); //Method Call to generate the border of a maze
-            addLights();
+          
         }
 
         //Generates the Interior of the maze

@@ -124,6 +124,18 @@ namespace Assets.Scripts
             Drawer.drawMaze();
             ThisMaze.transform.localScale = ThisMazeScale;
             ThisMaze.transform.position = ThisMazePosition;
+            PlayerSpawnInCell(0,0);
+        }
+
+        /// <summary>
+        /// Spawns Player in designatecell
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="z"></param>
+        private void PlayerSpawnInCell(int x, int z)
+        {
+            string GOtoFind = "Maze Cell (" + x.ToString() + "," + z.ToString() + ")";
+            GameObject.Find("Player").transform.position = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
         }
 
         /// <summary>
@@ -136,6 +148,7 @@ namespace Assets.Scripts
             ThisMaze = new GameObject(mazeName);
             ThisMazeScale = new Vector3(.5f, 10f, .5f);
             ThisMazePosition = new Vector3(0f, 0f, 0f);
+            
         }
     }
 }
