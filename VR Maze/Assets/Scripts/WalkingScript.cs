@@ -11,7 +11,18 @@ namespace Assests.Scripts
 
 		private float camViewRotX;	//The value of the camera when you look up or down
 
-			void Update(){
+		void Update(){
+
+			////////////TEST////////////
+			Speed test = new Speed();
+			test.speedUp (5);
+			test.testPrint ();
+			test.speedUp (13);
+			test.testPrint ();
+			test.speedUp (2);
+			test.testPrint ();
+			/// ////////////////////////
+
 
 			camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 			Speed speed = new Speed ();
@@ -20,11 +31,10 @@ namespace Assests.Scripts
 				speed.speedUp (camViewRotX);
 
 			}
-			if (camViewRotX < 355 && camViewRotX > 270) {
+			if (camViewRotX < 345 && camViewRotX > 270) {
 				speed.stop ();
 			}
 			walk (speed.playerSpeed ());
-			speed.testPrint ();
 		}
 
 		public void walk(float speed){
