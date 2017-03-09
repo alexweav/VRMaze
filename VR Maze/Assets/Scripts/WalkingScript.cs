@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System;
 
-public class WalkingScript : MonoBehaviour {
+namespace Assests.Scripts
+{
+	public class WalkingScript : MonoBehaviour {
 
+<<<<<<< Updated upstream
 	public GameObject cameraView;
 	public Rigidbody playerRigidbody;
 	public CapsuleCollider playerCollider;
@@ -10,9 +13,21 @@ public class WalkingScript : MonoBehaviour {
 	private float currentSpeed = 0;
 	private float tempSpeed = 0;
 	private float camViewRotX;	//The value of the camera when you look up or doww
+=======
+		public GameObject cameraView;
+		public GameObject playerModel;
+		public Rigidbody playerRigidbody;
+		public CapsuleCollider playerCollider;
 
-	void Update(){
+		private float camViewRotX;	//The value of the camera when you look up or down
 
+		void Update(){
+>>>>>>> Stashed changes
+
+			camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
+			Speed speed = new Speed();
+
+<<<<<<< Updated upstream
 		camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 
 
@@ -22,34 +37,44 @@ public class WalkingScript : MonoBehaviour {
 		}
 		if (camViewRotX < 355 && camViewRotX > 270){
 			slowDown ();
-		}
-		walk (currentSpeed);
-
-	}
-
-	public void walk(float speed){
-
-		Vector3 cameraDirection = new Vector3 (cameraView.transform.forward.x, 0, cameraView.transform.forward.z).normalized * speed * Time.deltaTime; //2 = speed
-		Quaternion cameraRotation = Quaternion.Euler (new Vector3 (0, -transform.rotation.eulerAngles.y, 0));
-		transform.Translate (cameraRotation * cameraDirection);
-	}
-
-	public void speedControl(){
-		
-	}
-	public void speedUp(float angle){
-		currentSpeed = (float)Math.Pow (camViewRotX, 2) / 540;
-		if (currentSpeed >= tempSpeed) {
-			if (currentSpeed < 5) {
-				currentSpeed = 5;
+=======
+			if (camViewRotX > 8 && camViewRotX < 90) {
+				speed.speedUp (camViewRotX);
 			}
-			tempSpeed = currentSpeed;
-		} else {
-			currentSpeed = tempSpeed;
+			if (camViewRotX < 355 && camViewRotX > 270){
+				speed.stop();
+			}
+			walk (speed.playerSpeed());
+			speed.testPrint ();
+>>>>>>> Stashed changes
 		}
+
+		public void walk(float speed){
+
+			Vector3 cameraDirection = new Vector3 (cameraView.transform.forward.x, 0, cameraView.transform.forward.z).normalized * speed * Time.deltaTime; //2 = speed
+			Quaternion cameraRotation = Quaternion.Euler (new Vector3 (0, -transform.rotation.eulerAngles.y, 0));
+			transform.Translate (cameraRotation * cameraDirection);
+		}
+
+		private bool PlayerSpawnGrounded(){
+			var player = GameObject.Find ("MainPlayer");
+			var playerHeight = player.GetComponent<Renderer> ().bounds.size.y;
+			var playerPosition = playerHeight / 2 + 0.1f;
+			var actualPosition = player.transform.position.y;
+
+			if (playerPosition <= actualPosition) {
+				return true;
+			} else {
+				return false; 
+			}
+		}
+<<<<<<< Updated upstream
 	}
 	public void slowDown(){
 		tempSpeed = 0;
 		currentSpeed = 0;
+=======
+
+>>>>>>> Stashed changes
 	}
 }
