@@ -5,48 +5,26 @@ namespace Assests.Scripts
 {
 	public class WalkingScript : MonoBehaviour {
 
-<<<<<<< Updated upstream
-	public GameObject cameraView;
-	public Rigidbody playerRigidbody;
-	public CapsuleCollider playerCollider;
-
-	private float currentSpeed = 0;
-	private float tempSpeed = 0;
-	private float camViewRotX;	//The value of the camera when you look up or doww
-=======
 		public GameObject cameraView;
-		public GameObject playerModel;
 		public Rigidbody playerRigidbody;
 		public CapsuleCollider playerCollider;
 
 		private float camViewRotX;	//The value of the camera when you look up or down
 
-		void Update(){
->>>>>>> Stashed changes
+			void Update(){
 
 			camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
-			Speed speed = new Speed();
+			Speed speed = new Speed ();
 
-<<<<<<< Updated upstream
-		camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
-
-
-		if (camViewRotX > 8 && camViewRotX < 90) {
-			speedUp (camViewRotX);
-
-		}
-		if (camViewRotX < 355 && camViewRotX > 270){
-			slowDown ();
-=======
 			if (camViewRotX > 8 && camViewRotX < 90) {
 				speed.speedUp (camViewRotX);
+
 			}
-			if (camViewRotX < 355 && camViewRotX > 270){
-				speed.stop();
+			if (camViewRotX < 355 && camViewRotX > 270) {
+				speed.stop ();
 			}
-			walk (speed.playerSpeed());
+			walk (speed.playerSpeed ());
 			speed.testPrint ();
->>>>>>> Stashed changes
 		}
 
 		public void walk(float speed){
@@ -68,13 +46,5 @@ namespace Assests.Scripts
 				return false; 
 			}
 		}
-<<<<<<< Updated upstream
-	}
-	public void slowDown(){
-		tempSpeed = 0;
-		currentSpeed = 0;
-=======
-
->>>>>>> Stashed changes
 	}
 }

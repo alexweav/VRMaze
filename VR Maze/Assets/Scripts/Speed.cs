@@ -38,17 +38,8 @@ namespace Assests.Scripts
 				if (speedCheck < 5) {
 					currentSpeed = 5;
 				}
+				currentSpeed = tempSpeed;
 			}
-	
-//			if (speedCheck >= tempSpeed) {
-//				if (speedCheck < 5) {
-//					currentSpeed = 5;
-//				}
-//				tempSpeed = speedCheck;
-//				currentSpeed = tempSpeed;
-//			} else {
-//				currentSpeed = tempSpeed;
-//			}
 		}
 	}
 }
