@@ -136,7 +136,7 @@ namespace Assets.Scripts
         {
             string GOtoFind = "Maze Cell (" + x.ToString() + "," + z.ToString() + ")";
             Vector3 CellPosition = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
-            GameObject.Find("Player").transform.position = new Vector3(CellPosition.x, GameObject.Find("Player").transform.position.y, CellPosition.z);
+            GameObject.Find("MainPlayer").transform.position = new Vector3(CellPosition.x, GameObject.Find("Player").transform.position.y, CellPosition.z);
         }
 
         /// <summary>

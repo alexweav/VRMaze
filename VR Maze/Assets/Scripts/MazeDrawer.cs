@@ -123,7 +123,7 @@ namespace Assets.Scripts
         //Also assigns the created wall game object to the pass cell and names the wall based on the passed string 
         public void generateWall(Vector3 position, Vector3 scale, GameObject cell, string wallName)
         {
-			GameObject wall = GameObject.Instantiate((GameObject)Resources.Load("Wall-Prefab"));
+			GameObject wall = GameObject.Instantiate((GameObject)Resources.Load("Wall 1"));
 			//GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall.name = wallName;
             wall.SetActive(true);
@@ -137,7 +137,7 @@ namespace Assets.Scripts
         //Assigns the created floor game abject to the passed cell
         public void generateFloor(float x, float z, GameObject cell)
         {
-			GameObject mazeFloor = GameObject.Instantiate((GameObject)Resources.Load("Cell Floor-Prefab"));
+			GameObject mazeFloor = GameObject.Instantiate((GameObject)Resources.Load("Floor 1"));
             //GameObject mazeFloor = GameObject.CreatePrimitive(PrimitiveType.Plane);
             mazeFloor.name = "Cell Floor";
             mazeFloor.SetActive(true);
