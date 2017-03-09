@@ -13,20 +13,12 @@ namespace Assests.Scripts
 
 		void Update(){
 
-			////////////TEST////////////
-			Speed test = new Speed();
-			test.speedUp (5);
-			test.testPrint ();
-			test.speedUp (13);
-			test.testPrint ();
-			test.speedUp (2);
-			test.testPrint ();
-			/// ////////////////////////
-
 
 			camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 			Speed speed = new Speed ();
 
+			//TODO: Process below makes unneccary calls, check if the speed has changed rather
+			///		constantly check the angle.
 			if (camViewRotX > 8 && camViewRotX < 90) {
 				speed.speedUp (camViewRotX);
 

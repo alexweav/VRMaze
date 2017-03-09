@@ -3,8 +3,7 @@ using System;
 
 namespace Assests.Scripts
 {
-	public class Speed
-	{
+	public class Speed {
 		public float currentSpeed;
 		public float tempSpeed;
 		public float speedCheck;
