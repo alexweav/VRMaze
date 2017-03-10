@@ -87,7 +87,7 @@ namespace Assets.Scripts
             //Creates a wall if a north path does not exist
             if (northPath == false)
             {
-                scaleV = new Vector3(11f, 2, 1);
+                scaleV = new Vector3(10f, 2, 1);
                 posV = new Vector3(x + 5, 1, z);
                 generateWall(posV, scaleV, cell, "North Wall");
 
@@ -96,7 +96,7 @@ namespace Assets.Scripts
             //Creates a wall if a east path does not exist
             if (eastPath == false)
             {
-                scaleV = new Vector3(1, 2, 11f);
+                scaleV = new Vector3(1, 2, 10f);
                 posV = new Vector3(x + 10f, 1, z - 5f);
                 generateWall(posV, scaleV, cell, "East Wall");
             }
@@ -104,7 +104,7 @@ namespace Assets.Scripts
             //Creates a wall if a south path does not exist
             if (southPath == false)
             {
-                scaleV = new Vector3(11f, 2, 1);
+                scaleV = new Vector3(10f, 2, 1);
                 posV = new Vector3(x + 5f, 1, z - 10);
                 generateWall(posV, scaleV, cell, "South Wall");
             }
@@ -112,7 +112,7 @@ namespace Assets.Scripts
             //Creates a wall if a West path does not exist
             if (westPath == false)
             {
-                scaleV = new Vector3(1, 2, 11f);
+                scaleV = new Vector3(1, 2, 10f);
                 posV = new Vector3(x, 1, z - 5);
                 generateWall(posV, scaleV, cell, "West Wall");
             }
