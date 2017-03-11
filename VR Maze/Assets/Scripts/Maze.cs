@@ -135,12 +135,6 @@ namespace Assets.Scripts
         private void PlayerSpawnInCell(int x, int z)
         {
             string GOtoFind = "Maze Cell (" + x.ToString() + "," + z.ToString() + ")";
-<<<<<<< HEAD
-=======
-            Vector3 CellPosition = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
-            GameObject.Find("MainPlayer").transform.position = new Vector3(CellPosition.x, GameObject.Find("Player").transform.position.y, CellPosition.z);
-        }
->>>>>>> 628b42065fe7c007dc8d80f8fb40886b0e1807c3
 
 			Vector3 CellPosition = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
 			GameObject.Find("MainPlayer").transform.position = new Vector3(CellPosition.x, GameObject.Find("MainPlayer").transform.position.y, CellPosition.z);
