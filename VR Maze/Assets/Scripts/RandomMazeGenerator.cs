@@ -13,7 +13,7 @@ namespace Assets.Scripts
         public Maze generate(int width, int height)
         {
             UndirectedGraph<Pair<int, int>> graph = CreateUnconnectedGridGraph(width, height);
-            //graph = BuildRandomGridSpanningTree(graph);
+            graph = BuildRandomGridSpanningTree(graph);
             Maze maze = new Maze(graph);
             return maze;
         }
@@ -54,6 +54,7 @@ namespace Assets.Scripts
                 var random = new Random();
                 int chosenIndex = random.Next(candidateEdges.Count);
                 graph.AddEdge(candidateEdges[chosenIndex].Cell1, candidateEdges[chosenIndex].Cell2);
+                inMaze.Add(candidateEdges[chosenIndex].Cell2);
             }
             return graph;
         }
