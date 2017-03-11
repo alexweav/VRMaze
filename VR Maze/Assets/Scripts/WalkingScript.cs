@@ -10,23 +10,24 @@ namespace Assests.Scripts
 		public CapsuleCollider playerCollider;
 
 		private float camViewRotX;	//The value of the camera when you look up or down
+		private float playerSpeed;
+		Speed speed = new Speed ();
 
 		void Update(){
 
-
 			camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
-			Speed speed = new Speed ();
+			playerSpeed = (float)Math.Pow (camViewRotX, 2) / 540;
 
-			//TODO: Process below makes unneccary calls, check if the speed has changed rather
-			///		constantly check the angle.
-			if (camViewRotX > 8 && camViewRotX < 90) {
-				speed.speedUp (camViewRotX);
-
-			}
-			if (camViewRotX < 345 && camViewRotX > 270) {
+			if (playerSpeed > 0 && playerSpeed < 15) {
+				if (playerSpeed > speed.getCurrentSpeed ()) {
+					speed.speedUp (playerSpeed);
+				}
+			} 
+			else if (camViewRotX > 270 && camViewRotX < 350) {
 				speed.stop ();
 			}
-			walk (speed.playerSpeed ());
+
+			walk (speed.getCurrentSpeed());
 		}
 
 		public void walk(float speed){
