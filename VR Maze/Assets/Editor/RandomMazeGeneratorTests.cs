@@ -20,5 +20,17 @@ namespace Assets.Scripts.Tests
                 }
             }
         }
+
+        [Test]
+        public void RandomMazeGeneratorTests_AllNodesHaveCorrectConnectionCount()
+        {
+            RandomMazeGenerator generator = new RandomMazeGenerator();
+            Maze maze = generator.generate(5, 6);
+            foreach(var node in maze.Graph)
+            {
+                Assert.IsTrue(maze.Graph.Neighbors(node).Count > 0);
+                Assert.IsTrue(maze.Graph.Neighbors(node).Count < 5);
+            }
+        }
     }
 }
