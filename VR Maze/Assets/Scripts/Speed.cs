@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace Assests.Scripts
+namespace Assets.Scripts
 {
 	public class Speed {
 		
