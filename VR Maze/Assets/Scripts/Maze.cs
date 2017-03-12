@@ -8,7 +8,7 @@ namespace Assets.Scripts
 
     public class Maze
     {
-        public List<MazeCell> CellsInMaze = new List<MazeCell>();
+        public List<MazeCell> CellsInMaze = new List<MazeCell>(); 
         private GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
@@ -135,10 +135,11 @@ namespace Assets.Scripts
         private void PlayerSpawnInCell(int x, int z)
         {
             string GOtoFind = "Maze Cell (" + x.ToString() + "," + z.ToString() + ")";
-            Vector3 CellPosition = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
-            GameObject.Find("MainPlayer").transform.position = new Vector3(CellPosition.x, GameObject.Find("Player").transform.position.y, CellPosition.z);
-        }
 
+			Vector3 CellPosition = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
+			GameObject.Find("MainPlayer").transform.position = new Vector3(CellPosition.x, GameObject.Find("MainPlayer").transform.position.y, CellPosition.z);
+        }
+		  
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
         /// </summary>
