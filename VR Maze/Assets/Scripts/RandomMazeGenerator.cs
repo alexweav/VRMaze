@@ -26,7 +26,6 @@ namespace Assets.Scripts
         /// <returns>The graph</returns>
         private UndirectedGraph<Pair<int, int>> CreateUnconnectedGridGraph(int width, int height)
         {
-            int numNodes = width * height;
             UndirectedGraph<Pair<int, int>> graph = new UndirectedGraph<Pair<int, int>>();
             for (int i = 0; i < width; i++)
             {
