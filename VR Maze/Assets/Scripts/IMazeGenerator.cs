@@ -10,6 +10,12 @@ namespace Assets.Scripts
     /// </summary>
     interface IMazeGenerator
     {
+        /// <summary>
+        /// Generates a maze that is "width" cells wide and "height" cells tall
+        /// </summary>
+        /// <param name="width">Width in cells</param>
+        /// <param name="height">Height in cells</param>
+        /// <returns>The maze</returns>
         Maze generate(int width, int height);
     }
 }
