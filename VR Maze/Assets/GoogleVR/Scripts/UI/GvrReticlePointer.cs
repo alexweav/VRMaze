@@ -29,16 +29,16 @@ public class GvrReticlePointer : GvrBasePointer {
   private Material materialComp;
 
   // Current inner angle of the reticle (in degrees).
-  private float reticleInnerAngle = 0.5f;
+  private float reticleInnerAngle = 0f;
   // Current outer angle of the reticle (in degrees).
-  private float reticleOuterAngle = 1.5f;
+  private float reticleOuterAngle = 2f;
   // Current distance of the reticle (in meters).
   private float reticleDistanceInMeters = 0.5f;
 
   // Minimum inner angle of the reticle (in degrees).
-  private const float kReticleMinInnerAngle = 0.5f;
+  private const float kReticleMinInnerAngle = 1f;
   // Minimum outer angle of the reticle (in degrees).
-  private const float kReticleMinOuterAngle = 1.0f;
+  private const float kReticleMinOuterAngle = 2f;
   // Angle at which to expand the reticle when intersecting with an object
   // (in degrees).
   private const float kReticleGrowthAngle = 1.5f;
