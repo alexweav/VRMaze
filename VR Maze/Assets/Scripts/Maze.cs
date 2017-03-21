@@ -8,7 +8,7 @@ namespace Assets.Scripts
 
     public class Maze
     {
-        public List<MazeCell> CellsInMaze = new List<MazeCell>();
+        public List<MazeCell> CellsInMaze = new List<MazeCell>(); 
         private GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
@@ -16,11 +16,18 @@ namespace Assets.Scripts
         private MazeDrawer Drawer;
         private string mazeName;
 
+        /// <summary>
+        /// Intializes the maze
+        /// </summary>
         public Maze()
         {
             IntializeMaze("Maze");
         }
 
+        /// <summary>
+        /// Intializes the maze given a name for the maze
+        /// </summary>
+        /// <param name="MazeName"> name of the maze</param>
         public Maze(string MazeName)
         {
             IntializeMaze(MazeName);
@@ -73,6 +80,14 @@ namespace Assets.Scripts
             }
         }
 
+        public UndirectedGraph<Pair<int, int>> Graph
+        {
+            get
+            {
+                return this.graph;
+            }
+        }
+
         /// <summary>
         /// Allows Maze Scale to be change in the X,Y, and Z directions
         /// </summary>
@@ -117,14 +132,33 @@ namespace Assets.Scripts
             Drawer.drawMaze();
             ThisMaze.transform.localScale = ThisMazeScale;
             ThisMaze.transform.position = ThisMazePosition;
+            PlayerSpawnInCell(0,0);
         }
 
+        /// <summary>
+        /// Spawns Player in designatecell
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="z"></param>
+        private void PlayerSpawnInCell(int x, int z)
+        {
+            string GOtoFind = "Maze Cell (" + x.ToString() + "," + z.ToString() + ")";
+
+			Vector3 CellPosition = GameObject.Find(GOtoFind).transform.GetChild(0).transform.position;
+			GameObject.Find("MainPlayer").transform.position = new Vector3(CellPosition.x, GameObject.Find("MainPlayer").transform.position.y, CellPosition.z);
+        }
+		  
+        /// <summary>
+        /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
+        /// </summary>
+        /// <param name="MazeName"></param>
         private void IntializeMaze(string MazeName)
         {
             mazeName = MazeName;
             ThisMaze = new GameObject(mazeName);
             ThisMazeScale = new Vector3(.5f, 10f, .5f);
             ThisMazePosition = new Vector3(0f, 0f, 0f);
+            
         }
     }
 }
