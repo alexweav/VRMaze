@@ -15,7 +15,7 @@ namespace Assets.Scripts
             Maze maze1 = new Maze("Maze 1"); //Intializes new Maze and Maze size
            maze1.SetXYZScale(.5f, 6, .5f);
 
-            //This portion adds a cell for each position in the mmaze
+            //This portion adds a cell for each position in the maze
 
             //Row 1 cell
 
