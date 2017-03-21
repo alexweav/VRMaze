@@ -24,26 +24,24 @@ namespace Assets.Scripts
         {
             generateInnerOfMaze(); //Method Call to generate the inside of a maze
             generateBorderOfMaze(); //Method Call to generate the border of a maze
-            addLights();
+          
         }
 
         //Generates the Interior of the maze
         private void generateInnerOfMaze()
         {
             //Intialize Empty Game Object cell
-            GameObject cell;
-
-
-            for (int count = 0; count < mazeCellList.Count; count++)
+            
+            foreach (MazeCell cell in mazeCellList )
             {
                 //Creates an empty parent game object cell which contains the path walls and cell floor for each cell
-                cell = new GameObject("Maze Cell (" + mazeCellList[count].cellLocationX.ToString() + "," + mazeCellList[count].cellLocationZ.ToString() + ")");
+                cell.mazeCellGO = new GameObject("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
 
                 //Creates the position for the wall also passes the cell game object the walls are associated
-                positionWall(mazeCellList[count].cellLocationX, mazeCellList[count].cellLocationZ, true, mazeCellList[count].EastPath, mazeCellList[count].SouthPath, true, cell);
+                positionWall(cell.cellLocationX, cell.cellLocationZ, true, cell.EastPath, cell.SouthPath, true, cell.mazeCellGO);
 
                 //Generates the Floor for the current cell and passes the cell game object the floor walls are associated with
-                generateFloor((mazeCellList[count].cellLocationX * 10) - 25, 25 - (mazeCellList[count].cellLocationZ * 10), cell);
+                generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), cell.mazeCellGO);
             }
         }
 
@@ -89,7 +87,7 @@ namespace Assets.Scripts
             //Creates a wall if a north path does not exist
             if (northPath == false)
             {
-                scaleV = new Vector3(11f, 2, 1);
+                scaleV = new Vector3(10f, 2, 1);
                 posV = new Vector3(x + 5, 1, z);
                 generateWall(posV, scaleV, cell, "North Wall");
 
@@ -98,7 +96,7 @@ namespace Assets.Scripts
             //Creates a wall if a east path does not exist
             if (eastPath == false)
             {
-                scaleV = new Vector3(1, 2, 11f);
+                scaleV = new Vector3(1, 2, 10f);
                 posV = new Vector3(x + 10f, 1, z - 5f);
                 generateWall(posV, scaleV, cell, "East Wall");
             }
@@ -106,7 +104,7 @@ namespace Assets.Scripts
             //Creates a wall if a south path does not exist
             if (southPath == false)
             {
-                scaleV = new Vector3(11f, 2, 1);
+                scaleV = new Vector3(10f, 2, 1);
                 posV = new Vector3(x + 5f, 1, z - 10);
                 generateWall(posV, scaleV, cell, "South Wall");
             }
@@ -114,7 +112,7 @@ namespace Assets.Scripts
             //Creates a wall if a West path does not exist
             if (westPath == false)
             {
-                scaleV = new Vector3(1, 2, 11f);
+                scaleV = new Vector3(1, 2, 10f);
                 posV = new Vector3(x, 1, z - 5);
                 generateWall(posV, scaleV, cell, "West Wall");
             }
@@ -125,7 +123,7 @@ namespace Assets.Scripts
         //Also assigns the created wall game object to the pass cell and names the wall based on the passed string 
         public void generateWall(Vector3 position, Vector3 scale, GameObject cell, string wallName)
         {
-			GameObject wall = GameObject.Instantiate((GameObject)Resources.Load("Wall-Prefab"));
+			GameObject wall = GameObject.Instantiate((GameObject)Resources.Load("Wall 1"));
 			//GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
             wall.name = wallName;
             wall.SetActive(true);
@@ -139,7 +137,7 @@ namespace Assets.Scripts
         //Assigns the created floor game abject to the passed cell
         public void generateFloor(float x, float z, GameObject cell)
         {
-			GameObject mazeFloor = GameObject.Instantiate((GameObject)Resources.Load("Cell Floor-Prefab"));
+			GameObject mazeFloor = GameObject.Instantiate((GameObject)Resources.Load("Floor 1"));
             //GameObject mazeFloor = GameObject.CreatePrimitive(PrimitiveType.Plane);
             mazeFloor.name = "Cell Floor";
             mazeFloor.SetActive(true);
@@ -148,51 +146,5 @@ namespace Assets.Scripts
             mazeFloor.transform.parent = cell.transform;
             cell.transform.SetParent(GameObject.Find(CurrentMazeName).transform);
         }
-
-        /// <summary>
-        /// Finds which cells to put spot lights over
-        /// </summary>
-        private void addLights()
-        {
-            int mcStart = -1;
-            bool everyOther = true;
-            foreach (MazeCell mc in mazeCellList )
-            {               
-               if(everyOther)
-                {
-                    addLight(mc);
-                    everyOther = false;
-                }
-                else
-                {
-                    everyOther = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Create a spot light with the proper attributes
-        /// </summary>
-        /// <param name="mc">This is the Maze Cell a light is created over</param>
-        public void addLight(MazeCell mc)
-        {
-            GameObject lightGameObject = new GameObject("Light");
-            Light CellLight = lightGameObject.AddComponent<Light>();
-            Vector3 pos = (GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform.FindChild("Cell Floor").position);
-
-            CellLight.type = LightType.Spot;
-            CellLight.range = 31f;
-            CellLight.intensity = 6;
-            lightGameObject.transform.position = new Vector3(pos.x, 1.2f, pos.z);
-            lightGameObject.transform.rotation = Quaternion.Euler(90, 0, 0);
-            lightGameObject.transform.SetParent(GameObject.Find("Maze Cell (" + mc.cellLocationX.ToString() + "," + mc.cellLocationZ.ToString() + ")").transform);
-            
-
-
-
-        }
-
-
-
     }
 }

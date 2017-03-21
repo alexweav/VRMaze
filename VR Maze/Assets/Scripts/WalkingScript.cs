@@ -1,42 +1,53 @@
 ﻿using UnityEngine;
 using System;
 
-public class WalkingScript : MonoBehaviour {
+namespace Assets.Scripts
+{
+	public class WalkingScript : MonoBehaviour {
 
-	public GameObject cameraView;
-	public Rigidbody playerRigidbody;
-	public CapsuleCollider playerCollider;
+		public GameObject cameraView;
+		public Rigidbody playerRigidbody;
+		public CapsuleCollider playerCollider;
 
+		private float camViewRotX;	//The value of the camera when you look up or down
+		private float playerSpeed;
+		Speed speed = new Speed ();
 
-	private bool isWalking;
-	private float speed;
-	private float camViewRotX;	//The value of the camera when you look up or doww
+		void Update(){
 
-	void Update(){
+			camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
+			playerSpeed = (float)Math.Pow (camViewRotX, 2) / 540;
 
-		camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
+			if (playerSpeed > 0 && playerSpeed < 15) {
+				if (playerSpeed > speed.getCurrentSpeed ()) {
+					speed.speedUp (playerSpeed);
+				}
+			} 
+			else if (camViewRotX > 270 && camViewRotX < 350) {
+				speed.stop ();
+			}
 
-
-		speed = 5; //Temp for 
-		//speed = (float) Math.Pow(0.00001, (double)1/camViewRotX); //Formula that increase the speed the more you look down
-
-		//Testing purposes: Alter the speed and downward angle ratio
-		//print ("cam: " + camViewRotX);
-		//print ("Speed: " + speed);
-
-		if (camViewRotX > 5 && camViewRotX < 90) {
-			isWalking = true;
+			walk (speed.getCurrentSpeed());
 		}
-		else{
-			isWalking = false;
-		}
 
-		if (isWalking) {
-			
+		public void walk(float speed){
+
 			Vector3 cameraDirection = new Vector3 (cameraView.transform.forward.x, 0, cameraView.transform.forward.z).normalized * speed * Time.deltaTime; //2 = speed
 			Quaternion cameraRotation = Quaternion.Euler (new Vector3 (0, -transform.rotation.eulerAngles.y, 0));
 			transform.Translate (cameraRotation * cameraDirection);
+		}
 
+		private bool PlayerSpawnGrounded(){
+			var player = GameObject.Find ("MainPlayer");
+			var playerHeight = player.GetComponent<Renderer> ().bounds.size.y;
+			var playerPosition = playerHeight / 2 + 0.1f;
+			var actualPosition = player.transform.position.y;
+
+			if (playerPosition <= actualPosition) {
+				return true;
+			} else {
+				return false; 
+			}
 		}
 	}
 }
