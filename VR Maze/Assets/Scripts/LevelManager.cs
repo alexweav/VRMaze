@@ -69,8 +69,10 @@ public class LevelManager : MonoBehaviour {
                 }
                 else if(goBack == true) //return to previous menu
                 {
-                    if(statMenu.gameObject.activeSelf)
+                    if (statMenu.gameObject.activeSelf)
                         backStat(true);
+                    else if (optionMenu.gameObject.activeSelf)
+                        backOpt(true);
                 }
                 else if(stopGame == true) //end the game
                 {
@@ -101,6 +103,8 @@ public class LevelManager : MonoBehaviour {
 /************************************************************************************************************
  * optionsMenu()
  * optMenu()
+ * setScene()
+ * LoadScene()
  * 
  * These functions set up and control the buttons on the options menu.
  * This menu displays the different game options that are available to the user for play. At this time these
@@ -115,13 +119,14 @@ public class LevelManager : MonoBehaviour {
     {
         if (clicked == true)
         {
+            startScene = false;
+            showStats = false;
+            goBack = false;
+            stopGame = false;
+            showOptions = false;
+
             optionMenu.gameObject.SetActive(clicked);
             mainMenu.gameObject.SetActive(false);
-        }
-        else
-        {
-            optionMenu.gameObject.SetActive(clicked);
-            mainMenu.gameObject.SetActive(true);
         }
     }
 
@@ -143,13 +148,28 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(name);
     }
 
-/*******************************************************
+    private void backOpt(bool clicked)
+    {
+        if (clicked == true)
+        {
+            startScene = false;
+            showStats = false;
+            goBack = false;
+            stopGame = false;
+            showOptions = false;
+
+            mainMenu.gameObject.SetActive(clicked);
+            optionMenu.gameObject.SetActive(false);
+        }
+    }
+
+/***********************************************************************************************************
 * endScene()
 * QuitGame()
 * 
 * These functions quit the game if the user chooses
 * to discontinue playing the app
-* ***************************************************/
+* *********************************************************************************************************/
     public void endScene()
     {
         stopGame = true;
@@ -159,9 +179,13 @@ public class LevelManager : MonoBehaviour {
         Application.Quit();
     }
 
-    /*******************************************************
-    * Switches to the statistices menu
-    * ***************************************************/
+/****************************************************************************************************************
+* statsMenu()
+* StatMenu()
+*
+* These functions switch from the MainMenu to the statistics menu and allow for the user to also return
+* from the statistics menu back to the MainMenu
+* *************************************************************************************************************/
     public void statsMenu()
     {
         showStats = true;
@@ -170,13 +194,14 @@ public class LevelManager : MonoBehaviour {
     {
         if(clicked == true)
         {
+            startScene = false;
+            showStats = false;
+            goBack = false;
+            stopGame = false;
+            showOptions = false;
+
             statMenu.gameObject.SetActive(clicked);
             mainMenu.gameObject.SetActive(false);
-        }
-       else
-        {
-            statMenu.gameObject.SetActive(clicked);
-            mainMenu.gameObject.SetActive(true);
         }
     }
 
@@ -191,13 +216,14 @@ public class LevelManager : MonoBehaviour {
     {
         if (clicked == true)
         {
+            startScene = false;
+            showStats = false;
+            goBack = false;
+            stopGame = false;
+            showOptions = false;
+
             mainMenu.gameObject.SetActive(clicked);
             statMenu.gameObject.SetActive(false);
-        }
-        else
-        {
-            mainMenu.gameObject.SetActive(clicked);
-           // statMenu.gameObject.SetActive(true);
         }
     }
 }
