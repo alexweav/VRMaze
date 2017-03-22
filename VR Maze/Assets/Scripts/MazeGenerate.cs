@@ -28,8 +28,8 @@ namespace Assets.Scripts
         /// <param name="height">Height in cells</param>
         void DrawRandomMaze(int width, int height)
         {
-            RandomMazeGenerator generator = new RandomMazeGenerator();
-            Maze maze = generator.generate(width, height);
+            RandomMazeGenerator generator = new RandomMazeGenerator(width, height);
+            Maze maze = generator.Generate();
             maze.Draw();
         }
 
