@@ -59,7 +59,7 @@ namespace Assets.Scripts.Tests {
             graph.AddEdge(new Pair<int, int>(1, 2), new Pair<int, int>(1, 3));
             graph.AddEdge(new Pair<int, int>(2, 2), new Pair<int, int>(2, 3));
             graph.AddEdge(new Pair<int, int>(2, 3), new Pair<int, int>(3, 3));
-            Maze maze = new Maze(graph);
+            Maze maze = new RandomMaze(graph);
             Assert.AreEqual(maze.CellsInMaze.Count, 9);
             Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 1, false, true)));
             Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 1, true, true)));
