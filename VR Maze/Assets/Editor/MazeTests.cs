@@ -3,31 +3,60 @@ using UnityEditor;
 using NUnit.Framework;
 using System.Collections;
 using Assets.Scripts;
+using System;
 
 namespace Assets.Scripts.Tests {
 
     public class MazeTests {
 
+        private class EmptyTestMaze : Maze
+        {
+        }
+
+        private class EmptyTestMazeGenerator : MazeGenerator
+        {
+            public override Maze Generate()
+            {
+                return new EmptyTestMaze();
+            }
+        }
+
         [Test]
         public void MazeTests_NewMazeEmpty() {
-            Maze maze = new Maze();
+            MazeGenerator generator = new EmptyTestMazeGenerator();
+            Maze maze = generator.Generate();
             Assert.IsEmpty(maze.CellsInMaze);
+        }
+
+        private class HardcodedTestMaze : Maze
+        {
+            public HardcodedTestMaze()
+            {
+                addMazeCell(1, 1, false, true);
+                addMazeCell(2, 1, true, true);
+                addMazeCell(3, 1, false, false);
+                addMazeCell(1, 2, false, true);
+                addMazeCell(2, 2, true, true);
+                addMazeCell(3, 2, false, true);
+                addMazeCell(1, 3, true, false);
+                addMazeCell(2, 3, false, false);
+                addMazeCell(3, 3, false, false);
+            }
+        }
+
+        public class HardcodedTestMazeGenerator : MazeGenerator
+        {
+            public override Maze Generate()
+            {
+                return new HardcodedTestMaze();
+            }
         }
 
         [Test]
         public void MazeTests_AddCellsHardcodedMethodTest()
         {
-            Maze maze = new Maze("Maze");
-            Assert.IsEmpty(maze.CellsInMaze);
-            maze.addMazeCell(1, 1, false, true);
-            maze.addMazeCell(2, 1, true, true);
-            maze.addMazeCell(3, 1, false, false);
-            maze.addMazeCell(1, 2, false, true);
-            maze.addMazeCell(2, 2, true, true);
-            maze.addMazeCell(3, 2, false, true);
-            maze.addMazeCell(1, 3, true, false);
-            maze.addMazeCell(2, 3, false, false);
-            maze.addMazeCell(3, 3, false, false);
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();         
             Assert.AreEqual(maze.CellsInMaze.Count, 9);
             Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 1, false, true)));
             Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 1, true, true)));
