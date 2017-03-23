@@ -11,8 +11,8 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
-            DrawHardcodedMaze();
-            //DrawRandomMaze(15, 15);
+            //DrawHardcodedMaze();
+            DrawRandomMaze(15, 15);
         }
 
         // Update is called once per frame
