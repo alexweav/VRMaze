@@ -27,6 +27,8 @@ namespace Assets.Scripts
 				speed.stop ();
 			}
 
+			speed.testPrint ();
+
 			walk (speed.getCurrentSpeed());
 		}
 
