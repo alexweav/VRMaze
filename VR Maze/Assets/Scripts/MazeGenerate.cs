@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-
     public class MazeGenerate : MonoBehaviour
     {
-
+		public int hieght = 15;
+		public int width = 15;
         // Use this for initialization
         void Start()
         {
             //DrawHardcodedMaze();
-            DrawRandomMaze(15, 15);
+			DrawRandomMaze(hieght, width);
         }
 
         // Update is called once per frame
