@@ -8,13 +8,22 @@ namespace Assets.Scripts
     /// <summary>
     /// Randomly generates mazes
     /// </summary>
-    public class RandomMazeGenerator : IMazeGenerator
+    public class RandomMazeGenerator : MazeGenerator
     {
-        public Maze generate(int width, int height)
+        private int width;
+        private int height;
+
+        public RandomMazeGenerator(int width, int height)
         {
-            UndirectedGraph<Pair<int, int>> graph = CreateUnconnectedGridGraph(width, height);
+            this.width = width;
+            this.height = height;
+        }
+
+        public override Maze Generate()
+        {
+            UndirectedGraph<Pair<int, int>> graph = CreateUnconnectedGridGraph(this.width, this.height);
             graph = BuildRandomGridSpanningTree(graph);
-            Maze maze = new Maze(graph);
+            RandomMaze maze = new RandomMaze(graph);
             return maze;
         }
 

@@ -9,8 +9,8 @@ namespace Assets.Scripts.Tests
         [Test]
         public void RandomMazeGeneratorTests_GraphHasCorrectNodes()
         {
-            RandomMazeGenerator generator = new RandomMazeGenerator();
-            Maze maze = generator.generate(5, 6);
+            RandomMazeGenerator generator = new RandomMazeGenerator(5, 6);
+            RandomMaze maze = generator.Generate() as RandomMaze;
             Assert.AreEqual(maze.Graph.Count, 30);
             for(int i = 0; i < 5; i++)
             {
@@ -24,8 +24,8 @@ namespace Assets.Scripts.Tests
         [Test]
         public void RandomMazeGeneratorTests_AllNodesHaveCorrectConnectionCount()
         {
-            RandomMazeGenerator generator = new RandomMazeGenerator();
-            Maze maze = generator.generate(5, 6);
+            RandomMazeGenerator generator = new RandomMazeGenerator(5, 6);
+            RandomMaze maze = generator.Generate() as RandomMaze;
             foreach(var node in maze.Graph)
             {
                 Assert.IsTrue(maze.Graph.Neighbors(node).Count > 0);

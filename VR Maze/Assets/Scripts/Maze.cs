@@ -6,13 +6,12 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public class Maze
+    public abstract class Maze
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>(); 
         private GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
-        private UndirectedGraph<Pair<int, int>> graph;
         private MazeDrawer Drawer;
         private string mazeName;
 
@@ -31,24 +30,6 @@ namespace Assets.Scripts
         public Maze(string MazeName)
         {
             IntializeMaze(MazeName);
-        }
-
-        /// <summary>
-        /// Constructs a maze from a grid-shaped graph. Passageways between cells are connections in the graph.
-        /// </summary>
-        /// <param name="graph">The grid-shaped graph</param>
-        public Maze(UndirectedGraph<Pair<int, int>> graph)
-        {
-            IntializeMaze("Maze");
-            this.graph = graph;
-            foreach(var node in graph)
-            {
-                Pair<int, int> southNode = new Pair<int, int>(node.First + 1, node.Second);
-                Pair<int, int> eastNode = new Pair<int, int>(node.First, node.Second + 1);
-                bool southPath = graph.Contains(southNode) && graph.AreConnected(node, southNode);
-                bool eastPath = graph.Contains(eastNode) && graph.AreConnected(node, eastNode);
-                addMazeCell(node.Second, node.First, eastPath, southPath);
-            }
         }
 
         /// <summary>
@@ -77,14 +58,6 @@ namespace Assets.Scripts
             set
             {
                 mazeName = value;
-            }
-        }
-
-        public UndirectedGraph<Pair<int, int>> Graph
-        {
-            get
-            {
-                return this.graph;
             }
         }
 
@@ -151,8 +124,8 @@ namespace Assets.Scripts
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
         /// </summary>
-        /// <param name="MazeName"></param>
-        private void IntializeMaze(string MazeName)
+        /// <param name="MazeName">Name of the maze</param>
+        protected void IntializeMaze(string MazeName)
         {
             mazeName = MazeName;
             ThisMaze = new GameObject(mazeName);
