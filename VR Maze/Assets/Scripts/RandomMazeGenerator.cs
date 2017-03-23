@@ -23,7 +23,7 @@ namespace Assets.Scripts
         {
             UndirectedGraph<Pair<int, int>> graph = CreateUnconnectedGridGraph(this.width, this.height);
             graph = BuildRandomGridSpanningTree(graph);
-            Maze maze = new Maze(graph);
+            RandomMaze maze = new RandomMaze(graph);
             return maze;
         }
 
