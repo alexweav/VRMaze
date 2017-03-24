@@ -100,5 +100,87 @@ namespace Assets.Scripts.Tests {
             Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 3, false, false)));
             Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 3, false, false)));
         }
+
+        [Test]
+        public void MazeTests_StartCellTest()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            Assert.IsNull(maze.StartCell);
+            maze.StartCell = new Pair<int, int>(1, 1);
+            Assert.AreEqual(maze.StartCell, new Pair<int, int>(1, 1));
+            maze.StartCell = new Pair<int, int>(2, 3);
+            Assert.AreEqual(maze.StartCell, new Pair<int, int>(2, 3));
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MazeTests_StartCellInMaze()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            maze.StartCell = new Pair<int, int>(4, 4);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MazeTests_FinishCellInMaze()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            maze.FinishCell = new Pair<int, int>(4, 4);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MazeTests_StartCellNotFinishCell()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            maze.FinishCell = new Pair<int, int>(1, 1);
+            maze.StartCell = new Pair<int, int>(1, 1);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void MazeTests_FinishCellNotStartCell()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            maze.StartCell = new Pair<int, int>(1, 1);
+            maze.FinishCell = new Pair<int, int>(1, 1);
+        }
+
+        [Test]
+        public void MazeTests_FinishCellTest()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            Assert.IsNull(maze.FinishCell);
+            maze.FinishCell = new Pair<int, int>(1, 1);
+            Assert.AreEqual(maze.FinishCell, new Pair<int, int>(1, 1));
+            maze.FinishCell = new Pair<int, int>(2, 3);
+            Assert.AreEqual(maze.FinishCell, new Pair<int, int>(2, 3));
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void MazeTests_MazeWithoutStartNotDrawable()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            maze.FinishCell = new Pair<int, int>(1, 1);
+            maze.Draw();
+        }
+
+        [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void MazeTests_MazeWithoutFinishNotDrawable()
+        {
+            MazeGenerator generator = new HardcodedTestMazeGenerator();
+            Maze maze = generator.Generate();
+            maze.StartCell = new Pair<int, int>(1, 1);
+            maze.Draw();
+        }
     }
 }

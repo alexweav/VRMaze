@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace Assets.Scripts
         private Vector3 ThisMazePosition;
         private MazeDrawer Drawer;
         private string mazeName;
+        private MazeCell startCell;
+        private MazeCell finishCell;
 
         /// <summary>
         /// Intializes the maze
@@ -62,6 +65,62 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// Gets and sets the start cell of the maze, in the form of a pair of ints representing the X and Z coordinates of the cell.
+        /// </summary>
+        public Pair<int, int> StartCell
+        {
+            get
+            {
+                if (startCell == null)
+                {
+                    return null;
+                }
+                return new Pair<int, int>(startCell.cellLocationX, startCell.cellLocationZ);
+            }
+            set
+            {
+                MazeCell cell = FindCellByCoordinates(value.First, value.Second);
+                if (cell == null)
+                {
+                    throw new ArgumentException("The given cell is not in the maze.");
+                }
+                if (cell.Equals(finishCell))
+                {
+                    throw new ArgumentException("The start cell cannot be the same as the finish cell.");
+                }
+                startCell = cell;
+            }
+        }
+
+        /// <summary>
+        /// Gets and sets the finish cell of the maze, in the form of a pair of ints representing the X and Z coordinates of the cell.
+        /// </summary>
+        public Pair<int, int> FinishCell
+        {
+            get
+            {
+                if(finishCell == null)
+                {
+                    return null;
+                }
+                return new Pair<int, int>(finishCell.cellLocationX, finishCell.cellLocationZ);
+            }
+            set
+            {
+                MazeCell cell = FindCellByCoordinates(value.First, value.Second);
+                if (cell == null)
+                {
+                    throw new ArgumentException("The given cell is not in the maze.");
+                }
+                if (cell.Equals(startCell))
+                {
+                    throw new ArgumentException("The finish cell cannot be the same as the start cell.");
+                }
+                finishCell = cell;
+            }
+        }
+
+        /// <summary>
         /// Allows Maze Scale to be change in the X,Y, and Z directions
         /// </summary>
         /// <param name="x"> x scale multiplier</param>
@@ -86,6 +145,24 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// Given coordinates, finds the corresponding MazeCell object if it exists.
+        /// </summary>
+        /// <param name="x">The x coordinate of the cell</param>
+        /// <param name="z">The z coordinate of the cell</param>
+        /// <returns>The cell, if it exists, or null otherwise</returns>
+        private MazeCell FindCellByCoordinates(int x, int z)
+        {
+            foreach(var cell in CellsInMaze)
+            {
+                if (cell.cellLocationX == x && cell.cellLocationZ == z)
+                {
+                    return cell;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Sets XYZ Position of the maze
         /// </summary>
         /// <param name="x"> x position</param>
@@ -101,6 +178,14 @@ namespace Assets.Scripts
         /// </summary>
         public void Draw()
         {
+            if (startCell == null)
+            {
+                throw new InvalidOperationException("The maze has no defined start cell.");
+            }
+            if (finishCell == null)
+            {
+                throw new InvalidOperationException("The maze has no defined finish cell.");
+            }
             Drawer = new MazeDrawer(this);
             Drawer.drawMaze();
             ThisMaze.transform.localScale = ThisMazeScale;

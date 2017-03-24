@@ -24,6 +24,8 @@ namespace Assets.Scripts
             UndirectedGraph<Pair<int, int>> graph = CreateUnconnectedGridGraph(this.width, this.height);
             graph = BuildRandomGridSpanningTree(graph);
             RandomMaze maze = new RandomMaze(graph);
+            maze.StartCell = new Pair<int, int>(0, 0);
+            maze.FinishCell = new Pair<int, int>(width - 1, height - 1);
             return maze;
         }
 
