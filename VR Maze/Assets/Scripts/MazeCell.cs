@@ -12,8 +12,6 @@ namespace Assets.Scripts
     public class MazeCell
     {
         public GameObject mazeCellGO;
-        private bool startCell;
-        private bool finishCell;
         private bool southPath;
         private bool eastPath;
         private int[] cellLocation = new int[2];
@@ -27,8 +25,6 @@ namespace Assets.Scripts
             eastPath = EastPath;
             cellLocation[0] = x;
             cellLocation[1] = z;
-            startCell = false;
-            finishCell = false;
         }
 
         /// <summary>
@@ -59,34 +55,6 @@ namespace Assets.Scripts
             {
                 cellLocation[1] = cellLocationZ;
             }
-        }
-
-        /// <summary>
-        /// Get and set method for StartCell
-        /// </summary>
-        public bool StartCell
-        {
-            get
-            {
-                return startCell;
-            }
-            set
-            {
-                startCell = StartCell;
-            }
-        }
-
-        public bool FinishCell
-        {
-            get
-            {
-                return startCell;
-            }
-            set
-            {
-                finishCell = FinishCell;
-            }
-
         }
 
         /// <summary>
@@ -131,8 +99,7 @@ namespace Assets.Scripts
             {
                 return false;
             }
-            return (this.startCell == cell.StartCell) && (this.finishCell == cell.finishCell)
-                && (this.southPath == cell.southPath) && (this.eastPath == cell.eastPath)
+            return (this.southPath == cell.southPath) && (this.eastPath == cell.eastPath)
                 && (this.cellLocationX == cell.cellLocationX) && (this.cellLocationZ == cell.cellLocationZ);
         }
         
