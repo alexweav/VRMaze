@@ -30,6 +30,12 @@ class Graph:
             if (y < self.cols-1): self.add_edge((x, y), (x, y+1))
 
     def connect_maze(self):
+        inMaze = [(0, 0)]
+        while(len(inMaze) < self.rows*self.cols):
+            candidate_edges = find_candidate_edges(graph, inMaze)
+            return
+
+    def find_candidate_edges(self, graph, inMaze):
         pass
 
     def write(self):
