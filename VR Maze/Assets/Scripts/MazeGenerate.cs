@@ -30,6 +30,7 @@ namespace Assets.Scripts
         {
             MazeGenerator generator = new RandomMazeGenerator(width, height);
             Maze maze = generator.Generate();
+            maze.SetXYZScale(.5f, 6, .5f);
             maze.Draw();
         }
 
