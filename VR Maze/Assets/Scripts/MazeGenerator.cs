@@ -8,7 +8,7 @@ namespace Assets.Scripts
     /// <summary>
     /// Interface for all maze generation classes
     /// </summary>
-    interface IMazeGenerator
+    public abstract class MazeGenerator
     {
         /// <summary>
         /// Generates a maze that is "width" cells wide and "height" cells tall
@@ -16,6 +16,6 @@ namespace Assets.Scripts
         /// <param name="width">Width in cells</param>
         /// <param name="height">Height in cells</param>
         /// <returns>The maze</returns>
-        Maze generate(int width, int height);
+        public abstract Maze Generate();
     }
 }

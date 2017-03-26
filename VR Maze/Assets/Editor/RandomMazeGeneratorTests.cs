@@ -9,12 +9,12 @@ namespace Assets.Scripts.Tests
         [Test]
         public void RandomMazeGeneratorTests_GraphHasCorrectNodes()
         {
-            RandomMazeGenerator generator = new RandomMazeGenerator();
-            Maze maze = generator.generate(5, 6);
+            RandomMazeGenerator generator = new RandomMazeGenerator(5, 6);
+            RandomMaze maze = generator.Generate() as RandomMaze;
             Assert.AreEqual(maze.Graph.Count, 30);
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                for(int j = 0; j < 6; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     Assert.IsTrue(maze.Graph.Contains(new Pair<int, int>(j, i)), i + ", " + j);
                 }
@@ -24,13 +24,29 @@ namespace Assets.Scripts.Tests
         [Test]
         public void RandomMazeGeneratorTests_AllNodesHaveCorrectConnectionCount()
         {
-            RandomMazeGenerator generator = new RandomMazeGenerator();
-            Maze maze = generator.generate(5, 6);
-            foreach(var node in maze.Graph)
+            RandomMazeGenerator generator = new RandomMazeGenerator(5, 6);
+            RandomMaze maze = generator.Generate() as RandomMaze;
+            foreach (var node in maze.Graph)
             {
                 Assert.IsTrue(maze.Graph.Neighbors(node).Count > 0);
                 Assert.IsTrue(maze.Graph.Neighbors(node).Count < 5);
             }
+        }
+
+        [Test]
+        public void RandomMazeGeneratorTests_StartCellUpperLeft()
+        {
+            RandomMazeGenerator generator = new RandomMazeGenerator(5, 6);
+            Maze maze = generator.Generate();
+            Assert.AreEqual(maze.StartCell, new Pair<int, int>(0, 0));
+        }
+
+        [Test]
+        public void RandomMazeGeneratorTests_FinishCellBottomRight()
+        {
+            RandomMazeGenerator generator = new RandomMazeGenerator(5, 6);
+            Maze maze = generator.Generate();
+            Assert.AreEqual(maze.FinishCell, new Pair<int, int>(4, 5));
         }
     }
 }

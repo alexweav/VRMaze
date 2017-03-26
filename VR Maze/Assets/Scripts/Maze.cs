@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +7,16 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public class Maze
+    public abstract class Maze
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>(); 
         private GameObject ThisMaze;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
-        private UndirectedGraph<Pair<int, int>> graph;
         private MazeDrawer Drawer;
         private string mazeName;
+        private MazeCell startCell;
+        private MazeCell finishCell;
 
         /// <summary>
         /// Intializes the maze
@@ -31,24 +33,6 @@ namespace Assets.Scripts
         public Maze(string MazeName)
         {
             IntializeMaze(MazeName);
-        }
-
-        /// <summary>
-        /// Constructs a maze from a grid-shaped graph. Passageways between cells are connections in the graph.
-        /// </summary>
-        /// <param name="graph">The grid-shaped graph</param>
-        public Maze(UndirectedGraph<Pair<int, int>> graph)
-        {
-            IntializeMaze("Maze");
-            this.graph = graph;
-            foreach(var node in graph)
-            {
-                Pair<int, int> southNode = new Pair<int, int>(node.First + 1, node.Second);
-                Pair<int, int> eastNode = new Pair<int, int>(node.First, node.Second + 1);
-                bool southPath = graph.Contains(southNode) && graph.AreConnected(node, southNode);
-                bool eastPath = graph.Contains(eastNode) && graph.AreConnected(node, eastNode);
-                addMazeCell(node.Second, node.First, eastPath, southPath);
-            }
         }
 
         /// <summary>
@@ -80,11 +64,59 @@ namespace Assets.Scripts
             }
         }
 
-        public UndirectedGraph<Pair<int, int>> Graph
+        /// <summary>
+        /// Gets and sets the start cell of the maze, in the form of a pair of ints representing the X and Z coordinates of the cell.
+        /// </summary>
+        public Pair<int, int> StartCell
         {
             get
             {
-                return this.graph;
+                if (startCell == null)
+                {
+                    return null;
+                }
+                return new Pair<int, int>(startCell.cellLocationX, startCell.cellLocationZ);
+            }
+            set
+            {
+                MazeCell cell = FindCellByCoordinates(value.First, value.Second);
+                if (cell == null)
+                {
+                    throw new ArgumentException("The given cell is not in the maze.");
+                }
+                if (cell.Equals(finishCell))
+                {
+                    throw new ArgumentException("The start cell cannot be the same as the finish cell.");
+                }
+                startCell = cell;
+            }
+        }
+
+        /// <summary>
+        /// Gets and sets the finish cell of the maze, in the form of a pair of ints representing the X and Z coordinates of the cell.
+        /// </summary>
+        public Pair<int, int> FinishCell
+        {
+            get
+            {
+                if(finishCell == null)
+                {
+                    return null;
+                }
+                return new Pair<int, int>(finishCell.cellLocationX, finishCell.cellLocationZ);
+            }
+            set
+            {
+                MazeCell cell = FindCellByCoordinates(value.First, value.Second);
+                if (cell == null)
+                {
+                    throw new ArgumentException("The given cell is not in the maze.");
+                }
+                if (cell.Equals(startCell))
+                {
+                    throw new ArgumentException("The finish cell cannot be the same as the start cell.");
+                }
+                finishCell = cell;
             }
         }
 
@@ -113,6 +145,24 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// Given coordinates, finds the corresponding MazeCell object if it exists.
+        /// </summary>
+        /// <param name="x">The x coordinate of the cell</param>
+        /// <param name="z">The z coordinate of the cell</param>
+        /// <returns>The cell, if it exists, or null otherwise</returns>
+        private MazeCell FindCellByCoordinates(int x, int z)
+        {
+            foreach(var cell in CellsInMaze)
+            {
+                if (cell.cellLocationX == x && cell.cellLocationZ == z)
+                {
+                    return cell;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Sets XYZ Position of the maze
         /// </summary>
         /// <param name="x"> x position</param>
@@ -128,6 +178,14 @@ namespace Assets.Scripts
         /// </summary>
         public void Draw()
         {
+            if (startCell == null)
+            {
+                throw new InvalidOperationException("The maze has no defined start cell.");
+            }
+            if (finishCell == null)
+            {
+                throw new InvalidOperationException("The maze has no defined finish cell.");
+            }
             Drawer = new MazeDrawer(this);
             Drawer.drawMaze();
             ThisMaze.transform.localScale = ThisMazeScale;
@@ -151,8 +209,8 @@ namespace Assets.Scripts
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
         /// </summary>
-        /// <param name="MazeName"></param>
-        private void IntializeMaze(string MazeName)
+        /// <param name="MazeName">Name of the maze</param>
+        protected void IntializeMaze(string MazeName)
         {
             mazeName = MazeName;
             ThisMaze = new GameObject(mazeName);
