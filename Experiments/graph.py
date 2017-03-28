@@ -1,3 +1,5 @@
+import random
+
 #Basic grid graph class
 class Graph:
 
@@ -32,11 +34,31 @@ class Graph:
     def connect_maze(self):
         inMaze = [(0, 0)]
         while(len(inMaze) < self.rows*self.cols):
-            candidate_edges = find_candidate_edges(graph, inMaze)
-            return
+            candidate_edges = self.find_candidate_edges(inMaze)
+            edge = random.choice(candidate_edges)
+            n1, n2 = edge
+            self.add_edge(n1, n2)
+            self.add_edge(n2, n1)
+            inMaze += [n2]
 
-    def find_candidate_edges(self, graph, inMaze):
-        pass
+    def find_candidate_edges(self, inMaze):
+        candidates = []
+        for node in self.data:
+            if node in inMaze:
+                x, y = node
+                up = (x-1, y)
+                if self.contains(up) and not up in inMaze:
+                    candidates += [(node, up)]
+                down = (x+1, y)
+                if self.contains(down) and not down in inMaze:
+                    candidates += [(node, down)]
+                left = (x, y-1)
+                if self.contains(left) and not left in inMaze:
+                    candidates += [(node, left)]
+                right = (x, y+1)
+                if self.contains(right) and not right in inMaze:
+                    candidates += [(node, right)]
+        return candidates
 
     def write(self):
         for row in range(self.rows):
@@ -51,6 +73,6 @@ class Graph:
                 print('  ', end='')
             print()
 
-x = Graph(10, 10)
-x.connect_grid()
+x = Graph(20, 30)
+x.connect_maze()
 x.write()
