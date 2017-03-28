@@ -60,6 +60,21 @@ class Graph:
                     candidates += [(node, right)]
         return candidates
 
+    def get_connection_code(self, node):
+        code = 0
+        if not self.contains(node):
+            return -1
+        x, y = node
+        if self.connected(node, (x-1, y)):
+            code = code|1
+        if self.connected(node, (x+1, y)):
+            code = code|2
+        if self.connected(node, (x, y-1)):
+            code = code|4
+        if self.connected(node, (x, y+1)):
+            code = code|8
+        return code
+
     def write(self):
         for row in range(self.rows):
             for col in range(self.cols):
@@ -73,6 +88,7 @@ class Graph:
                 print('  ', end='')
             print()
 
-x = Graph(20, 30)
+x = Graph(10, 10)
 x.connect_maze()
 x.write()
+print(x.get_connection_code((2, 2)))
