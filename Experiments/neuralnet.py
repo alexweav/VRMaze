@@ -5,6 +5,7 @@ import numpy as np
 class NeuralNet():
 
     def __init__(self, architecture):
+        self.architecture = architecture
         self.init_model(architecture)
         self.init_rmsprop_cache()
 
@@ -24,18 +25,33 @@ class NeuralNet():
             self.weights_cache += [np.zeros_like(self.weights[layer])]
             self.biases_cache += [np.zeros_like(self.biases[layer])]
 
-    def sigmoid(x):
+    def sigmoid(self, x):
         return 1. / (1. + np.exp(-x))
 
-    def relu(x):
+    def relu(self, x):
         x[x<0] = 0
         return x
 
+    def softmax(self, x):
+        ex = np.exp(x - np.max(x))
+        return ex/ex.sum()
+
+    def eval(self, data):
+        layer_in = data
+        hidden_activations = [np.empty(shape=(0,0))]
+        for layer in range(1, len(architecture)-1):
+            score = np.dot(layer_in, self.weights[layer]) + self.biases[layer]
+            activation = self.relu(score)
+            print(activation)
+            hidden_activations += [activation]
+            layer_in = activation
+        #Don't perform activation function on final score
+        final_scores = np.dot(layer_in, self.weights[-1]) + self.biases[-1]
+        probability = self.softmax(final_scores)
+        return probability, hidden_activations
+
 architecture = [3, 7, 5]
 net = NeuralNet(architecture)
-for layer in range(len(architecture)):
-    print(architecture[layer])
-    print(net.weights[layer])
-    print(net.weights_cache[layer])
-    print(net.biases[layer])
-    print(net.biases_cache[layer])
+data = np.array([[5, 2, 3]])
+probability, _ = net.eval(data)
+print(probability)
