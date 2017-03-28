@@ -6,13 +6,13 @@ namespace Assets.Scripts
 {
     public class MazeGenerate : MonoBehaviour
     {
-		public int hieght = 15;
+		public int height = 15;
 		public int width = 15;
         // Use this for initialization
         void Start()
         {
             //DrawHardcodedMaze();
-			DrawRandomMaze(hieght, width);
+			DrawRandomMaze(width, height);
         }
 
         // Update is called once per frame
@@ -30,6 +30,7 @@ namespace Assets.Scripts
         {
             MazeGenerator generator = new RandomMazeGenerator(width, height);
             Maze maze = generator.Generate();
+            maze.SetXYZScale(.5f, 6, .5f);
             maze.Draw();
         }
 

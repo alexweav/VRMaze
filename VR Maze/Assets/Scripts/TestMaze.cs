@@ -48,6 +48,9 @@ namespace Assets.Scripts
             addMazeCell(2, 4, true, true);
             addMazeCell(3, 4, true, false);
             addMazeCell(4, 4, true, true);
+
+            this.StartCell = new Pair<int, int>(0, 0);
+            this.FinishCell = new Pair<int, int>(4, 4);
         }
     }
 
