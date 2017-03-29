@@ -33,11 +33,12 @@ class NeuralNet():
         return x
 
     def softmax(self, x):
-        ex = np.exp(x - np.max(x))
-        return ex/ex.sum()
+        ex = np.exp(x)
+        return ex / np.sum(ex, axis=1).reshape(-1, 1)
 
     def eval(self, data):
         layer_in = data
+        #Cache internal activation data for future use in backprop
         hidden_activations = [np.empty(shape=(0,0))]
         for layer in range(1, len(architecture)-1):
             score = np.dot(layer_in, self.weights[layer]) + self.biases[layer]
@@ -47,8 +48,8 @@ class NeuralNet():
             layer_in = activation
         #Don't perform activation function on final score
         final_scores = np.dot(layer_in, self.weights[-1]) + self.biases[-1]
-        probability = self.softmax(final_scores)
-        return probability, hidden_activations
+        probabilities = self.softmax(final_scores)
+        return probabilities, hidden_activations
 
     def make_choice(probabilities):
         return np.random.choice(np.arange(np.prod(probabilities.shape)), p=probabilities.ravel())
@@ -56,5 +57,6 @@ class NeuralNet():
 architecture = [10, 7, 3]
 net = NeuralNet(architecture)
 data = np.random.randn(10, 10);
-probability, _ = net.eval(data)
-print(probability)
+probabilities, _ = net.eval(data)
+print(probabilities)
+print(np.sum(probabilities, axis=1))
