@@ -54,9 +54,3 @@ class NeuralNet():
     def make_choice(self, probabilities):
         return np.random.choice(np.arange(np.prod(probabilities.shape)), p=probabilities.ravel())
 
-architecture = [10, 7, 3]
-net = NeuralNet(architecture)
-data = np.random.randn(1, 10);
-probabilities, _ = net.eval(data)
-print(probabilities)
-print(net.make_choice(probabilities))

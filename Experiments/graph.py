@@ -88,7 +88,3 @@ class Graph:
                 print('  ', end='')
             print()
 
-x = Graph(10, 10)
-x.connect_maze()
-x.write()
-print(x.get_connection_code((2, 2)))
