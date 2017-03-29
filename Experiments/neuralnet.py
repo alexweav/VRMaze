@@ -51,12 +51,12 @@ class NeuralNet():
         probabilities = self.softmax(final_scores)
         return probabilities, hidden_activations
 
-    def make_choice(probabilities):
+    def make_choice(self, probabilities):
         return np.random.choice(np.arange(np.prod(probabilities.shape)), p=probabilities.ravel())
 
 architecture = [10, 7, 3]
 net = NeuralNet(architecture)
-data = np.random.randn(10, 10);
+data = np.random.randn(1, 10);
 probabilities, _ = net.eval(data)
 print(probabilities)
-print(np.sum(probabilities, axis=1))
+print(net.make_choice(probabilities))
