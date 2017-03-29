@@ -34,3 +34,6 @@ sysinfo.txt
 
 #Python
 *__pycache__/
+
+#vi/vim swap files
+*.swp
