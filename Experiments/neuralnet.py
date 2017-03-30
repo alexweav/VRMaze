@@ -4,10 +4,14 @@ import numpy as np
 #ReLU activation, RMSProp updates
 class NeuralNet():
 
-    def __init__(self, architecture):
+    #Architecture is a list of ints, describing the number of neurons in each layer
+    #architecture[0] is the input dim, architecture[-1] is the output dim
+    #Gamma is the reward decay rate
+    def __init__(self, architecture, gamma=0.99):
         self.architecture = architecture
         self.init_model(architecture)
         self.init_rmsprop_cache()
+        self.gamma = gamma
 
     def init_model(self, architecture):
         self.weights = [np.empty(shape=(0,0))]
@@ -52,4 +56,12 @@ class NeuralNet():
 
     def make_choice(self, probabilities):
         return np.random.choice(np.arange(np.prod(probabilities.shape)), p=probabilities.ravel())
+
+    def accumulate_reward(self, rewards):
+        accumulated_reward = np.zeros_like(rewards)
+        accumulator = 0.0
+        for i in range(rewards.shape[0]):
+            accumulator = self.gamma * accumulator + rewards[i]
+            accumulated_reward[i] = accumulator
+        return accumulated_reward
 
