@@ -10,23 +10,24 @@ steps_per_game = 100
 
 def main():
     #Create a new 10x10 maze
-    graph = Graph(10, 10)
-    graph.connect_maze()
-    current_node = (0, 0)
-    exploration_buffer = np.zeros((10, 10))
-    exploration_buffer[(0, 0)] = graph.get_connection_code(current_node)
-    observation = create_observation(exploration_buffer, current_node)
     action_dim = 4
-    architecture = [np.prod(observation.shape), 75, action_dim]
+    architecture = [102, 75, action_dim]
     net = NeuralNet(architecture)
-    for stepnum in range(steps_per_game):
-        probabilities, _ = net.eval(observation)
-        choice = net.make_choice(probabilities)
-        current_node, reward = step(graph, current_node, choice)
-        exploration_buffer[current_node] = graph.get_connection_code(current_node)
-        print(choice, reward)
-        print(exploration_buffer)
-        input()
+    for game in range(num_games):
+        graph = Graph(10, 10)
+        graph.connect_maze()
+        current_node = (0, 0)
+        exploration_buffer = np.zeros((10, 10))
+        exploration_buffer[(0, 0)] = graph.get_connection_code(current_node)
+        observation = create_observation(exploration_buffer, current_node)
+        for stepnum in range(steps_per_game):
+            probabilities, _ = net.eval(observation)
+            choice = net.make_choice(probabilities)
+            current_node, reward = step(graph, current_node, choice)
+            exploration_buffer[current_node] = graph.get_connection_code(current_node)
+            print(choice, reward)
+            print(exploration_buffer)
+            input()
 
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
