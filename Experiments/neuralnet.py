@@ -21,7 +21,7 @@ class NeuralNet():
     def init_rmsprop_cache(self):
         self.weights_cache = [np.empty(shape=(0,0))]
         self.biases_cache = [np.empty(shape=(0,0))]
-        for layer in range(1, len(architecture)):
+        for layer in range(1, len(self.architecture)):
             self.weights_cache += [np.zeros_like(self.weights[layer])]
             self.biases_cache += [np.zeros_like(self.biases[layer])]
 
@@ -40,10 +40,9 @@ class NeuralNet():
         layer_in = data
         #Cache internal activation data for future use in backprop
         hidden_activations = [np.empty(shape=(0,0))]
-        for layer in range(1, len(architecture)-1):
+        for layer in range(1, len(self.architecture)-1):
             score = np.dot(layer_in, self.weights[layer]) + self.biases[layer]
             activation = self.relu(score)
-            print(activation)
             hidden_activations += [activation]
             layer_in = activation
         #Don't perform activation function on final score
