@@ -5,7 +5,7 @@ import numpy as np
 from graph import *
 from neuralnet import *
 
-num_games = 1
+num_games = 100
 steps_per_game = 100
 
 def main():
@@ -30,7 +30,8 @@ def main():
             hidden_activations += [[]]
         d_log_probs = [] #Derivative of loss function
         rewards = [] #Reward gained
-        total_reward = 0.0
+        valid_moves = 0
+        invalid_moves = 0
         for stepnum in range(steps_per_game):
             #Get action from network
             probabilities, hidden_activation = net.eval(observation)
@@ -41,6 +42,10 @@ def main():
             choice_vector[(0, choice)] = 1
             #Perform the action
             current_node, reward = step(graph, current_node, choice)
+            if reward > 0:
+                valid_moves += 1
+            else:
+                invalid_moves += 1
             #Cache data
             observations.append(observation)
             d_log_probs.append(choice_vector - probabilities)
@@ -48,8 +53,6 @@ def main():
             #Set up next observation
             exploration_buffer[current_node] = graph.get_connection_code(current_node)
             observation = create_observation(exploration_buffer, current_node)
-            #print(choice, reward)
-            #print(exploration_buffer)
         observations = np.vstack(observations)
         d_log_probs = np.vstack(d_log_probs)
         for i in range(len(hidden_activations)):
@@ -66,6 +69,8 @@ def main():
 
         net.backprop(d_log_probs, observations, hidden_activations)
         net.update()
+
+        print("Game ", game, " done with ", valid_moves, " valid moves and ", invalid_moves, "invalid moves")
 
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
