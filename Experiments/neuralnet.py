@@ -89,3 +89,13 @@ class NeuralNet():
         self.d_biases.reverse()
         self.d_weights.reverse()
 
+    def update(self):
+        for layer in range(1, len(self.architecture)):
+            self.biases[layer], self.biases_cache[layer] = self.rmsprop(self.biases[layer], self.d_biases[layer], self.biases_cache[layer], 1e-3, 0.99)            
+            self.weights[layer], self.weights_cache[layer] = self.rmsprop(self.weights[layer], self.d_weights[layer], self.weights_cache[layer], 1e-3, 0.99)
+
+    def rmsprop(self, theta, dtheta, error, learning_rate, decay):
+        eps = 1e-8
+        error = decay * error + (1 - decay) * dtheta**2
+        return theta - learning_rate * dtheta / (np.sqrt(error) + eps), error
+
