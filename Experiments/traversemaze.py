@@ -26,12 +26,16 @@ def main():
         #Data stored at every game step:
         observations = [] #The observation at each game step
         hidden_activations = [] #The hidden layer activations of the net
+        for i in range(len(architecture)-2): #One list for each hidden layer, containing activation at each step
+            hidden_activations += [[]]
         d_log_probs = [] #Derivative of loss function
         rewards = [] #Reward gained
         total_reward = 0.0
         for stepnum in range(steps_per_game):
             #Get action from network
             probabilities, hidden_activation = net.eval(observation)
+            for i in range(len(hidden_activation)):
+                hidden_activations[i].append(hidden_activation[i])
             choice = net.make_choice(probabilities)
             choice_vector = np.zeros_like(probabilities)
             choice_vector[(0, choice)] = 1
@@ -39,16 +43,17 @@ def main():
             current_node, reward = step(graph, current_node, choice)
             #Cache data
             observations.append(observation)
-            hidden_activations.append(hidden_activation)
             d_log_probs.append(choice_vector - probabilities)
             rewards.append(reward)
             #Set up next observation
             exploration_buffer[current_node] = graph.get_connection_code(current_node)
             observation = create_observation(exploration_buffer, current_node)
-            print(choice, reward)
-            print(exploration_buffer)
+            #print(choice, reward)
+            #print(exploration_buffer)
         observations = np.vstack(observations)
         d_log_probs = np.vstack(d_log_probs)
+        for i in range(len(hidden_activations)):
+            hidden_activations[i] = np.vstack(hidden_activations[i])
         rewards = np.vstack(rewards)
 
         #Accumulate rewards over time and normalize

@@ -43,7 +43,7 @@ class NeuralNet():
     def eval(self, data):
         layer_in = data
         #Cache internal activation data for future use in backprop
-        hidden_activations = [np.empty(shape=(0,0))]
+        hidden_activations = []
         for layer in range(1, len(self.architecture)-1):
             score = np.dot(layer_in, self.weights[layer]) + self.biases[layer]
             activation = self.relu(score)
@@ -66,4 +66,5 @@ class NeuralNet():
         return accumulated_reward
 
     def backprop(self, d_log_probs, observations, hidden_activations):
-        pass
+        print(len(hidden_activations))
+        print(hidden_activations[0].shape)
