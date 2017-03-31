@@ -66,5 +66,26 @@ class NeuralNet():
         return accumulated_reward
 
     def backprop(self, d_log_probs, observations, hidden_activations):
-        print(len(hidden_activations))
-        print(hidden_activations[0].shape)
+        N = observations.shape[0]
+        gradient_in = d_log_probs
+        self.d_biases = []
+        self.d_weights = []
+        for layer in range(len(self.architecture)-1, 1, -1):
+            d_b = np.sum(gradient_in, axis=0).reshape(self.biases[layer].shape)
+            self.d_biases.append(d_b)
+            d_W = np.dot(hidden_activations[layer-2].T, gradient_in)
+            self.d_weights.append(d_W)
+            d_hidden_activations = (gradient_in.dot(self.weights[layer].T))
+            d_hidden_activations[hidden_activations[layer-2] <= 0] = 0
+            gradient_in = d_hidden_activations
+        d_b = np.sum(gradient_in, axis=0).reshape(self.biases[1].shape)
+        self.d_biases.append(d_b)
+        d_W = np.dot(observations.T, gradient_in)
+        self.d_weights.append(d_W)
+        #Derivatives of weights and biases were pushed in reverse order
+        #Reverse them to match
+        self.d_biases.append(np.empty(shape=(0,0)))
+        self.d_weights.append(np.empty(shape=(0,0)))
+        self.d_biases.reverse()
+        self.d_weights.reverse()
+
