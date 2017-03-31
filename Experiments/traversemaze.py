@@ -5,13 +5,13 @@ import numpy as np
 from graph import *
 from neuralnet import *
 
-num_games = 100
+num_games = 10000
 steps_per_game = 100
 
 def main():
     #Construct the model
     action_dim = 4
-    architecture = [102, 75, action_dim]
+    architecture = [102, 500, action_dim]
     net = NeuralNet(architecture)
 
     for game in range(num_games):
@@ -90,8 +90,8 @@ def step(graph, current_node, choice):
     if choice == 2: target_node = (row, col-1) #left
     if choice == 3: target_node = (row, col+1) #right
     if graph.connected(current_node, target_node):
-        return target_node, 1.0
+        return target_node, -1.0
     else:
-        return current_node, -1.0
+        return current_node, 1.0
 
 main()
