@@ -65,3 +65,5 @@ class NeuralNet():
             accumulated_reward[i] = accumulator
         return accumulated_reward
 
+    def backprop(self, d_log_probs, observations, hidden_activations):
+        pass

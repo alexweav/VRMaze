@@ -59,6 +59,8 @@ def main():
         #Modulate gradient by normalized, accumulated rewards
         d_log_probs *= accumulated_rewards/accumulated_rewards.shape[0]
 
+        net.backprop(d_log_probs, observations, hidden_activations)
+
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
 def create_observation(exploration_buffer, current_node):
