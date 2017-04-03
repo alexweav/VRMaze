@@ -42,5 +42,12 @@ namespace Assets.Scripts
 				currentSpeed = sneak;
 			}
 		}
+
+		public void walk(float speed){
+
+			Vector3 cameraDirection = new Vector3 (cameraView.transform.forward.x, 0, cameraView.transform.forward.z).normalized * speed * Time.deltaTime; //2 = speed
+			Quaternion cameraRotation = Quaternion.Euler (new Vector3 (0, -transform.rotation.eulerAngles.y, 0));
+			transform.Translate (cameraRotation * cameraDirection);
+		}
 	}
 }
