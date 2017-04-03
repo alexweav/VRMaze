@@ -69,8 +69,11 @@ def main():
 
         net.backprop(d_log_probs, observations, hidden_activations)
         net.update()
+        print(net.biases[1][(0, 0)])
+        input()
 
-        print("Game ", game, " done with ", valid_moves, " valid moves and ", invalid_moves, "invalid moves")
+        cells_explored = np.count_nonzero(exploration_buffer)
+        print("Game ", game, ", ", valid_moves, " valid moves, ", invalid_moves, "invalid moves, ", cells_explored, "cells explored")
 
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
@@ -90,8 +93,8 @@ def step(graph, current_node, choice):
     if choice == 2: target_node = (row, col-1) #left
     if choice == 3: target_node = (row, col+1) #right
     if graph.connected(current_node, target_node):
-        return target_node, -1.0
+        return target_node, 1.0
     else:
-        return current_node, 1.0
+        return current_node, -1.0
 
 main()
