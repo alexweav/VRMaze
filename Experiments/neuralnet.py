@@ -61,7 +61,7 @@ class NeuralNet():
     def accumulate_reward(self, rewards):
         accumulated_reward = np.zeros_like(rewards)
         accumulator = 0.0
-        for i in range(rewards.shape[0]):
+        for i in reversed(range(rewards.shape[0])):
             accumulator = self.gamma * accumulator + rewards[i]
             accumulated_reward[i] = accumulator
         return accumulated_reward
