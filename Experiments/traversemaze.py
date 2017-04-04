@@ -65,7 +65,7 @@ def main():
 
 
         #Modulate gradient by normalized, accumulated rewards
-        d_log_probs *= accumulated_rewards
+        d_log_probs *= accumulated_rewards/accumulated_rewards.shape[0]
 
         net.backprop(d_log_probs, observations, hidden_activations)
         net.update()
@@ -91,7 +91,7 @@ def step(graph, current_node, choice, exploration_buffer):
     if choice == 2: target_node = (row, col-1) #left
     if choice == 3: target_node = (row, col+1) #right
     if graph.connected(current_node, target_node):
-        return target_node, 1.0
+        return target_node, np.count_nonzero(exploration_buffer)
     else:
         return current_node, -1.0
 
