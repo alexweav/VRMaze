@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour {
 
     public Transform mainMenu;
-    public Transform statMenu;
+    public Transform instructMenu;
     public Transform optionMenu;
 
     private float timer = 2f;//length of gaze required before action is taken
@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour {
      variables are set when the corresponding button is pressed 
      **********************************************************/
     private bool startScene = false; //switches scenes
-    private bool showStats = false; //switches to statMenu
+    private bool showInstruct = false; //switches to InstructMenu
     private bool goBack = false; //returns to previous menu
     private bool stopGame = false; //ends the application iff not in debug mode
     private bool showOptions = false; //switches to game options menu
@@ -63,14 +63,14 @@ public class LevelManager : MonoBehaviour {
                 {
                     optMenu(true);
                 }
-                else if(showStats == true) //show statistics menu
+                else if(showInstruct == true) //show instructions menu
                 {
-                    StatMenu(true);
+                    InstructMenu(true);
                 }
                 else if(goBack == true) //return to previous menu
                 {
-                    if (statMenu.gameObject.activeSelf)
-                        backStat(true);
+                    if (instructMenu.gameObject.activeSelf)
+                        backInstruct(true);
                     else if (optionMenu.gameObject.activeSelf)
                         backOpt(true);
                 }
@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour {
             lookTimer = 0f;
             myRenderer.material.SetFloat("cutoff", 0f);
             startScene = false;
-            showStats = false;
+            showInstruct = false;
             goBack = false;
             stopGame = false;
             showOptions = false;
@@ -120,7 +120,7 @@ public class LevelManager : MonoBehaviour {
         if (clicked == true)
         {
             startScene = false;
-            showStats = false;
+            showInstruct = false;
             goBack = false;
             stopGame = false;
             showOptions = false;
@@ -153,7 +153,7 @@ public class LevelManager : MonoBehaviour {
         if (clicked == true)
         {
             startScene = false;
-            showStats = false;
+            showInstruct = false;
             goBack = false;
             stopGame = false;
             showOptions = false;
@@ -180,27 +180,27 @@ public class LevelManager : MonoBehaviour {
     }
 
 /****************************************************************************************************************
-* statsMenu()
-* StatMenu()
+* instructMenu()
+* InstructMenu()
 *
-* These functions switch from the MainMenu to the statistics menu and allow for the user to also return
-* from the statistics menu back to the MainMenu
+* These functions switch from the MainMenu to the instructions menu and allow for the user to also return
+* from the instruction menu back to the MainMenu
 * *************************************************************************************************************/
-    public void statsMenu()
+    public void InstructMenu()
     {
-        showStats = true;
+        showInstruct = true;
     }
-    private void StatMenu(bool clicked)
+    private void InstructMenu(bool clicked)
     {
         if(clicked == true)
         {
             startScene = false;
-            showStats = false;
+            showInstruct = false;
             goBack = false;
             stopGame = false;
             showOptions = false;
 
-            statMenu.gameObject.SetActive(clicked);
+            instructMenu.gameObject.SetActive(clicked);
             mainMenu.gameObject.SetActive(false);
         }
     }
@@ -212,18 +212,18 @@ public class LevelManager : MonoBehaviour {
     {
         goBack = true;
     }
-    private void backStat(bool clicked)
+    private void backInstruct(bool clicked)
     {
         if (clicked == true)
         {
             startScene = false;
-            showStats = false;
+            showInstruct = false;
             goBack = false;
             stopGame = false;
             showOptions = false;
 
             mainMenu.gameObject.SetActive(clicked);
-            statMenu.gameObject.SetActive(false);
+            instructMenu.gameObject.SetActive(false);
         }
     }
 }
