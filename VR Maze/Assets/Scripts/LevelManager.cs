@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
     public Transform mainMenu;
     public Transform instructMenu;
     public Transform optionMenu;
+    public Transform loading;
 
     private float timer = 2f;//length of gaze required before action is taken
     private float lookTimer = 0f;//length of time the user has looked at an object
@@ -41,6 +42,7 @@ public class LevelManager : MonoBehaviour {
  ***************************************************************************************************/
     private void Update()
     {
+
         if(isLookedAt) //iff an item is being looked at by the user
         {
             lookTimer += Time.deltaTime; //get length of look
@@ -57,7 +59,7 @@ public class LevelManager : MonoBehaviour {
                  * **********************************************************/
                 if(startScene == true) //switch scenes
                 {
-                    LoadScene(scene);
+                    LoadScene();
                 }
                 else if(showOptions == true) //switch to options menu
                 {
@@ -93,6 +95,7 @@ public class LevelManager : MonoBehaviour {
             stopGame = false;
             showOptions = false;
         }
+
     }
 
     public void SetGazedAt(bool gazedAt) // called once the user sets their reticle on an interactible object
@@ -143,9 +146,11 @@ public class LevelManager : MonoBehaviour {
         startScene = true;
     }
 
-    private void LoadScene(string name)
+    private void LoadScene()
     {
-        SceneManager.LoadScene(name);
+        optionMenu.gameObject.SetActive(false);
+        loading.gameObject.SetActive(true);
+        SceneManager.LoadScene(scene);
     }
 
     private void backOpt(bool clicked)
