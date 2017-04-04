@@ -7,11 +7,12 @@ class NeuralNet():
     #Architecture is a list of ints, describing the number of neurons in each layer
     #architecture[0] is the input dim, architecture[-1] is the output dim
     #Gamma is the reward decay rate
-    def __init__(self, architecture, gamma=0.99):
+    def __init__(self, architecture, learning_rate, gamma=0.99):
         self.architecture = architecture
         self.init_model(architecture)
         self.init_rmsprop_cache()
         self.gamma = gamma
+        self.learning_rate = learning_rate
 
     def init_model(self, architecture):
         self.weights = [np.empty(shape=(0,0))]
@@ -91,8 +92,8 @@ class NeuralNet():
 
     def update(self):
         for layer in range(1, len(self.architecture)):
-            self.biases[layer], self.biases_cache[layer] = self.rmsprop(self.biases[layer], self.d_biases[layer], self.biases_cache[layer], 3e-3, 0.99)            
-            self.weights[layer], self.weights_cache[layer] = self.rmsprop(self.weights[layer], self.d_weights[layer], self.weights_cache[layer], 3e-3, 0.99)
+            self.biases[layer], self.biases_cache[layer] = self.rmsprop(self.biases[layer], self.d_biases[layer], self.biases_cache[layer], self.learning_rate, 0.99)            
+            self.weights[layer], self.weights_cache[layer] = self.rmsprop(self.weights[layer], self.d_weights[layer], self.weights_cache[layer], self.learning_rate, 0.99)
 
     def rmsprop(self, theta, dtheta, error, learning_rate, decay):
         eps = 1e-8

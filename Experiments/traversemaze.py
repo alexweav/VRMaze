@@ -12,7 +12,7 @@ def main():
     #Construct the model
     action_dim = 4
     architecture = [102, 500, action_dim]
-    net = NeuralNet(architecture)
+    net = NeuralNet(architecture, 3e-4)
 
     for game in range(num_games):
         #Create a new maze and set up initial observation
@@ -22,7 +22,6 @@ def main():
         exploration_buffer = np.zeros((10, 10))
         exploration_buffer[(0, 0)] = graph.get_connection_code(current_node)
         observation = create_observation(exploration_buffer, current_node)
-
         #Data stored at every game step:
         observations = [] #The observation at each game step
         hidden_activations = [] #The hidden layer activations of the net
@@ -41,14 +40,14 @@ def main():
             choice_vector = np.zeros_like(probabilities)
             choice_vector[(0, choice)] = 1
             #Perform the action
-            current_node, reward = step(graph, current_node, choice)
+            current_node, reward = step(graph, current_node, choice, exploration_buffer)
             if reward > 0:
                 valid_moves += 1
             else:
                 invalid_moves += 1
             #Cache data
             observations.append(observation)
-            d_log_probs.append(choice_vector - probabilities)
+            d_log_probs.append(probabilities-choice_vector)
             rewards.append(reward)
             #Set up next observation
             exploration_buffer[current_node] = graph.get_connection_code(current_node)
@@ -60,17 +59,16 @@ def main():
         rewards = np.vstack(rewards)
 
         #Accumulate rewards over time and normalize
-        accumulated_rewards = net.accumulate_reward(rewards)
-        accumulated_rewards -= np.mean(accumulated_rewards)
-        accumulated_rewards /= np.std(accumulated_rewards)
+        accumulated_rewards = rewards#net.accumulate_reward(rewards)
+        #accumulated_rewards -= np.mean(accumulated_rewards)
+        #accumulated_rewards /= np.std(accumulated_rewards)
+
 
         #Modulate gradient by normalized, accumulated rewards
-        d_log_probs *= accumulated_rewards/accumulated_rewards.shape[0]
+        d_log_probs *= accumulated_rewards
 
         net.backprop(d_log_probs, observations, hidden_activations)
         net.update()
-        print(net.biases[1][(0, 0)])
-        input()
 
         cells_explored = np.count_nonzero(exploration_buffer)
         print("Game ", game, ", ", valid_moves, " valid moves, ", invalid_moves, "invalid moves, ", cells_explored, "cells explored")
@@ -85,7 +83,7 @@ def create_observation(exploration_buffer, current_node):
 
 #Performs an action in the game
 #Returns a pair (new_current_node, reward)
-def step(graph, current_node, choice):
+def step(graph, current_node, choice, exploration_buffer):
     target_node = current_node
     row, col = current_node
     if choice == 0: target_node = (row-1, col) #up
