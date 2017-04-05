@@ -7,19 +7,25 @@ from neuralnet import *
 
 num_games = 10000
 steps_per_game = 100
+maze_size = 5
+print_every = 100
 
 def main():
     #Construct the model
     action_dim = 4
-    architecture = [102, 500, action_dim]
-    net = NeuralNet(architecture, 3e-4)
+    architecture = [maze_size*maze_size+2, 500, action_dim]
+    net = NeuralNet(architecture, 1e-4)
+
+    set_valid = 0
+    set_invalid = 0
+    set_cells = 0
 
     for game in range(num_games):
         #Create a new maze and set up initial observation
-        graph = Graph(10, 10)
+        graph = Graph(maze_size, maze_size)
         graph.connect_maze()
         current_node = (0, 0)
-        exploration_buffer = np.zeros((10, 10))
+        exploration_buffer = np.zeros((maze_size, maze_size))
         exploration_buffer[(0, 0)] = graph.get_connection_code(current_node)
         observation = create_observation(exploration_buffer, current_node)
         #Data stored at every game step:
@@ -59,9 +65,9 @@ def main():
         rewards = np.vstack(rewards)
 
         #Accumulate rewards over time and normalize
-        accumulated_rewards = rewards#net.accumulate_reward(rewards)
-        #accumulated_rewards -= np.mean(accumulated_rewards)
-        #accumulated_rewards /= np.std(accumulated_rewards)
+        accumulated_rewards = net.accumulate_reward(rewards)
+        accumulated_rewards -= np.mean(accumulated_rewards)
+        accumulated_rewards /= np.std(accumulated_rewards)
 
 
         #Modulate gradient by normalized, accumulated rewards
@@ -71,7 +77,16 @@ def main():
         net.update()
 
         cells_explored = np.count_nonzero(exploration_buffer)
-        print("Game ", game, ", ", valid_moves, " valid moves, ", invalid_moves, "invalid moves, ", cells_explored, "cells explored")
+        #print("Game ", game, ", ", valid_moves, " valid moves, ", invalid_moves, "invalid moves, ", cells_explored, "cells explored")
+        set_valid += valid_moves
+        set_invalid += invalid_moves
+        set_cells += cells_explored
+
+        if game%print_every == 0:
+            print("Avg. valid:", set_valid/float(print_every), "Avg. cells explored", set_cells/float(print_every))
+            set_valid = 0
+            set_invalid = 0
+            set_cells = 0
 
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
@@ -91,8 +106,8 @@ def step(graph, current_node, choice, exploration_buffer):
     if choice == 2: target_node = (row, col-1) #left
     if choice == 3: target_node = (row, col+1) #right
     if graph.connected(current_node, target_node):
-        return target_node, np.count_nonzero(exploration_buffer)
+        return target_node, float(np.count_nonzero(exploration_buffer))
     else:
-        return current_node, -1.0
+        return current_node, -10.0
 
 main()
