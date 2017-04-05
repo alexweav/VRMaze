@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour
+{
 
     public Transform mainMenu;
     public Transform instructMenu;
@@ -33,23 +34,23 @@ public class LevelManager : MonoBehaviour {
         myRenderer = GetComponent<Renderer>();
         myRenderer.material.SetFloat("cutoff", 0f);
     }
-/****************************************************************************************************
- * Update()
- * 
- * This function checks continuously to determine if the user is looking at any interactive object
- * on the screen, if the use looks at any one interactive item for at least the length required by 
- * timer then an action is taken based on the object being looked at.
- ***************************************************************************************************/
+    /****************************************************************************************************
+     * Update()
+     * 
+     * This function checks continuously to determine if the user is looking at any interactive object
+     * on the screen, if the use looks at any one interactive item for at least the length required by 
+     * timer then an action is taken based on the object being looked at.
+     ***************************************************************************************************/
     private void Update()
     {
 
-        if(isLookedAt) //iff an item is being looked at by the user
+        if (isLookedAt) //iff an item is being looked at by the user
         {
             lookTimer += Time.deltaTime; //get length of look
 
             myRenderer.material.SetFloat("cutoff", lookTimer / timer);
 
-            if(lookTimer > timer) //if length is at the threshold length
+            if (lookTimer > timer) //if length is at the threshold length
             {
                 lookTimer = 0f; //reset the lookTimer
                 myCollider.enabled = false;
@@ -57,26 +58,26 @@ public class LevelManager : MonoBehaviour {
                  * depending on which action is to be taken, the proper
                  * function will be called
                  * **********************************************************/
-                if(startScene == true) //switch scenes
+                if (startScene == true) //switch scenes
                 {
                     LoadScene();
                 }
-                else if(showOptions == true) //switch to options menu
+                else if (showOptions == true) //switch to options menu
                 {
                     optMenu(true);
                 }
-                else if(showInstruct == true) //show instructions menu
+                else if (showInstruct == true) //show instructions menu
                 {
                     InstructMenu(true);
                 }
-                else if(goBack == true) //return to previous menu
+                else if (goBack == true) //return to previous menu
                 {
                     if (instructMenu.gameObject.activeSelf)
                         backInstruct(true);
                     else if (optionMenu.gameObject.activeSelf)
                         backOpt(true);
                 }
-                else if(stopGame == true) //end the game
+                else if (stopGame == true) //end the game
                 {
                     QuitGame();
                 }
@@ -103,16 +104,16 @@ public class LevelManager : MonoBehaviour {
         isLookedAt = gazedAt;
     }
 
-/************************************************************************************************************
- * optionsMenu()
- * optMenu()
- * setScene()
- * LoadScene()
- * 
- * These functions set up and control the buttons on the options menu.
- * This menu displays the different game options that are available to the user for play. At this time these
- * game options include DEMO, and FREEROAM
- ***********************************************************************************************************/
+    /************************************************************************************************************
+     * optionsMenu()
+     * optMenu()
+     * setScene()
+     * LoadScene()
+     * 
+     * These functions set up and control the buttons on the options menu.
+     * This menu displays the different game options that are available to the user for play. At this time these
+     * game options include DEMO, and FREEROAM
+     ***********************************************************************************************************/
     public void optionsMenu()
     {
         showOptions = true;
@@ -168,13 +169,13 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-/***********************************************************************************************************
-* endScene()
-* QuitGame()
-* 
-* These functions quit the game if the user chooses
-* to discontinue playing the app
-* *********************************************************************************************************/
+    /***********************************************************************************************************
+    * endScene()
+    * QuitGame()
+    * 
+    * These functions quit the game if the user chooses
+    * to discontinue playing the app
+    * *********************************************************************************************************/
     public void endScene()
     {
         stopGame = true;
@@ -184,20 +185,20 @@ public class LevelManager : MonoBehaviour {
         Application.Quit();
     }
 
-/****************************************************************************************************************
-* instructMenu()
-* InstructMenu()
-*
-* These functions switch from the MainMenu to the instructions menu and allow for the user to also return
-* from the instruction menu back to the MainMenu
-* *************************************************************************************************************/
+    /****************************************************************************************************************
+    * instructMenu()
+    * InstructMenu()
+    *
+    * These functions switch from the MainMenu to the instructions menu and allow for the user to also return
+    * from the instruction menu back to the MainMenu
+    * *************************************************************************************************************/
     public void InstructMenu()
     {
         showInstruct = true;
     }
     private void InstructMenu(bool clicked)
     {
-        if(clicked == true)
+        if (clicked == true)
         {
             startScene = false;
             showInstruct = false;
