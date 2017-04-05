@@ -13,12 +13,13 @@ print_every = 100
 def main():
     #Construct the model
     action_dim = 4
-    architecture = [maze_size*maze_size+2, 500, action_dim]
-    net = NeuralNet(architecture, 1e-4)
+    architecture = [maze_size*maze_size+2, 500, 100, action_dim]
+    net = NeuralNet(architecture, 3e-4)
 
     set_valid = 0
     set_invalid = 0
     set_cells = 0
+    set_reward = 0
 
     for game in range(num_games):
         #Create a new maze and set up initial observation
@@ -37,6 +38,7 @@ def main():
         rewards = [] #Reward gained
         valid_moves = 0
         invalid_moves = 0
+        total_reward = 0.0
         for stepnum in range(steps_per_game):
             #Get action from network
             probabilities, hidden_activation = net.eval(observation)
@@ -47,6 +49,7 @@ def main():
             choice_vector[(0, choice)] = 1
             #Perform the action
             current_node, reward = step(graph, current_node, choice, exploration_buffer)
+            total_reward += reward
             if reward > 0:
                 valid_moves += 1
             else:
@@ -81,12 +84,14 @@ def main():
         set_valid += valid_moves
         set_invalid += invalid_moves
         set_cells += cells_explored
+        set_reward += total_reward
 
         if game%print_every == 0:
-            print("Avg. valid:", set_valid/float(print_every), "Avg. cells explored", set_cells/float(print_every))
+            print("Avg. valid:", set_valid/float(print_every), "Avg. cells explored", set_cells/float(print_every), "Reward", set_reward/float(print_every))
             set_valid = 0
             set_invalid = 0
             set_cells = 0
+            set_reward = 0
 
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
@@ -106,8 +111,12 @@ def step(graph, current_node, choice, exploration_buffer):
     if choice == 2: target_node = (row, col-1) #left
     if choice == 3: target_node = (row, col+1) #right
     if graph.connected(current_node, target_node):
-        return target_node, float(np.count_nonzero(exploration_buffer))
+        if exploration_buffer[target_node] == 0:
+            return target_node, 25#*float(np.count_nonzero(exploration_buffer))
+        else:
+            return target_node, 0.1
+    #return target_node, float(np.count_nonzero(exploration_buffer))
     else:
-        return current_node, -10.0
+        return current_node, -1.0
 
 main()
