@@ -4,6 +4,7 @@ import numpy as np
 
 from graph import *
 from neuralnet import *
+from env_traversemaze import *
 
 num_games = 10000
 steps_per_game = 100
@@ -13,7 +14,7 @@ print_every = 100
 def main():
     #Construct the model
     action_dim = 4
-    architecture = [maze_size*maze_size+2, 500, 100, action_dim]
+    architecture = [maze_size*maze_size, 500, 100, action_dim]
     net = NeuralNet(architecture, 3e-4)
 
     set_valid = 0
@@ -23,12 +24,8 @@ def main():
 
     for game in range(num_games):
         #Create a new maze and set up initial observation
-        graph = Graph(maze_size, maze_size)
-        graph.connect_maze()
-        current_node = (0, 0)
-        exploration_buffer = np.zeros((maze_size, maze_size))
-        exploration_buffer[(0, 0)] = graph.get_connection_code(current_node)
-        observation = create_observation(exploration_buffer, current_node)
+        env = TraverseMazeEnvironment(maze_size)
+        observation = env.reset()
         #Data stored at every game step:
         observations = [] #The observation at each game step
         hidden_activations = [] #The hidden layer activations of the net
@@ -47,20 +44,18 @@ def main():
             choice = net.make_choice(probabilities)
             choice_vector = np.zeros_like(probabilities)
             choice_vector[(0, choice)] = 1
+            observations.append(observation)
             #Perform the action
-            current_node, reward = step(graph, current_node, choice, exploration_buffer)
+            observation, reward = env.step(choice)
             total_reward += reward
             if reward > 0:
                 valid_moves += 1
             else:
                 invalid_moves += 1
             #Cache data
-            observations.append(observation)
             d_log_probs.append(probabilities-choice_vector)
             rewards.append(reward)
             #Set up next observation
-            exploration_buffer[current_node] = graph.get_connection_code(current_node)
-            observation = create_observation(exploration_buffer, current_node)
         observations = np.vstack(observations)
         d_log_probs = np.vstack(d_log_probs)
         for i in range(len(hidden_activations)):
@@ -79,7 +74,7 @@ def main():
         net.backprop(d_log_probs, observations, hidden_activations)
         net.update()
 
-        cells_explored = np.count_nonzero(exploration_buffer)
+        cells_explored = np.count_nonzero(env.exploration_buffer)
         #print("Game ", game, ", ", valid_moves, " valid moves, ", invalid_moves, "invalid moves, ", cells_explored, "cells explored")
         set_valid += valid_moves
         set_invalid += invalid_moves
@@ -96,6 +91,7 @@ def main():
 #A single game observation is a pair (exploration buffer, current node)
 #Represented in a row vector of integers
 def create_observation(exploration_buffer, current_node):
+    return exploration_buffer.reshape(1, np.prod(exploration_buffer.shape))
     row, col = current_node
     expl = exploration_buffer.reshape(1, np.prod(exploration_buffer.shape))
     node = np.array([[row, col]])
@@ -114,9 +110,9 @@ def step(graph, current_node, choice, exploration_buffer):
         if exploration_buffer[target_node] == 0:
             return target_node, 25#*float(np.count_nonzero(exploration_buffer))
         else:
-            return target_node, 0.1
+            return target_node, 0.25
     #return target_node, float(np.count_nonzero(exploration_buffer))
     else:
-        return current_node, -1.0
+        return current_node, -2.5
 
 main()
