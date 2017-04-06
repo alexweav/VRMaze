@@ -26,13 +26,13 @@ class TraverseMazeEnvironment():
             next_node = self.current_node
             if self.graph.connected(self.current_node, target_node):
                 if self.exploration_buffer[target_node] == 0:
-                    reward = 25.0
+                    reward = 1.0
                     next_node = target_node
                 else:
-                    reward = 0.25
+                    reward = 0.0
                     next_node = target_node
             else:
-                reward = -2.5
+                reward = -1.0
                 next_node = self.current_node
             self.exploration_buffer[self.current_node] -= 16
             self.exploration_buffer[next_node] = self.graph.get_connection_code(next_node)

@@ -88,31 +88,4 @@ def main():
             set_cells = 0
             set_reward = 0
 
-#A single game observation is a pair (exploration buffer, current node)
-#Represented in a row vector of integers
-def create_observation(exploration_buffer, current_node):
-    return exploration_buffer.reshape(1, np.prod(exploration_buffer.shape))
-    row, col = current_node
-    expl = exploration_buffer.reshape(1, np.prod(exploration_buffer.shape))
-    node = np.array([[row, col]])
-    return np.concatenate((expl, node), axis=1)
-
-#Performs an action in the game
-#Returns a pair (new_current_node, reward)
-def step(graph, current_node, choice, exploration_buffer):
-    target_node = current_node
-    row, col = current_node
-    if choice == 0: target_node = (row-1, col) #up
-    if choice == 1: target_node = (row+1, col) #down
-    if choice == 2: target_node = (row, col-1) #left
-    if choice == 3: target_node = (row, col+1) #right
-    if graph.connected(current_node, target_node):
-        if exploration_buffer[target_node] == 0:
-            return target_node, 25#*float(np.count_nonzero(exploration_buffer))
-        else:
-            return target_node, 0.25
-    #return target_node, float(np.count_nonzero(exploration_buffer))
-    else:
-        return current_node, -2.5
-
 main()
