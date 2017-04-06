@@ -12,11 +12,20 @@ namespace Assets.Scripts
     {
         private int width;
         private int height;
+        private int seed;
 
         public RandomMazeGenerator(int width, int height)
         {
             this.width = width;
             this.height = height;
+            this.seed = System.DateTime.Now.Millisecond;
+        }
+
+        public RandomMazeGenerator(int width, int height, int seed)
+        {
+            this.width = width;
+            this.height = height;
+            this.seed = seed;
         }
 
         public override Maze Generate()
@@ -58,10 +67,10 @@ namespace Assets.Scripts
             var startCell = new Pair<int, int>(0, 0);
             List<Pair<int, int>> inMaze = new List<Pair<int, int>>();
             inMaze.Add(startCell);
+            var random = new Random(this.seed);
             while (inMaze.Count < graph.Count)
             {
                 List<GridEdge> candidateEdges = FindCandidateEdges(graph, inMaze);
-                var random = new Random();
                 int chosenIndex = random.Next(candidateEdges.Count);
                 graph.AddEdge(candidateEdges[chosenIndex].Cell1, candidateEdges[chosenIndex].Cell2);
                 inMaze.Add(candidateEdges[chosenIndex].Cell2);
@@ -134,6 +143,14 @@ namespace Assets.Scripts
 
             public Pair<int, int> Cell1{get; set;}
             public Pair<int, int> Cell2 { get; set; }
+        }
+
+        public int Seed
+        {
+            get
+            {
+                return this.seed;
+            }
         }
     }
 }
