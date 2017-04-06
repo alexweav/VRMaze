@@ -28,7 +28,10 @@ namespace Assets.Scripts
 					speed.stop ();
 				}
 				walk (speed.getCurrentSpeed ());
-			} 
+			} else {
+				speed.stop ();	
+			}
+			Debug.Log (speed.getCurrentSpeed ());
 		}
 
 		public void walk(float speed){

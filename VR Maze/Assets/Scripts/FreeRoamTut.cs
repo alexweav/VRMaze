@@ -11,9 +11,9 @@ namespace Assets.Scripts
 		public Text promptText;
 		public Image promptBox;
 
-		private string[] msgState = {"Welcome to Free Roan!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
+		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
 		private int msgIndex = 0;
-		private bool taskCompeleted = false;
+		private bool taskCompleted = false;
 
 		void Start(){
 			displayPrompt (false);
@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
 		void Update(){
 			
-			if (taskCompeleted) {
+			if (taskCompleted) {
 				msgIndex++;	
 			}
 		}
