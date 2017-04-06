@@ -3,7 +3,7 @@ using System;
 
 namespace Assets.Scripts
 {
-	public class Speed: MonoBehaviour {
+	public class Speed{
 		
 		private float currentSpeed;
 		private float sneak = 1.5f;

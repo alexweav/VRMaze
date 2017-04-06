@@ -29,6 +29,7 @@ namespace Assets.Scripts
 			
 		/// <summary>
 		/// IEnumberator works in conjunction with StartCoroutine()
+		/// Creates typewriter effect for displaying dialog.
 		/// </summary>
 		/// <returns>Edits promptBox</returns>
 		IEnumerator prompt(float delay){
@@ -44,7 +45,7 @@ namespace Assets.Scripts
 		public void displayPrompt(bool status){
 			promptBox.enabled = status;
 			promptText.enabled = status;
-			//disableWalking (status);
+			disableWalking (status);
 		}
 
 		public void disableWalking(bool status){
