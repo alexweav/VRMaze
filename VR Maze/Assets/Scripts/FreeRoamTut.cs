@@ -15,8 +15,6 @@ namespace Assets.Scripts
 		private int msgIndex = 0;
 		private bool taskCompeleted = false;
 
-
-
 		void Start(){
 			displayPrompt (false);
 			StartCoroutine (prompt (3.0f));
@@ -46,14 +44,13 @@ namespace Assets.Scripts
 		public void displayPrompt(bool status){
 			promptBox.enabled = status;
 			promptText.enabled = status;
-			disableWalking (status);
+			//disableWalking (status);
 		}
 
 		public void disableWalking(bool status){
 			GameObject player = GameObject.Find ("MainPlayer");
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
 			walkingController.freezePlayer = status;
-			Debug.Log(walkingController.freezePlayer);
 		}
 	}
 }
