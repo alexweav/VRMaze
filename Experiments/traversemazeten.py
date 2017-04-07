@@ -8,11 +8,11 @@ from env_traversemaze import *
 num_games = 10000
 steps_per_game = 100
 maze_size = 5
-D = maze_size*maze_size
+D = 6*maze_size*maze_size
 print_every = 100
 
-H = 100
-learning_rate = 1e-2
+H = 1500
+learning_rate = 1e-5
 gamma = 0.99
 
 def main():
@@ -47,9 +47,9 @@ def main():
             epr = np.vstack(drs)
             tfp = tfps
 
-            discounted_epr = discount_rewards(epr)
-            discounted_epr -= np.mean(discounted_epr)
-            discounted_epr /= np.std(discounted_epr)
+            discounted_epr = epr#discount_rewards(epr)
+            #discounted_epr -= np.mean(discounted_epr)
+            #discounted_epr /= np.std(discounted_epr)
 
             t_grad = sess.run(model.new_grads, feed_dict={model.observations: epx, model.input_y: epy, model.advantages: discounted_epr})
             for ix, grad in enumerate(t_grad):
