@@ -12,7 +12,7 @@ D = 6*maze_size*maze_size
 print_every = 100
 
 H = 1500
-learning_rate = 1e-5
+learning_rate = 1e-4
 gamma = 0.99
 
 def main():
@@ -47,13 +47,14 @@ def main():
             epr = np.vstack(drs)
             tfp = tfps
 
-            discounted_epr = epr#discount_rewards(epr)
-            #discounted_epr -= np.mean(discounted_epr)
-            #discounted_epr /= np.std(discounted_epr)
+            discounted_epr = discount_rewards(epr)
+            discounted_epr -= np.mean(discounted_epr)
+            discounted_epr /= np.std(discounted_epr)
 
             t_grad = sess.run(model.new_grads, feed_dict={model.observations: epx, model.input_y: epy, model.advantages: discounted_epr})
             for ix, grad in enumerate(t_grad):
                 grad_buffer[ix] += grad
+            sess.run(model.update_grads, feed_dict={model.W1_grad: grad_buffer[0], model.W2_grad: grad_buffer[1]})
             move_count.append(valid_moves)
             trs.append(reward_sum)
             if game % print_every == 0:

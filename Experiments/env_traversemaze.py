@@ -22,7 +22,7 @@ class TraverseMazeEnvironment():
             self.exploration_buffer = np.zeros((6, self.size, self.size))
             code = self.graph.get_connection_code(self.current_node)
             row, col = self.current_node
-            self.exploration_buffer[(0, row, col)] = 1 if (code & 1) > 0 else 0
+            self.exploration_buffer[(0, row, col)] = 1 if code & 1 > 0 else 0
             self.exploration_buffer[(1, row, col)] = 1 if code & 2 > 0 else 0
             self.exploration_buffer[(2, row, col)] = 1 if code & 4 > 0 else 0
             self.exploration_buffer[(3, row, col)] = 1 if code & 8 > 0 else 0
@@ -70,8 +70,3 @@ class TraverseMazeEnvironment():
         def create_observation(self):
             return self.exploration_buffer.reshape(1, np.prod(self.exploration_buffer.shape))
 
-env = TraverseMazeEnvironment(3)
-env.reset()
-print(env.exploration_buffer)
-env.step(1)
-print(env.exploration_buffer)
