@@ -26,7 +26,7 @@ class TraverseMazeEnvironment():
             next_node = self.current_node
             if self.graph.connected(self.current_node, target_node):
                 if self.exploration_buffer[target_node] == 0:
-                    reward = 1.0
+                    reward = np.count_nonzero(self.exploration_buffer)
                     next_node = target_node
                 else:
                     reward = 0.0

@@ -5,14 +5,14 @@ import tensorflow as tf
 from graph import *
 from env_traversemaze import *
 
-num_games = 1
-steps_per_game = 10
+num_games = 10000
+steps_per_game = 100
 maze_size = 5
 D = maze_size*maze_size
 print_every = 100
 
-H = 500
-learning_rate = 1e-3
+H = 100
+learning_rate = 1e-2
 gamma = 0.99
 
 def main():
@@ -21,12 +21,14 @@ def main():
     init = tf.initialize_all_variables()
     with tf.Session() as sess:
         sess.run(init)
+        move_count, trs = [], []
         for game in range(num_games):
             xs, hs, dlogps, drs, ys, tfps = [], [], [], [], [], []
             running_rewarad = None
             reward_sum = 0.0
             observation = env.reset()
             grad_buffer = sess.run(model.tvars)
+            valid_moves = 0
             for ix, grad in enumerate(grad_buffer):
                 grad_buffer[ix] = grad * 0
             for step in range(steps_per_game):
@@ -37,10 +39,29 @@ def main():
                 choice_vector[(0, choice)] = 1
                 ys.append(choice_vector)
                 observation, reward = env.step(choice)
+                if reward > -0.5: valid_moves += 1
                 reward_sum += reward
                 drs.append(reward)
-                print(observation)
-                print(reward)
+            epx = np.vstack(xs)
+            epy = np.vstack(ys)
+            epr = np.vstack(drs)
+            tfp = tfps
+
+            discounted_epr = discount_rewards(epr)
+            discounted_epr -= np.mean(discounted_epr)
+            discounted_epr /= np.std(discounted_epr)
+
+            t_grad = sess.run(model.new_grads, feed_dict={model.observations: epx, model.input_y: epy, model.advantages: discounted_epr})
+            for ix, grad in enumerate(t_grad):
+                grad_buffer[ix] += grad
+            move_count.append(valid_moves)
+            trs.append(reward_sum)
+            if game % print_every == 0:
+                move_count = np.vstack(move_count)
+                trs = np.vstack(trs)
+                print(np.mean(move_count), " avg valid moves", "avg total reward ", np.mean(trs)) 
+                move_count, trs = [], []
+            
 
 def discount_rewards(rewards):
     discounted_rewards = np.zeros_like(rewards)
