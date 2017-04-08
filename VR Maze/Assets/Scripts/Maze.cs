@@ -10,7 +10,7 @@ namespace Assets.Scripts
     public abstract class Maze
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>(); 
-        private GameObject ThisMaze;
+        public GameObject MazeGO;
         private Vector3 ThisMazeScale;
         private Vector3 ThisMazePosition;
         private MazeDrawer Drawer;
@@ -188,8 +188,8 @@ namespace Assets.Scripts
             }
             Drawer = new MazeDrawer(this);
             Drawer.drawMaze();
-            ThisMaze.transform.localScale = ThisMazeScale;
-            ThisMaze.transform.position = ThisMazePosition;
+            MazeGO.transform.localScale = ThisMazeScale;
+            MazeGO.transform.position = ThisMazePosition;
             PlayerSpawnInCell(0,0);
         }
 
@@ -213,7 +213,7 @@ namespace Assets.Scripts
         protected void IntializeMaze(string MazeName)
         {
             mazeName = MazeName;
-            ThisMaze = new GameObject(mazeName);
+            MazeGO = new GameObject(mazeName);
             ThisMazeScale = new Vector3(.5f, 10f, .5f);
             ThisMazePosition = new Vector3(0f, 0f, 0f);
             
