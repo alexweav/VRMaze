@@ -19,23 +19,6 @@ namespace Assets.Scripts
         private MazeCell finishCell;
 
         /// <summary>
-        /// Intializes the maze
-        /// </summary>
-        public Maze()
-        {
-            IntializeMaze("Maze");
-        }
-
-        /// <summary>
-        /// Intializes the maze given a name for the maze
-        /// </summary>
-        /// <param name="MazeName"> name of the maze</param>
-        public Maze(string MazeName)
-        {
-            IntializeMaze(MazeName);
-        }
-
-        /// <summary>
         /// adds a maze cell to a list to of maze cells to form a maze mazecells called DrawbleFormat to form a maze  
         /// </summary>
         /// <param name="x"> x cell position </param>
