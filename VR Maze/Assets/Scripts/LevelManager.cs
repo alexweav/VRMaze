@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour
+{
 
     public Transform mainMenu;
-    public Transform statMenu;
+    public Transform instructMenu;
     public Transform optionMenu;
+    public Transform loading;
 
-    private float timer = 2f;//length of gaze required before action is taken
+    public float timer = 5f;//length of gaze required before action is taken
     private float lookTimer = 0f;//length of time the user has looked at an object
     private Renderer myRenderer;
     private BoxCollider myCollider;
@@ -19,9 +21,8 @@ public class LevelManager : MonoBehaviour {
      variables are set when the corresponding button is pressed 
      **********************************************************/
     private bool startScene = false; //switches scenes
-    private bool showStats = false; //switches to statMenu
+    private bool showInstruct = false; //switches to InstructMenu
     private bool goBack = false; //returns to previous menu
-    private bool stopGame = false; //ends the application iff not in debug mode
     private bool showOptions = false; //switches to game options menu
 
     private string scene = "MainMenu"; //initially set to load itself if no other scene is designated
@@ -32,198 +33,125 @@ public class LevelManager : MonoBehaviour {
         myRenderer = GetComponent<Renderer>();
         myRenderer.material.SetFloat("cutoff", 0f);
     }
-/****************************************************************************************************
- * Update()
- * 
- * This function checks continuously to determine if the user is looking at any interactive object
- * on the screen, if the use looks at any one interactive item for at least the length required by 
- * timer then an action is taken based on the object being looked at.
- ***************************************************************************************************/
+    /****************************************************************************************************
+     * Update()
+     * 
+     * This function checks continuously to determine if the user is looking at any interactive object
+     * on the screen, if the use looks at any one interactive item for at least the length required by 
+     * timer then an action is taken based on the object being looked at.
+     ***************************************************************************************************/
     private void Update()
     {
-        if(isLookedAt) //iff an item is being looked at by the user
+
+        if (isLookedAt) //iff an item is being looked at by the user
         {
             lookTimer += Time.deltaTime; //get length of look
 
             myRenderer.material.SetFloat("cutoff", lookTimer / timer);
 
-            if(lookTimer > timer) //if length is at the threshold length
+            if (lookTimer > timer) //if length is at the threshold length
             {
-                lookTimer = 0f; //reset the lookTimer
+                //Debug.Log("Time "+lookTimer);
+                //lookTimer = 0f; //reset the lookTimer
                 myCollider.enabled = false;
                 /*************************************************************
                  * depending on which action is to be taken, the proper
                  * function will be called
                  * **********************************************************/
-                if(startScene == true) //switch scenes
+                if (startScene == true) //switch scenes
                 {
-                    LoadScene(scene);
+                    //Debug.Log("load "+scene);
+                    loading.gameObject.SetActive(true);
+                    optionMenu.gameObject.SetActive(false);
+                    SceneManager.LoadScene(scene);
                 }
-                else if(showOptions == true) //switch to options menu
+                else if (showOptions == true) //switch to options menu
                 {
-                    optMenu(true);
+                    //Debug.Log("options");
+                    optionMenu.gameObject.SetActive(true);
+                    mainMenu.gameObject.SetActive(false);
                 }
-                else if(showStats == true) //show statistics menu
+                else if (showInstruct == true) //show instructions menu
                 {
-                    StatMenu(true);
+                    //Debug.Log("instructions");
+                    instructMenu.gameObject.SetActive(true);
+                    mainMenu.gameObject.SetActive(false);
                 }
-                else if(goBack == true) //return to previous menu
+                else if (goBack == true) //return to previous menu
                 {
-                    if (statMenu.gameObject.activeSelf)
-                        backStat(true);
+                    //Debug.Log("back");
+                    if (instructMenu.gameObject.activeSelf)
+                    {
+                       // Debug.Log("inst");
+                        mainMenu.gameObject.SetActive(true);
+                        instructMenu.gameObject.SetActive(false);
+                    }
                     else if (optionMenu.gameObject.activeSelf)
-                        backOpt(true);
+                    {
+                        //Debug.Log("opt");
+                        mainMenu.gameObject.SetActive(true);
+                        optionMenu.gameObject.SetActive(false);
+                    }
                 }
-                else if(stopGame == true) //end the game
-                {
-                    QuitGame();
-                }
-            }
 
+                resetVars();
+            }
+            
         }
         else //iff user stops gaze before threshold time is reached
         {
-            //all variables are reset
-
-            lookTimer = 0f;
-            myRenderer.material.SetFloat("cutoff", 0f);
-            startScene = false;
-            showStats = false;
-            goBack = false;
-            stopGame = false;
-            showOptions = false;
+           // Debug.Log("Stop gaze");
+            resetVars();
         }
+
     }
 
-    public void SetGazedAt(bool gazedAt) // called once the user sets their reticle on an interactible object
+    public void StartGaze() // called once the user sets their reticle on an interactible object
     {
-        isLookedAt = gazedAt;
+        isLookedAt = true;
     }
 
-/************************************************************************************************************
- * optionsMenu()
- * optMenu()
- * setScene()
- * LoadScene()
- * 
- * These functions set up and control the buttons on the options menu.
- * This menu displays the different game options that are available to the user for play. At this time these
- * game options include DEMO, and FREEROAM
- ***********************************************************************************************************/
-    public void optionsMenu()
+    public void StopGaze()
     {
-        showOptions = true;
+        isLookedAt = false;
     }
 
-    private void optMenu(bool clicked)
+    private void resetVars()
     {
-        if (clicked == true)
-        {
-            startScene = false;
-            showStats = false;
-            goBack = false;
-            stopGame = false;
-            showOptions = false;
-
-            optionMenu.gameObject.SetActive(clicked);
-            mainMenu.gameObject.SetActive(false);
-        }
+       // Debug.Log("reset");
+        lookTimer = 0f;
+        myRenderer.material.SetFloat("cutoff", 0f);
+        startScene = false;
+        showInstruct = false;
+        goBack = false;
+        showOptions = false;
+        scene = "MainMenu";
+        myCollider.enabled = false;
+    }
+   
+    public void optionsMenu(bool pick)
+    {
+       // Debug.Log("show opt");
+        showOptions = pick;
     }
 
-    /*******************************************************
-     * setScene()
-     * LoadScene()
-     * 
-     * These functions load the scene from a string that is
-     * passed to it. 
-     * ***************************************************/
     public void setScene(string name)
     {
+       // Debug.Log("new scene");
         scene = name;
         startScene = true;
     }
 
-    private void LoadScene(string name)
+    public void InstructMenu(bool pick)
     {
-        SceneManager.LoadScene(name);
+       // Debug.Log("show inst");
+        showInstruct = pick;
     }
 
-    private void backOpt(bool clicked)
+    public void backMenu(bool pick)
     {
-        if (clicked == true)
-        {
-            startScene = false;
-            showStats = false;
-            goBack = false;
-            stopGame = false;
-            showOptions = false;
-
-            mainMenu.gameObject.SetActive(clicked);
-            optionMenu.gameObject.SetActive(false);
-        }
+      //  Debug.Log("go back");
+        goBack = pick;
     }
 
-/***********************************************************************************************************
-* endScene()
-* QuitGame()
-* 
-* These functions quit the game if the user chooses
-* to discontinue playing the app
-* *********************************************************************************************************/
-    public void endScene()
-    {
-        stopGame = true;
-    }
-    private void QuitGame()
-    {
-        Application.Quit();
-    }
-
-/****************************************************************************************************************
-* statsMenu()
-* StatMenu()
-*
-* These functions switch from the MainMenu to the statistics menu and allow for the user to also return
-* from the statistics menu back to the MainMenu
-* *************************************************************************************************************/
-    public void statsMenu()
-    {
-        showStats = true;
-    }
-    private void StatMenu(bool clicked)
-    {
-        if(clicked == true)
-        {
-            startScene = false;
-            showStats = false;
-            goBack = false;
-            stopGame = false;
-            showOptions = false;
-
-            statMenu.gameObject.SetActive(clicked);
-            mainMenu.gameObject.SetActive(false);
-        }
-    }
-
-    /*******************************************************
-    * returns to the main menu from the current menu 
-    * ***************************************************/
-    public void backMenu()
-    {
-        goBack = true;
-    }
-    private void backStat(bool clicked)
-    {
-        if (clicked == true)
-        {
-            startScene = false;
-            showStats = false;
-            goBack = false;
-            stopGame = false;
-            showOptions = false;
-
-            mainMenu.gameObject.SetActive(clicked);
-            statMenu.gameObject.SetActive(false);
-        }
-    }
 }
