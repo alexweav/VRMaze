@@ -6,8 +6,8 @@ namespace Assets.Scripts
 {
     public class MazeGenerate : MonoBehaviour
     {
-		public int height = 15;
-		public int width = 15;
+		public int height = 5;
+		public int width = 5;
         // Use this for initialization
         void Start()
         {
