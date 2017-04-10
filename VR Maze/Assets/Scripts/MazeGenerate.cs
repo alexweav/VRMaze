@@ -34,7 +34,7 @@ namespace Assets.Scripts
             maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
             maze.Draw();
 
-            HUDMiniMap HUDMM = new HUDMiniMap(maze);
+            HUDMiniMapGenerator HUDMM = new HUDMiniMapGenerator(maze);
         }
 
         /// <summary>
@@ -48,7 +48,9 @@ namespace Assets.Scripts
             maze.SetXYZScale(.5f, 6, .5f);
             maze.Draw();
             maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
-            HUDMiniMap HUDMM = new HUDMiniMap(maze);
+            HUDMiniMapGenerator HUDMM = new HUDMiniMapGenerator(maze);
         }
+
+        
     }
 }

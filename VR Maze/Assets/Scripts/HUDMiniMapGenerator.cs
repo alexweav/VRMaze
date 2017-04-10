@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class HUDMiniMap : MonoBehaviour
+    public class HUDMiniMapGenerator : MonoBehaviour
     {
         
         private GameObject MiniMap;
         private Maze MiniMapMaze;
 
-        public HUDMiniMap(Maze mazeToCreate)
+        public HUDMiniMapGenerator(Maze mazeToCreate)
         {
             createMiniMapMaze(mazeToCreate);
             createIcon();
@@ -39,7 +39,7 @@ namespace Assets.Scripts
         {
             GameObject Icon = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             Icon.transform.name = "Icon";
-            Icon.transform. = new Vector3(.1f, .001f, .1f);
+            Icon.transform.localScale = new Vector3(.1f, .001f, .1f);
             MiniMapMaze.AddSpawnGO(0, 0, Icon);
             
 
