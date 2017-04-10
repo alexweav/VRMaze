@@ -24,7 +24,7 @@ namespace Assets.Scripts
             {
                 string CellGOtoFind = "Maze Cell (" + objectToSpawn.XCellposition.ToString() + "," + objectToSpawn.ZCellposition.ToString() + ")";
                 Vector3 CellPosition = GameObject.Find(CellGOtoFind).transform.GetChild(0).transform.position;
-                GameObject.Find(objectToSpawn.SpawnObject.transform.name).transform.position = new Vector3(CellPosition.x, (CellPosition.y + (objectToSpawn.SpawnObject.transform.localScale.y/2)), CellPosition.z);
+                GameObject.Find(objectToSpawn.SpawnObject.transform.name).transform.position = new Vector3(CellPosition.x, (CellPosition.y + 1f), CellPosition.z);
             }
         }
 

@@ -51,6 +51,6 @@ namespace Assets.Scripts
             HUDMiniMapGenerator HUDMM = new HUDMiniMapGenerator(maze);
         }
 
-        
+      
     }
 }

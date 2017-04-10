@@ -16,7 +16,7 @@ namespace Assets.Scripts
         public HUDMiniMapGenerator(Maze mazeToCreate)
         {
             createMiniMapMaze(mazeToCreate);
-            createIcon();
+            //createIcon();
             MiniMapMaze.updateMazeGOProperties();
         }
 
