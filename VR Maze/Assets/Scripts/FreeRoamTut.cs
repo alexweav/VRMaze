@@ -18,13 +18,31 @@ namespace Assets.Scripts
 		void Start(){
 			displayPrompt (false);
 			StartCoroutine (prompt (3.0f));
+
 		}
 
 		void Update(){
 			
 			if (taskCompleted) {
-				msgIndex++;	
+				msgIndex++;
+				StartCoroutine (prompt (.5f));
+				taskCompleted = false;
 			}
+		}
+
+		public void states(int stateNumber){
+			switch(stateNumber){
+			case 0:
+				taskCompleted = playerLookedAround ();
+				break;	
+			case 1:
+				Debug.Log ("In task '2' now!");
+				break;
+			}
+		}
+
+		public bool playerLookedAround(){
+			return true;
 		}
 			
 		/// <summary>
