@@ -3,7 +3,7 @@ using System;
 
 namespace Assets.Scripts
 {
-	public class Speed {
+	public class Speed{
 		
 		private float currentSpeed;
 		private float sneak = 1.5f;
@@ -16,7 +16,6 @@ namespace Assets.Scripts
 
 		public Speed(){
 			currentSpeed = 0;
-
 		}
 
 		public float getCurrentSpeed(){
