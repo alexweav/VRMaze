@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 
@@ -7,52 +9,43 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class HUDMiniMapGenerator : MonoBehaviour
+    public class HUDMiniMapGenerator : MazeGenerator
     {
+        public Camera MiniMapCamera;
+        private Maze mazeToDuplicate;
+        private HUDMiniMapMaze HUDMMM;
+        private GameObject Icon;
         
-        private GameObject MiniMap;
-        private Maze MiniMapMaze;
 
         public HUDMiniMapGenerator(Maze mazeToCreate)
         {
-            createMiniMapMaze(mazeToCreate);
-            //createIcon();
-            MiniMapMaze.updateMazeGOProperties();
+            HUDMMM = new HUDMiniMapMaze(mazeToCreate);
+            this.mazeToDuplicate = mazeToCreate;
+            createIcon();
+
+            HUDMMM.updateMazeGOProperties();
         }
 
-
-        private void createMiniMapMaze(Maze mazeToCreate)
+        public override Maze Generate()
         {
-            MiniMapMaze = mazeToCreate; 
-            MiniMapMaze.MazeGO = GameObject.Instantiate(mazeToCreate.MazeGO);
-            MiniMapMaze.MazeGO.transform.name = "MiniMap Maze";
-            MiniMapMaze.SetXYZPosition(0, 20, 0);
-            MiniMapMaze.SetXYZScale(.05f,.01f,.05f);
-            
-
-            MiniMap = new GameObject("MiniMap");
-            MiniMapMaze.MazeGO.transform.SetParent(MiniMap.transform);
-            
+            return HUDMMM;
         }
+
 
         private void createIcon()
         {
-            GameObject Icon = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            Icon = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             Icon.transform.name = "Icon";
+            Icon.transform.position = new Vector3(0, 20, 0);
             Icon.transform.localScale = new Vector3(.1f, .001f, .1f);
-            MiniMapMaze.AddSpawnGO(0, 0, Icon);
-            
-
-
-
+           // Rigidbody rb = Icon.AddComponent<Rigidbody>();
+            HUDMMM.AddSpawnGO(0, 0, Icon);
         }
-
-
 
         // Update is called once per frame
         void Update()
         {
-
+            
         }
     }
 
