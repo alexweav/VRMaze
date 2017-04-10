@@ -15,7 +15,9 @@ namespace Assets.Scripts
 
 		Speed speed = new Speed ();
 
-		void Update(){
+        private Vector3 INTIconPOS = GameObject.Find("Icon").transform.position;
+
+        void Update(){
 			if (!freezePlayer) {
 				camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 				playerSpeed = (float)Math.Pow (camViewRotX, 2) / 540;
@@ -32,9 +34,14 @@ namespace Assets.Scripts
 				speed.stop ();	
 			}
 			Debug.Log (speed.getCurrentSpeed ());
-		}
 
-		public void walk(float speed){
+             
+            Vector3 MainPlayerPOS = playerCollider.transform.position;
+            GameObject.Find("Icon").transform.position = new Vector3(MainPlayerPOS.x / 10 + INTIconPOS.x, 20.001f, MainPlayerPOS.z / 10 + INTIconPOS.z);
+
+    }
+
+    public void walk(float speed){
 			Vector3 cameraDirection = new Vector3 (cameraView.transform.forward.x, 0, cameraView.transform.forward.z).normalized * speed * Time.deltaTime; //2 = speed
 			Quaternion cameraRotation = Quaternion.Euler (new Vector3 (0, -transform.rotation.eulerAngles.y, 0));
 			transform.Translate (cameraRotation * cameraDirection);
