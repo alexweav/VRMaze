@@ -39,7 +39,7 @@ namespace Assets.Scripts
         {
             GameObject Icon = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             Icon.transform.name = "Icon";
-            Icon.transform.localScale = new Vector3(.1f, .001f, .1f);
+            Icon.transform. = new Vector3(.1f, .001f, .1f);
             MiniMapMaze.AddSpawnGO(0, 0, Icon);
             
 
