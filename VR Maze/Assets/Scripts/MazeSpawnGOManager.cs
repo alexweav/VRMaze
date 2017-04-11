@@ -7,9 +7,11 @@ namespace Assets.Scripts
     class MazeSpawnGOManager
     {
         List<MazeSpawnGO> ListMazeSpawnGO;
+        private string MazeName;
 
-        public MazeSpawnGOManager()
+        public MazeSpawnGOManager(string mazeName)
         {
+            MazeName = mazeName;
             ListMazeSpawnGO = new List<Scripts.MazeSpawnGO>();
         }
 
@@ -23,8 +25,9 @@ namespace Assets.Scripts
             foreach (MazeSpawnGO objectToSpawn in ListMazeSpawnGO)
             {
                 string CellGOtoFind = "Maze Cell (" + objectToSpawn.XCellposition.ToString() + "," + objectToSpawn.ZCellposition.ToString() + ")";
-                Vector3 CellPosition = GameObject.Find(CellGOtoFind).transform.GetChild(0).transform.position;
-                GameObject.Find(objectToSpawn.SpawnObject.transform.name).transform.position = new Vector3(CellPosition.x, (CellPosition.y + 1f), CellPosition.z);
+                Vector3 CellPosition = GameObject.Find(MazeName).transform.FindChild(CellGOtoFind).FindChild("Cell Floor").transform.position;
+                GameObject.Find(objectToSpawn.SpawnObject.transform.name).transform.position = new Vector3(CellPosition.x, (CellPosition.y + objectToSpawn.SpawnObject.transform.localScale.y), CellPosition.z);
+                
             }
         }
 

@@ -10,11 +10,11 @@ namespace Assets.Scripts
     public abstract class Maze
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>();
-        private MazeSpawnGOManager MSPM = new MazeSpawnGOManager();
         public GameObject MazeGO;
         private Vector3 ThisMazeScale,ThisMazePosition;
         private MazeDrawer Drawer;
         private string mazeName;
+        private MazeSpawnGOManager MSPM; 
         private MazeCell startCell;
         private MazeCell finishCell;
 
@@ -169,7 +169,10 @@ namespace Assets.Scripts
             {
                 throw new InvalidOperationException("The maze has no defined finish cell.");
             }
+
+            MazeGO = new GameObject(mazeName);
             Drawer = new MazeDrawer(this);
+
             Drawer.drawMaze();
             updateMazeGOProperties();
             
@@ -182,6 +185,7 @@ namespace Assets.Scripts
         {
             MazeGO.transform.localScale = ThisMazeScale;
             MazeGO.transform.position = ThisMazePosition;
+            MazeGO.name = mazeName;
             MSPM.SpawnAllGO();
         }
 
@@ -206,10 +210,11 @@ namespace Assets.Scripts
         protected void IntializeMaze(string MazeName)
         {
             mazeName = MazeName;
-            MazeGO = new GameObject(mazeName);
+     
             ThisMazeScale = new Vector3(.5f, 10f, .5f);
             ThisMazePosition = new Vector3(0f, 0f, 0f);
-            
+            MSPM = new MazeSpawnGOManager(mazeName);
+
         }
     }
 }
