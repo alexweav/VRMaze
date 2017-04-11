@@ -10,18 +10,37 @@ namespace Assets.Scripts
 		public Text promptText;
 		public Image promptBox;
 
-		FreeRoamTut frTasks = new FreeRoamTut ();
+		//FreeRoamTut frTasks = new FreeRoamTut ();
 
 		private string message;
+		private bool showPrompt;
+		private float delayPrompt;
 
 		void Start(){
-			displayPrompt (false);
-			setMsg ();
-			StartCoroutine (prompt (3.0f));
+			//displayPrompt (false);
+			//setMsg ();
+			//StartCoroutine (prompt (3.0f));
 		}
 
-		void setMsg(){
-			message = frTasks.getMsg ();
+		void Update(){
+			//if (message != frTasks.getMsg ()) {
+			//	Debug.Log ("Start new prompted!");
+			//	setMsg ();
+			//	StartCoroutine (prompt (0.0f));
+			//}
+			if (showPrompt){
+				
+			}
+		}
+
+		void setMsg(string str){
+			
+		}
+
+		void setPrompt(bool status,string msg, float delay){
+			showPrompt = status;
+			message = msg;
+			delayPrompt = delay;
 		}
 
 		/// <summary>
@@ -37,6 +56,8 @@ namespace Assets.Scripts
 				promptText.text = message.Substring(0, i);
 				yield return new WaitForSeconds(.03f);
 			}
+			yield return new WaitForSeconds (3.0f);
+			displayPrompt (false);
 		}
 
 		public void displayPrompt(bool status){

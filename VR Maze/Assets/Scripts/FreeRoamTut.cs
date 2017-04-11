@@ -9,23 +9,40 @@ namespace Assets.Scripts
 	public class FreeRoamTut: MonoBehaviour{
 
 		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
-		private int msgIndex = 0;
-		//private bool taskCompleted = false;
+		public int msgIndex = 0;
+		private float playerFaced;
 
 		private GameObject player;
 
 
 		void Start(){
 			player = GameObject.Find ("MainPlayer");
+		}
 
+		void Update(){
+			switch (msgIndex) {
+			case 0:
+				taskOne();
+				break;
+			case 1:
+				taskTwo();
+				break;
+			}
 		}
 
 		public string getMsg(){
 			return msgState [msgIndex];
 		}
+	
+		public void taskOne(){
+			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
+			if (walkingController.camViewRotX > 50) {
+				msgIndex++;
+			}
+		}
 
-		public string msgOne(){
-			return  msgState [msgIndex];
+		public void taskTwo(){
+			Debug.Log ("In task two");
 		}
 	}
 }
