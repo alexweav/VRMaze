@@ -31,7 +31,10 @@ namespace Assets.Scripts
             MazeGenerator generator = new RandomMazeGenerator(width, height);
             Maze maze = generator.Generate();
             maze.SetXYZScale(.5f, 6, .5f);
+            maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
             maze.Draw();
+
+            HUDMiniMapGenerator HUDMM = new HUDMiniMapGenerator(maze);
         }
 
         /// <summary>
@@ -44,6 +47,10 @@ namespace Assets.Scripts
             Maze maze = generator.Generate();
             maze.SetXYZScale(.5f, 6, .5f);
             maze.Draw();
+            maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
+            HUDMiniMapGenerator HUDMM = new HUDMiniMapGenerator(maze);
         }
+
+      
     }
 }
