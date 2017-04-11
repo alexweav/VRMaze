@@ -10,8 +10,8 @@ namespace Assets.Scripts
 		public CapsuleCollider playerCollider;
 		public bool freezePlayer = false;
 
-		private float camViewRotX;	//The value of the camera when you look up or down
-		private float playerSpeed;
+		public float camViewRotX;	//The value of the camera when you look up or down
+		public float playerSpeed;
 
 		Speed speed = new Speed ();
 
@@ -33,11 +33,9 @@ namespace Assets.Scripts
 			} else {
 				speed.stop ();	
 			}
-			Debug.Log (speed.getCurrentSpeed ());
-
              
             Vector3 MainPlayerPOS = playerCollider.transform.position;
-            GameObject.Find("Icon").transform.position = new Vector3(MainPlayerPOS.x / 10 + INTIconPOS.x, 20.001f, MainPlayerPOS.z / 10 + INTIconPOS.z);
+            //GameObject.Find("Icon").transform.position = new Vector3(MainPlayerPOS.x / 10 + INTIconPOS.x, 20.001f, MainPlayerPOS.z / 10 + INTIconPOS.z);
 
     }
 
