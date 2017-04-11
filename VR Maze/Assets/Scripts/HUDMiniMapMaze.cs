@@ -8,7 +8,10 @@ namespace Assets.Scripts
 {
     class HUDMiniMapMaze : Maze
     {
+        void Update()
+        {
 
+        }
 
         public HUDMiniMapMaze(Maze mazeToDuplicate)
         {
@@ -29,6 +32,5 @@ namespace Assets.Scripts
             base.updateMazeGOProperties();
         }
 
-        
     }
 }

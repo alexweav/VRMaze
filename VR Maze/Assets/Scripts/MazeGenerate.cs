@@ -8,6 +8,7 @@ namespace Assets.Scripts
     {
 		public int height = 15;
 		public int width = 15;
+        private HUDMiniMap HMM;
         // Use this for initialization
         void Start()
         {
@@ -18,7 +19,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-
+            HMM.UpdateIconPOS();
         }
 
         /// <summary>
@@ -53,8 +54,9 @@ namespace Assets.Scripts
 
         void DrawMiniMapMaze(Maze mazeToDuplicate)
         {
-            MazeGenerator generator = new HUDMiniMapGenerator(mazeToDuplicate);
+            MazeGenerator generator = new HUDMiniMapMazeGenerator(mazeToDuplicate);
             Maze maze = generator.Generate();
+            HMM = new HUDMiniMap(maze);
 
         }
 
