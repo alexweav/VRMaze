@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class WinMenu : MonoBehaviour
 {
 
-    public Transform mainMenu;
-    public Transform instructMenu;
-    public Transform optionMenu;
+    public Transform winMenu;
     public Transform loading;
 
     public float timer = 3f;//length of gaze required before action is taken
@@ -20,12 +18,8 @@ public class LevelManager : MonoBehaviour
     /*********************************************************
      variables are set when the corresponding button is pressed 
      **********************************************************/
-    private bool startScene = false; //switches scenes
-    private bool showInstruct = false; //switches to InstructMenu
-    private bool goBack = false; //returns to previous menu
-    private bool showOptions = false; //switches to game options menu
-
-    private string scene = "MainMenu"; //initially set to load itself if no other scene is designated
+    private bool playAgain = false; //restarts the scene
+    private bool mainMenu = false; //switches to MainMenu
 
     private void Start()
     {
@@ -58,49 +52,28 @@ public class LevelManager : MonoBehaviour
                  * depending on which action is to be taken, the proper
                  * function will be called
                  * **********************************************************/
-                if (startScene == true) //switch scenes
+                if (mainMenu == true) //switch scenes
                 {
                     //Debug.Log("load "+scene);
                     loading.gameObject.SetActive(true);
-                    optionMenu.gameObject.SetActive(false);
-                    SceneManager.LoadScene(scene);
+                    winMenu.gameObject.SetActive(false);
+                    SceneManager.LoadScene("MainMenu");
                 }
-                else if (showOptions == true) //switch to options menu
+                else if (playAgain == true) //switch to options menu
                 {
                     //Debug.Log("options");
-                    optionMenu.gameObject.SetActive(true);
-                    mainMenu.gameObject.SetActive(false);
-                }
-                else if (showInstruct == true) //show instructions menu
-                {
-                    //Debug.Log("instructions");
-                    instructMenu.gameObject.SetActive(true);
-                    mainMenu.gameObject.SetActive(false);
-                }
-                else if (goBack == true) //return to previous menu
-                {
-                    //Debug.Log("back");
-                    if (instructMenu.gameObject.activeSelf)
-                    {
-                       // Debug.Log("inst");
-                        mainMenu.gameObject.SetActive(true);
-                        instructMenu.gameObject.SetActive(false);
-                    }
-                    else if (optionMenu.gameObject.activeSelf)
-                    {
-                        //Debug.Log("opt");
-                        mainMenu.gameObject.SetActive(true);
-                        optionMenu.gameObject.SetActive(false);
-                    }
+                    loading.gameObject.SetActive(true);
+                    winMenu.gameObject.SetActive(false);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
 
                 resetVars();
             }
-            
+
         }
         else //iff user stops gaze before threshold time is reached
         {
-           // Debug.Log("Stop gaze");
+            // Debug.Log("Stop gaze");
             resetVars();
         }
 
@@ -118,40 +91,25 @@ public class LevelManager : MonoBehaviour
 
     private void resetVars()
     {
-       // Debug.Log("reset");
+        // Debug.Log("reset");
         lookTimer = 0f;
         myRenderer.material.SetFloat("cutoff", 0f);
-        startScene = false;
-        showInstruct = false;
-        goBack = false;
-        showOptions = false;
-        scene = "MainMenu";
+        playAgain = false;
+        mainMenu = false;
         myCollider.enabled = false;
     }
-   
-    public void optionsMenu(bool pick)
+
+    public void PlayAgain(bool pick)
     {
-       // Debug.Log("show opt");
-        showOptions = pick;
+        // Debug.Log("show opt");
+        playAgain = pick;
     }
 
-    public void setScene(string name)
+    public void MainMenu(bool pick)
     {
-       // Debug.Log("new scene");
-        scene = name;
-        startScene = true;
-    }
-
-    public void InstructMenu(bool pick)
-    {
-       // Debug.Log("show inst");
-        showInstruct = pick;
-    }
-
-    public void backMenu(bool pick)
-    {
-      //  Debug.Log("go back");
-        goBack = pick;
+        // Debug.Log("new scene");
+        mainMenu = pick;
     }
 
 }
+
