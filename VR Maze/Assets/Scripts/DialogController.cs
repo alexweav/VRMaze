@@ -10,36 +10,29 @@ namespace Assets.Scripts
 		public Text promptText;
 		public Image promptBox;
 
-		//FreeRoamTut frTasks = new FreeRoamTut ();
+		FreeRoamTut frTasks = new FreeRoamTut ();
 
 		private string message;
-		private bool showPrompt;
+		public bool showPrompt;
 		private float delayPrompt;
 
 		void Start(){
-			//displayPrompt (false);
-			//setMsg ();
-			//StartCoroutine (prompt (3.0f));
+			displayPrompt (false);
+			setPrompt (true, frTasks.getMsg(), 3.0f);
+			StartCoroutine (prompt ());
 		}
 
 		void Update(){
-			//if (message != frTasks.getMsg ()) {
-			//	Debug.Log ("Start new prompted!");
-			//	setMsg ();
-			//	StartCoroutine (prompt (0.0f));
-			//}
-			if (showPrompt){
-				
+			if (frTasks.taskCompleted()){
+				StartCoroutine (prompt ());
 			}
 		}
 
-		void setMsg(string str){
-			
-		}
 
-		void setPrompt(bool status,string msg, float delay){
+
+		public void setPrompt(bool status,string msg, float delay){
 			showPrompt = status;
-			message = msg;
+			message = frTasks.getMsg();
 			delayPrompt = delay;
 		}
 
@@ -48,8 +41,8 @@ namespace Assets.Scripts
 		/// Creates typewriter effect for displaying dialog.
 		/// </summary>
 		/// <returns>Edits promptBox</returns>
-		IEnumerator prompt(float delay){
-			yield return new WaitForSeconds(delay);
+		IEnumerator prompt(){
+			yield return new WaitForSeconds(delayPrompt);
 			displayPrompt (true);
 			for (int i = 0; i < (message.Length+1); i++)
 			{

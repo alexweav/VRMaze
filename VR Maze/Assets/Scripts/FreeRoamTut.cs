@@ -10,16 +10,16 @@ namespace Assets.Scripts
 
 		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
 		public int msgIndex = 0;
-		private float playerFaced;
 
 		private GameObject player;
 
+		DialogController dialogPrompt = new DialogController();
 
 		void Start(){
 			player = GameObject.Find ("MainPlayer");
 		}
 
-		void Update(){
+		public void chechState(){
 			switch (msgIndex) {
 			case 0:
 				taskOne();
@@ -33,11 +33,16 @@ namespace Assets.Scripts
 		public string getMsg(){
 			return msgState [msgIndex];
 		}
+
+		public bool taskCompleted(){
+			return false;
+		}
 	
 		public void taskOne(){
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
 			if (walkingController.camViewRotX > 50) {
-				msgIndex++;
+				dialogPrompt.setPrompt (true, getMsg (), 0.0f);
+				dialogPrompt.showPrompt = true;
 			}
 		}
 
