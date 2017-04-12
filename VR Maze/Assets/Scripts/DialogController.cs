@@ -16,26 +16,26 @@ namespace Assets.Scripts
 		public bool showPrompt;
 		private float delayPrompt;
 
-		void Start(){
-			displayPrompt (false);
-			setPrompt (true, frTasks.getMsg(), 3.0f);
-			StartCoroutine (prompt ());
-		}
-
+//		void Start(){
+//			displayPrompt (false);
+//			//setPrompt (true, frTasks.getMsg(), 3.0f);
+//			StartCoroutine (prompt ());
+//		}
+//
 		void Update(){
 			if (frTasks.taskCompleted()){
-				StartCoroutine (prompt ());
+			//	StartCoroutine (prompt ());
 			}
 		}
 
 
-
-		public void setPrompt(bool status,string msg, float delay){
-			showPrompt = status;
-			message = frTasks.getMsg();
-			delayPrompt = delay;
-		}
-
+//
+//		public void setPrompt(bool status,string msg, float delay){
+//			showPrompt = status;
+//			message = frTasks.getMsg();
+//			delayPrompt = delay;
+//		}
+//
 		/// <summary>
 		/// IEnumberator works in conjunction with StartCoroutine()
 		/// Creates typewriter effect for displaying dialog.

@@ -13,8 +13,6 @@ namespace Assets.Scripts
 
 		private GameObject player;
 
-		DialogController dialogPrompt = new DialogController();
-
 		void Start(){
 			player = GameObject.Find ("MainPlayer");
 		}
@@ -41,8 +39,7 @@ namespace Assets.Scripts
 		public void taskOne(){
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
 			if (walkingController.camViewRotX > 50) {
-				dialogPrompt.setPrompt (true, getMsg (), 0.0f);
-				dialogPrompt.showPrompt = true;
+				
 			}
 		}
 
