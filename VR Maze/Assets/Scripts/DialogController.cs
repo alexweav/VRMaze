@@ -16,31 +16,27 @@ namespace Assets.Scripts
 		public bool showPrompt;
 		private float delayPrompt;
 
-
-
-
 		void Start(){
 			displayPrompt (false);
+			frTasks.allowTasksToBeCompleted = false; //Overrides the call in displayPrompt so player cannot achieve tasks before the list of tasks begin.
 			setPrompt (true, frTasks.getMsg(), 3.0f);
 			StartCoroutine (prompt ());
 		}
-//
+
 		void Update(){
 			frTasks.checkState();
-			if (frTasks.taskCompleted()){
+			if (frTasks.taskComplete){
 				setPrompt (true, frTasks.getMsg (), 0.0f);
 				StartCoroutine (prompt ());
 			}
 		}
-
-
-//
+			
 		public void setPrompt(bool status,string msg, float delay){
 			showPrompt = status;
 			message = frTasks.getMsg();
 			delayPrompt = delay;
 		}
-//
+
 		/// <summary>
 		/// IEnumberator works in conjunction with StartCoroutine()
 		/// Creates typewriter effect for displaying dialog.
@@ -72,4 +68,3 @@ namespace Assets.Scripts
 		}
 	}
 }
-
