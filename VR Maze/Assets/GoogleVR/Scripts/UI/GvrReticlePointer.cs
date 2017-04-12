@@ -33,7 +33,7 @@ public class GvrReticlePointer : GvrBasePointer {
   // Current outer angle of the reticle (in degrees).
   private float reticleOuterAngle = 2f;
   // Current distance of the reticle (in meters).
-  private float reticleDistanceInMeters = 0.5f;
+  private float reticleDistanceInMeters = 50f;
 
   // Minimum inner angle of the reticle (in degrees).
   private const float kReticleMinInnerAngle = 1f;
