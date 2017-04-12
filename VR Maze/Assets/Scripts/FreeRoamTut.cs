@@ -9,22 +9,24 @@ namespace Assets.Scripts
 	public class FreeRoamTut: MonoBehaviour{
 
 		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
-		public int msgIndex = 0;
-
-		private GameObject player;
+		private int msgIndex = 0;
+		private bool taskComplete = false;
+		private bool allowTasksToBeCompleted;
 
 		void Start(){
-			player = GameObject.Find ("MainPlayer");
+			
 		}
 
-		public void chechState(){
-			switch (msgIndex) {
-			case 0:
-				taskOne();
-				break;
-			case 1:
-				taskTwo();
-				break;
+		public void checkState(){
+			if (allowTasksToBeCompleted) {
+				switch (msgIndex) {
+				case 0:
+					taskOne ();
+					break;
+				case 1:
+					taskTwo ();
+					break;
+				}
 			}
 		}
 
@@ -33,13 +35,15 @@ namespace Assets.Scripts
 		}
 
 		public bool taskCompleted(){
-			return false;
+			return taskComplete;
 		}
 	
 		public void taskOne(){
+			GameObject player = GameObject.Find ("MainPlayer");
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
-			if (walkingController.camViewRotX > 50) {
-				
+			if (walkingController.camViewRotY > 150 && walkingController.camViewRotY < 180) {
+				taskComplete = true;
+				msgIndex++;
 			}
 		}
 

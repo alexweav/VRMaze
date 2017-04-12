@@ -16,25 +16,27 @@ namespace Assets.Scripts
 		public bool showPrompt;
 		private float delayPrompt;
 
-//		void Start(){
-//			displayPrompt (false);
-//			//setPrompt (true, frTasks.getMsg(), 3.0f);
-//			StartCoroutine (prompt ());
-//		}
+		void Start(){
+			displayPrompt (false);
+			setPrompt (true, frTasks.getMsg(), 3.0f);
+			StartCoroutine (prompt ());
+		}
 //
 		void Update(){
+			frTasks.checkState();
 			if (frTasks.taskCompleted()){
-			//	StartCoroutine (prompt ());
+				setPrompt (true, frTasks.getMsg (), 0.0f);
+				StartCoroutine (prompt ());
 			}
 		}
 
 
 //
-//		public void setPrompt(bool status,string msg, float delay){
-//			showPrompt = status;
-//			message = frTasks.getMsg();
-//			delayPrompt = delay;
-//		}
+		public void setPrompt(bool status,string msg, float delay){
+			showPrompt = status;
+			message = frTasks.getMsg();
+			delayPrompt = delay;
+		}
 //
 		/// <summary>
 		/// IEnumberator works in conjunction with StartCoroutine()
@@ -49,7 +51,7 @@ namespace Assets.Scripts
 				promptText.text = message.Substring(0, i);
 				yield return new WaitForSeconds(.03f);
 			}
-			yield return new WaitForSeconds (3.0f);
+			yield return new WaitForSeconds (5.0f);
 			displayPrompt (false);
 		}
 
