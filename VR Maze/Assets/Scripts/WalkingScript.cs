@@ -29,15 +29,15 @@ namespace Assets.Scripts
 						increaseSpeed (playerSpeed);
 					}
 				} else if (camViewRotX > 270 && camViewRotX < 350) {
-					speed.stop ();
+					stopPlayer ();
 				}
 				walk (currentSpeed());
 			} else {
-				speed.stop ();	
+				stopPlayer ();	
 			}
              
             Vector3 MainPlayerPOS = playerCollider.transform.position;
-            //GameObject.Find("Icon").transform.position = new Vector3(MainPlayerPOS.x / 10 + INTIconPOS.x, 20.001f, MainPlayerPOS.z / 10 + INTIconPOS.z);
+            GameObject.Find("Icon").transform.position = new Vector3(MainPlayerPOS.x / 10 + INTIconPOS.x, 20.001f, MainPlayerPOS.z / 10 + INTIconPOS.z);
 
     	}
 
@@ -48,13 +48,8 @@ namespace Assets.Scripts
 		public void increaseSpeed(float speedValue){
 			speed.speedUp (speedValue);
 		}
-
-		public bool isPlayerWalking(){
-			if (speed.getCurrentSpeed () > 0) {
-				return true;
-			} else {
-				return false;
-			}
+		public void stopPlayer(){
+			speed.stop ();
 		}
 
 	    public void walk(float speed){

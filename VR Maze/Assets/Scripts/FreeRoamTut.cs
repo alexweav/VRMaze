@@ -11,7 +11,7 @@ namespace Assets.Scripts
 
 		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!",
 									 "Great!\n Now to move forward, look down.",
-									 "To stop, look up towards the sky.\nNotice, you don't need to look all\n the way up to stop.",
+									 "Perfect! Now start walking, then look up to stop.\nNotice, you don't need to look all\n the way up to stop.",
 									 "Well done!\nNow, find your way out of this maze!\nGood Luck!"};
 		private int msgIndex = 0;
 		public bool taskComplete = false;
@@ -67,7 +67,7 @@ namespace Assets.Scripts
 			if (walkingController.currentSpeed() > 0) {
 				s.Start ();
 				print (s.ElapsedMilliseconds);
-				if (s.ElapsedMilliseconds > 1000) {
+				if (s.ElapsedMilliseconds > 200) {
 					taskCompleted ();
 				}
 			}
@@ -79,14 +79,13 @@ namespace Assets.Scripts
 		public void taskThree(){
 			GameObject player = GameObject.Find ("MainPlayer");
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
-			//print (walkingController.currentSpeed ());
-			if (!walkingController.isPlayerWalking()) {
-				
+			if (walkingController.camViewRotX > 270) {
 				taskCompleted ();
 			}
 		}
 		/// <summary>
 		/// Task Five: Player completed the maze.
+		/// Not sure if this is necessary. Depends how maze compeletion is handled.
 		/// </summary>
 		public void taskFour(){
 			
