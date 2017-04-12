@@ -46,7 +46,7 @@ public class GvrReticlePointer : GvrBasePointer {
   // Minimum distance of the reticle (in meters).
   private const float kReticleDistanceMin = 0.0f;
   // Maximum distance of the reticle (in meters).
-  private const float kReticleDistanceMax = 50.0f;
+  private const float kReticleDistanceMax = 100.0f;
 
   // Current inner and outer diameters of the reticle,
   // before distance multiplication.
