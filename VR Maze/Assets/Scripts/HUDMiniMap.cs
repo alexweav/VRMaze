@@ -9,7 +9,7 @@ namespace Assets.Scripts
     
 
 
-    public class HUDMiniMap 
+    public class HUDMiniMap  
     {
 
         private Maze HMMM;
@@ -20,7 +20,7 @@ namespace Assets.Scripts
 
         
 
-   
+        
 
 
         public HUDMiniMap(Maze MiniMapMaze)
@@ -84,9 +84,10 @@ namespace Assets.Scripts
 
         private void OnIconCollisionEnter()
         {
-            CapsuleCollider IconCollision = Icon.GetComponent<CapsuleCollider>();
-            bool f = IconCollision.isTrigger;
-            Debug.Log(f);
+            
+            //CapsuleCollider IconCollision = Icon.GetComponent<CapsuleCollider>();
+           // bool f = IconCollision.isTrigger;
+           // Debug.Log(f);
         }
 
 
