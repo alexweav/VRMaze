@@ -13,7 +13,7 @@ namespace Assets.Scripts
 									 "Great!\n Now to move forward, look down.",
 									 "To stop, look up towards the sky.\nNotice, you don't need to look all\n the way up to stop.",
 									 "Well done!\nNow, find your way out of this maze!\nGood Luck!"};
-		private int msgIndex = 1;
+		private int msgIndex = 0;
 		public bool taskComplete = false;
 		public bool allowTasksToBeCompleted = false;
 
@@ -29,6 +29,12 @@ namespace Assets.Scripts
 					break;
 				case 1:
 					taskTwo ();
+					break;
+				case 2:
+					taskThree ();
+					break;
+				case 3:
+					taskFour ();
 					break;
 				}
 			}
@@ -73,7 +79,9 @@ namespace Assets.Scripts
 		public void taskThree(){
 			GameObject player = GameObject.Find ("MainPlayer");
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
-			if (walkingController.currentSpeed() == 0) {
+			//print (walkingController.currentSpeed ());
+			if (!walkingController.isPlayerWalking()) {
+				
 				taskCompleted ();
 			}
 		}

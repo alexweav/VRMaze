@@ -26,7 +26,7 @@ namespace Assets.Scripts
 
 				if (playerSpeed > 0 && playerSpeed < 15) {
 					if (playerSpeed > speed.getCurrentSpeed ()) {
-						speed.speedUp (playerSpeed);
+						increaseSpeed (playerSpeed);
 					}
 				} else if (camViewRotX > 270 && camViewRotX < 350) {
 					speed.stop ();
@@ -43,6 +43,18 @@ namespace Assets.Scripts
 
 		public float currentSpeed(){
 			return speed.getCurrentSpeed ();
+		}
+
+		public void increaseSpeed(float speedValue){
+			speed.speedUp (speedValue);
+		}
+
+		public bool isPlayerWalking(){
+			if (speed.getCurrentSpeed () > 0) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 
 	    public void walk(float speed){
