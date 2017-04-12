@@ -37,14 +37,20 @@ namespace Assets.Scripts
             
             foreach (MazeCell cell in mazeCellList )
             {
+                //Loads pre-fab then Instantiates it
+                cell.mazeCellGO = GameObject.Instantiate((GameObject)Resources.Load("Maze Cell Templet"));
+
                 //Creates an empty parent game object cell which contains the path walls and cell floor for each cell
-                cell.mazeCellGO = new GameObject("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
+                cell.mazeCellGO.name =("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
 
                 //Creates the position for the wall also passes the cell game object the walls are associated
                 positionWall(cell.cellLocationX, cell.cellLocationZ, true, cell.EastPath, cell.SouthPath, true, cell.mazeCellGO);
 
                 //Generates the Floor for the current cell and passes the cell game object the floor walls are associated with
                 generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), cell.mazeCellGO);
+
+
+                
             }
         }
 

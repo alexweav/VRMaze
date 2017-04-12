@@ -32,5 +32,10 @@ namespace Assets.Scripts
             base.updateMazeGOProperties();
         }
 
+        private void OnTriggerEnter(Collider collider)
+        {
+
+        }
+
     }
 }

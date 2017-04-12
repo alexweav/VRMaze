@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public abstract class Maze
+    public abstract class Maze 
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>();
         public GameObject MazeGO;

@@ -14,7 +14,7 @@ namespace Assets.Scripts
         public Camera MiniMapCamera;
         private Maze mazeToDuplicate;
         private HUDMiniMapMaze HUDMMM;
-        private GameObject Icon;
+    
         
 
         public HUDMiniMapMazeGenerator(Maze mazeToCreate)
