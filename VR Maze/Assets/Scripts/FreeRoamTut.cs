@@ -11,14 +11,12 @@ namespace Assets.Scripts
 		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
 		private int msgIndex = 0;
 		private bool taskComplete = false;
-		private bool allowTasksToBeCompleted;
+		public bool allowTasksToBeCompleted = true;
 
-		void Start(){
-			
-		}
 
 		public void checkState(){
 			if (allowTasksToBeCompleted) {
+				taskComplete = false;
 				switch (msgIndex) {
 				case 0:
 					taskOne ();
@@ -41,7 +39,7 @@ namespace Assets.Scripts
 		public void taskOne(){
 			GameObject player = GameObject.Find ("MainPlayer");
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
-			if (walkingController.camViewRotY > 150 && walkingController.camViewRotY < 180) {
+			if (walkingController.camViewRotY > 240 && walkingController.camViewRotY < 300) {
 				taskComplete = true;
 				msgIndex++;
 			}

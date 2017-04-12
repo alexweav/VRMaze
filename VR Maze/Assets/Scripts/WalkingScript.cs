@@ -9,7 +9,6 @@ namespace Assets.Scripts
 		public Rigidbody playerRigidbody;
 		public CapsuleCollider playerCollider;
 		public bool freezePlayer = false;
-		private bool playerLookedAround;
 
 		public float camViewRotX;	//The value of the camera when you look up or down
 		public float camViewRotY;	//Value of camera when look left or right. Mainly for tasks in tutorial mode.
@@ -23,6 +22,7 @@ namespace Assets.Scripts
 			if (!freezePlayer) {
 				camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 				camViewRotY = cameraView.transform.eulerAngles.y; 
+				Debug.Log (camViewRotY);
 				playerSpeed = (float)Math.Pow (camViewRotX, 2) / 540;
 
 				if (playerSpeed > 0 && playerSpeed < 15) {

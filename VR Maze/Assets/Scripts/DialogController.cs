@@ -16,6 +16,9 @@ namespace Assets.Scripts
 		public bool showPrompt;
 		private float delayPrompt;
 
+
+
+
 		void Start(){
 			displayPrompt (false);
 			setPrompt (true, frTasks.getMsg(), 3.0f);
@@ -51,13 +54,14 @@ namespace Assets.Scripts
 				promptText.text = message.Substring(0, i);
 				yield return new WaitForSeconds(.03f);
 			}
-			yield return new WaitForSeconds (5.0f);
+			yield return new WaitForSeconds (4.0f);
 			displayPrompt (false);
 		}
 
 		public void displayPrompt(bool status){
 			promptBox.enabled = status;
 			promptText.enabled = status;
+			frTasks.allowTasksToBeCompleted = !status;
 			disableWalking (status);
 		}
 
