@@ -7,10 +7,10 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public abstract class Maze 
+    public abstract class Maze
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>();
-        public GameObject MazeGO;
+        public GameObject MazeGO, MazeCellPlaceHolder;
         private Vector3 ThisMazeScale,ThisMazePosition;
         private MazeDrawer Drawer;
         private string mazeName;
@@ -27,8 +27,8 @@ namespace Assets.Scripts
         /// <param name="southPath"> bool value if a south path exist to another cell </param>
         public void addMazeCell(int x, int z, bool eastPath, bool southPath)
         {
-            MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
-            CellsInMaze.Add(currentCell);      //Adds mazeCell to list
+            createNewMazeCell(x, z, eastPath, southPath); 
+            CellsInMaze.Add(createNewMazeCell(x, z, eastPath, southPath));      //Adds mazeCell to list
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Assets.Scripts
             holder.XCellposition = z;            
             MSPM.addObjectToSpawn(holder);		
         }
-  
+            
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
         /// </summary>
@@ -215,6 +215,17 @@ namespace Assets.Scripts
             ThisMazePosition = new Vector3(0f, 0f, 0f);
             MSPM = new MazeSpawnGOManager(mazeName);
 
+        }
+
+        public MazeCell createNewMazeCell(int x, int z, bool eastPath, bool southPath)
+        {
+            MazeCellPlaceHolder = (GameObject)GameObject.Instantiate(Resources.Load("Maze Cell Templet"));
+            MazeCell currentCell = MazeCellPlaceHolder.GetComponent<MazeCell>();
+            currentCell.cellLocationX = x;
+            currentCell.cellLocationZ = z;
+            currentCell.EastPath = eastPath;
+            currentCell.SouthPath = southPath;
+            return currentCell;
         }
     }
 }
