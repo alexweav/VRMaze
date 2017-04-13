@@ -58,15 +58,15 @@ namespace Assets.Scripts.Tests {
             MazeGenerator generator = new HardcodedTestMazeGenerator();
             Maze maze = generator.Generate();         
             Assert.AreEqual(maze.CellsInMaze.Count, 9);
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(1, 1, false, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(2, 1, true, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(3, 1, false, false)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(1, 2, false, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(2, 2, true, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(3, 2, false, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(1, 3, true, false)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(2, 3, false, false)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(3, 3, false, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 1, false, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 1, true, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 1, false, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 2, false, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 2, true, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 2, false, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 3, true, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 3, false, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 3, false, false)));
         }
 
         [Test]
@@ -90,15 +90,15 @@ namespace Assets.Scripts.Tests {
             graph.AddEdge(new Pair<int, int>(2, 3), new Pair<int, int>(3, 3));
             Maze maze = new RandomMaze(graph);
             Assert.AreEqual(maze.CellsInMaze.Count, 9);
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(1, 1, false, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(2, 1, true, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(3, 1, false, false)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(1, 2, false, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(2, 2, true, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(3, 2, false, true)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(1, 3, true, false)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(2, 3, false, false)));
-            Assert.IsTrue(maze.ContainsCell(maze.createNewMazeCell(3, 3, false, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 1, false, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 1, true, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 1, false, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 2, false, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 2, true, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 2, false, true)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(1, 3, true, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(2, 3, false, false)));
+            Assert.IsTrue(maze.ContainsCell(new MazeCell(3, 3, false, false)));
         }
 
         [Test]

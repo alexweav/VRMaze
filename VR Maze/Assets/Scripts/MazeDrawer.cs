@@ -38,20 +38,19 @@ namespace Assets.Scripts
             foreach (MazeCell cell in mazeCellList )
             {
                 //Loads pre-fab then Instantiates it
-                GameObject MazeCellGO = cell.GetComponent<GameObject>();
-                Debug.Log(MazeCellGO.name);
+                cell.mazeCellGO = GameObject.Instantiate((GameObject)Resources.Load("Maze Cell Templet"));
 
                 //Creates an empty parent game object cell which contains the path walls and cell floor for each cell
-                cell.gameObject.name =("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
+                cell.mazeCellGO.name =("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
 
-               
                 //Creates the position for the wall also passes the cell game object the walls are associated
-                positionWall(cell.cellLocationX, cell.cellLocationZ, true, cell.EastPath, cell.SouthPath, true, MazeCellGO);
+                positionWall(cell.cellLocationX, cell.cellLocationZ, true, cell.EastPath, cell.SouthPath, true, cell.mazeCellGO);
 
                 //Generates the Floor for the current cell and passes the cell game object the floor walls are associated with
-                generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), MazeCellGO);
+                generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), cell.mazeCellGO);
 
-                        
+
+                
             }
         }
 
@@ -66,19 +65,19 @@ namespace Assets.Scripts
 
                 //Generates North Borders in maze
                 if (mazeCellList.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ - 1)) == false)
-                    positionWall(cell.cellLocationX, cell.cellLocationZ, false, true, true, true, cell.gameObject);
+                    positionWall(cell.cellLocationX, cell.cellLocationZ, false, true, true, true, cell.mazeCellGO);
 
                 //Generates East Borders in maze
                 if (mazeCellList.Exists(x => (x.cellLocationX == cell.cellLocationX + 1) && (x.cellLocationZ == cell.cellLocationZ)) == false)
-                    positionWall(cell.cellLocationX, cell.cellLocationZ, true, false, true, true, cell.gameObject);
+                    positionWall(cell.cellLocationX, cell.cellLocationZ, true, false, true, true, cell.mazeCellGO);
 
                 //Generates South Borders in maze
                 if (mazeCellList.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ + 1)) == false)
-                    positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, false, true, cell.gameObject);
+                    positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, false, true, cell.mazeCellGO);
 
                 //Generates West Borders in maze
                 if (mazeCellList.Exists(x => (x.cellLocationX == cell.cellLocationX - 1) && (x.cellLocationZ == cell.cellLocationZ)) == false)
-                    positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, true, false, cell.gameObject);
+                    positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, true, false, cell.mazeCellGO);
             }
 
 

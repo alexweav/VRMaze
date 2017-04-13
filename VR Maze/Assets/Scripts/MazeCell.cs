@@ -6,39 +6,27 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    
     /// <summary>
     /// A single cell of a maze
     /// </summary>
-    public class MazeCell : MonoBehaviour
-    {       
-        
-        public PlayerCollision MCcolision;
+    public class MazeCell
+    {
+        public GameObject mazeCellGO;
+        public MazeCellCollision MCcolision;
         private bool southPath;
         private bool eastPath;
         private int[] cellLocation = new int[2];
-        
-        public MazeCell()
-        {
-
-        }
-            
-
 
         /// <summary>
         /// Constructor 4 arguments
         /// </summary>
-        /// 
-        /*
         public MazeCell(int x, int z, bool EastPath, bool SouthPath)
         {
             southPath = SouthPath;
             eastPath = EastPath;
             cellLocation[0] = x;
             cellLocation[1] = z;
-           
         }
-        */
 
         /// <summary>
         /// Get and set method for cellLocationX
@@ -63,7 +51,6 @@ namespace Assets.Scripts
             get
             {
                 return cellLocation[1];
-               
             }
             set
             {
@@ -122,6 +109,4 @@ namespace Assets.Scripts
             return base.GetHashCode();
         }
     }
-
-    
 }
