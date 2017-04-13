@@ -47,9 +47,6 @@ public class Pause : MonoBehaviour {
 				// Reset timer
 				lookTimer = 0f;
 
-				// disable collider
-				myCollider.enabled = false;
-
 				// Do something
 				Debug.Log("BUTTON HAS BEEN SELECTED!");
 				menuObject.SetActive (true);
