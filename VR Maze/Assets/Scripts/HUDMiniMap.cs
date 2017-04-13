@@ -13,8 +13,9 @@ namespace Assets.Scripts
     {
 
         private Maze HMMM;
-        GameObject HUDMiniMapGO;
+        GameObject HUDMiniMapGO, MainPlayerGO;
         GameObject Icon;
+        GameObject collidingGO;
         Vector3 INTiconPOS;
         Vector3 INTmainplayerPOS;
 
@@ -26,10 +27,10 @@ namespace Assets.Scripts
         public HUDMiniMap(Maze MiniMapMaze)
         {
             IntializeHUDMiniMap(MiniMapMaze);
-            
+            MainPlayerGO = GameObject.Find("MainPlayer");
 
 
-            //hideAllCellsParts();
+            hideAllCellsParts();
         }
 
         // Use this for initialization
@@ -39,7 +40,7 @@ namespace Assets.Scripts
         {
             Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
             Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x)/10, 0, (MPPosition.z - INTmainplayerPOS.z)/10) ;
-            OnIconCollisionEnter();      
+            OnIconCollision();      
         }
 
         private void IntializeHUDMiniMap(Maze MiniMapMaze)
@@ -82,12 +83,41 @@ namespace Assets.Scripts
                
         }
 
-        private void OnIconCollisionEnter()
+        private void OnIconCollision()
         {
+           PlayerCollision tempObject = MainPlayerGO.GetComponentInChildren<PlayerCollision>();
+           
+           if(tempObject.GetCollidingObject() != null)
+           {
+              collidingGO = tempObject.GetCollidingObject();
+              Debug.Log(collidingGO.name);
+           }
+
+            GameObject childGO = HMMM.MazeGO.transform.FindChild(collidingGO.name).gameObject;
+            childGO.SetActive(true);
+           foreach (Transform ChildGOT in collidingGO.transform)
+           {
+                childGO.transform.FindChild(ChildGOT.gameObject.name).gameObject.SetActive(true);
+           }
+
+            //Generates North Borders in maze
+           // if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ - 1)) == false)
+                //positionWall(cell.cellLocationX, cell.cellLocationZ, false, true, true, true, cell.mazeCellGO);
+
+            //Generates East Borders in maze
+            //if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX + 1) && (x.cellLocationZ == cell.cellLocationZ)) == false)
+                //positionWall(cell.cellLocationX, cell.cellLocationZ, true, false, true, true, cell.mazeCellGO);
+
+            //Generates South Borders in maze
+            //if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ + 1)) == false)
+                //positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, false, true, cell.mazeCellGO);
+
+            //Generates West Borders in maze
+            //if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX - 1) && (x.cellLocationZ == cell.cellLocationZ)) == false)
+               // positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, true, false, cell.mazeCellGO);
             
-            //CapsuleCollider IconCollision = Icon.GetComponent<CapsuleCollider>();
-           // bool f = IconCollision.isTrigger;
-           // Debug.Log(f);
+
+
         }
 
 

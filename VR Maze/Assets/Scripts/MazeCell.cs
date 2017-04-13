@@ -12,7 +12,7 @@ namespace Assets.Scripts
     public class MazeCell
     {
         public GameObject mazeCellGO;
-        public MazeCellCollision MCcolision;
+
         private bool southPath;
         private bool eastPath;
         private int[] cellLocation = new int[2];
