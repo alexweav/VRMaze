@@ -8,6 +8,7 @@ public class WinMenu : MonoBehaviour
 
     public Transform winMenu;
     public Transform loading;
+    public Transform congratScreen;
 
     public float timer = 3f;//length of gaze required before action is taken
     private float lookTimer = 0f;//length of time the user has looked at an object
