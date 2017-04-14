@@ -26,6 +26,7 @@ namespace Assets.Scripts
 		void Update(){
 			frTasks.checkState();
 			if (frTasks.taskComplete){
+				displayPrompt (false);
 				setPrompt (true, frTasks.getMsg (), 0.0f);
 				StartCoroutine (prompt ());
 			}
@@ -58,13 +59,19 @@ namespace Assets.Scripts
 			promptBox.enabled = status;
 			promptText.enabled = status;
 			frTasks.allowTasksToBeCompleted = !status;
-			disableWalking (status);
+
 		}
 
-		public void disableWalking(bool status){
-			GameObject player = GameObject.Find ("MainPlayer");
-			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
-			walkingController.freezePlayer = status;
-		}
+		/// <summary>
+		/// Disables the walking function has been removed.
+		/// 
+		/// Keeping this comment here for reference on how to disable walking.
+		/// 
+		/// GameObject player = GameObject.Find ("MainPlayer");
+		/// WalkingScript walkingController = player.GetComponent<WalkingScript> ();
+		/// walkingController.enabled = false;
+		/// 
+		/// </summary>
+
 	}
 }

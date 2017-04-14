@@ -67,7 +67,7 @@ namespace Assets.Scripts
 			if (walkingController.currentSpeed() > 0) {
 				s.Start ();
 				print (s.ElapsedMilliseconds);
-				if (s.ElapsedMilliseconds > 500) {
+				if (s.ElapsedMilliseconds > 200) {
 					taskCompleted ();
 				}
 			}
