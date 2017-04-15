@@ -7,6 +7,7 @@ public class Pause : MonoBehaviour {
 
 	public GameObject menuObject;
 	public GameObject player;
+
 	
 	// How long to look at Menu Item before taking action
 	public float timerDuration = 2f;
@@ -50,8 +51,12 @@ public class Pause : MonoBehaviour {
 				// Do something
 				Debug.Log("BUTTON HAS BEEN SELECTED!");
 				menuObject.SetActive (true);
+				//rotation RotationController = menuObject.GetComponent<rotation> (); 
+				//RotationController.enabled = false;
 				WalkingScript WalkingController = player.GetComponent<WalkingScript> ();
 				WalkingController.enabled = false;
+				menuObject.transform.parent = null;
+				
 
 			}     
 		}  else {
