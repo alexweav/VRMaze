@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public class PlayerCollision : MonoBehaviour
+    public class MainPlayerColliderInfo : MonoBehaviour
     {
         GameObject currentCollidingGO;
 
@@ -22,9 +22,12 @@ namespace Assets.Scripts
 
         }
 
-        void OnTriggerEnter(Collider other)
-        {           
-            currentCollidingGO = GameObject.Find(other.gameObject.transform.parent.name);   
+        void OnCollisionEnter(Collision other)
+        {  
+          if(other.gameObject.name == "Cell Floor")           
+            currentCollidingGO = GameObject.Find(other.gameObject.transform.parent.name);
+           // Debug.Log(currentCollidingGO.name);
+            
         }
 
         public GameObject GetCollidingObject()
