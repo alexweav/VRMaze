@@ -38,8 +38,8 @@ namespace Assets.Scripts
             foreach (MazeCell cell in mazeCellList )
             {
                 //Loads pre-fab then Instantiates it
-                cell.mazeCellGO = GameObject.Instantiate((GameObject)Resources.Load("Maze Cell Templet"));
-
+                //cell.mazeCellGO = GameObject.Instantiate((GameObject)Resources.Load("Maze Cell Templet"));
+                
                 //Creates an empty parent game object cell which contains the path walls and cell floor for each cell
                 cell.mazeCellGO.name =("Maze Cell (" + cell.cellLocationX.ToString() + "," + cell.cellLocationZ.ToString() + ")");
 

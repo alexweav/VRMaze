@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public abstract class Maze 
+    public abstract class Maze  
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>();
         public GameObject MazeGO;
@@ -25,8 +25,9 @@ namespace Assets.Scripts
         /// <param name="z"> z cell position </param>
         /// <param name="eastPath"> bool value if an east path exist to another cell  </param>
         /// <param name="southPath"> bool value if a south path exist to another cell </param>
-        public void addMazeCell(int x, int z, bool eastPath, bool southPath)
+        public void addMazeCell(int x, int z, bool eastPath, bool southPath)  
         {
+            //GameObject mazeCellGO = (GameObject)GameObject.Instantiate(Resources.Load("Maze Cell Templet"));
             MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
             CellsInMaze.Add(currentCell);      //Adds mazeCell to list
         }
@@ -202,6 +203,8 @@ namespace Assets.Scripts
             holder.XCellposition = z;            
             MSPM.addObjectToSpawn(holder);		
         }
+
+        
   
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
@@ -218,3 +221,5 @@ namespace Assets.Scripts
         }
     }
 }
+
+
