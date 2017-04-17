@@ -35,7 +35,7 @@ namespace Assets.Scripts
 
         void DrawMiniMapMaze(Maze mazeToDuplicate)
         {
-            MazeGenerator generator = new HUDMiniMapGenerator(mazeToDuplicate);
+            MazeGenerator generator = new HUDMiniMapMazeGenerator(mazeToDuplicate);
             Maze maze = generator.Generate();
         }
 
