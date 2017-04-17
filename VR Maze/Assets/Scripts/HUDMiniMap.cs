@@ -22,6 +22,7 @@ namespace Assets.Scripts
 
         public HUDMiniMap(Maze MiniMapMaze)
         {
+            GameObject.Find("MainPlayer").AddComponent<MainPlayerColliderInfo>();
             IntializeHUDMiniMap(MiniMapMaze);
             MainPlayerGO = GameObject.Find("MainPlayer");
             hideAllCellsParts();
@@ -80,12 +81,12 @@ namespace Assets.Scripts
         
         public void MainPlayerCollision()
         {
-          GameObject tempObject =  GameObject.Find("MainPlayer").GetComponent<MainPlayerColliderInfo>().GetCollidingObject();
-           
-           if(tempObject.gameObject != null)
-           {
+         GameObject tempObject = GameObject.Find("MainPlayer").GetComponent<MainPlayerColliderInfo>().GetCollidingObject();
+            //if(tempObject.gameObject != null)
+            //{
+            Debug.Log(tempObject);
               collidingGO = tempObject.gameObject;
-           }
+         //}
 
             GameObject childGO = HMMM.MazeGO.transform.FindChild(collidingGO.name).gameObject;
             childGO.SetActive(true);
