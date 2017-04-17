@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class LoseMenu : MonoBehaviour {
     public Transform loseMenu;
     public Transform loading;
+    public Canvas c;
+    public Camera player;
 
     public float timer = 3f;//length of gaze required before action is taken
     private float lookTimer = 0f;//length of time the user has looked at an object
@@ -74,6 +76,9 @@ public class LoseMenu : MonoBehaviour {
             // Debug.Log("Stop gaze");
             resetVars();
         }
+
+        float rotation = player.transform.eulerAngles.y - c.transform.eulerAngles.y;
+        c.transform.Rotate(0, rotation, 0, Space.Self);
 
     }
 
