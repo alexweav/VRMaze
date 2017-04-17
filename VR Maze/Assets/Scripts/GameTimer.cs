@@ -10,8 +10,9 @@ public class GameTimer : MonoBehaviour
 {
     public Canvas gameOver;
 
-    public float MaxGameTime = 300; //equivalent of 5 minutes
+    public float MaxGameTime = 15; //equivalent of 5 minutes
     public Camera player; //camera -- allows timer to match rotation
+    public Transform pauseMenu;
 
     private GameObject person;
     private WalkingScript walkScript;
@@ -19,6 +20,7 @@ public class GameTimer : MonoBehaviour
     private Text timerText; //text element to display time in maze
 
     private bool paused = false;
+    private bool end = false;
     private float duration = 0; //total time in maze
     private float pauseTime = 0; //time at pause
     private Scene scene;
@@ -38,7 +40,8 @@ public class GameTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!paused)
+        paused = pauseMenu.gameObject.activeSelf;
+        if (!end && !paused)
         {
             //find time in maze
             duration += Time.deltaTime;
@@ -52,7 +55,7 @@ public class GameTimer : MonoBehaviour
             gameOver.gameObject.SetActive(true);
             walkScript.stopPlayer();
             walkScript.freezePlayer = true;
-            paused = true;
+            end = true;
         }
 
         //update canvas rotation
