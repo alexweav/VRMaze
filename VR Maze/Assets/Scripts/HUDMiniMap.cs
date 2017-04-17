@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,10 +19,17 @@ namespace Assets.Scripts
         Vector3 INTiconPOS;
         Vector3 INTmainplayerPOS;
 
+        
+
+        
+
+
         public HUDMiniMap(Maze MiniMapMaze)
         {
             IntializeHUDMiniMap(MiniMapMaze);
             MainPlayerGO = GameObject.Find("MainPlayer");
+
+
             hideAllCellsParts();
         }
 
@@ -34,7 +40,7 @@ namespace Assets.Scripts
         {
             Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
             Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x)/10, 0, (MPPosition.z - INTmainplayerPOS.z)/10) ;
-            MainPlayerCollision();      
+            OnIconCollision();      
         }
 
         private void IntializeHUDMiniMap(Maze MiniMapMaze)
@@ -77,14 +83,14 @@ namespace Assets.Scripts
                
         }
 
-        
-        public void MainPlayerCollision()
+        private void OnIconCollision()
         {
-          GameObject tempObject =  GameObject.Find("MainPlayer").GetComponent<MainPlayerColliderInfo>().GetCollidingObject();
+           PlayerCollision tempObject = MainPlayerGO.GetComponentInChildren<PlayerCollision>();
            
-           if(tempObject.gameObject != null)
+           if(tempObject.GetCollidingObject() != null)
            {
-              collidingGO = tempObject.gameObject;
+              collidingGO = tempObject.GetCollidingObject();
+              Debug.Log(collidingGO.name);
            }
 
             GameObject childGO = HMMM.MazeGO.transform.FindChild(collidingGO.name).gameObject;
@@ -94,82 +100,27 @@ namespace Assets.Scripts
                 childGO.transform.FindChild(ChildGOT.gameObject.name).gameObject.SetActive(true);
            }
 
-            
-
-            Debug.Log("Past Loop");
-            MazeCell cell = HMMM.CellsInMaze.Find(x => (x.mazeCellGO.name == collidingGO.name));
-
-
             //Generates North Borders in maze
-            if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ - 1) == true) )
-            {
-                //Debug.Log("North Wall");
-                ActivateWall("North Wall", HMMM.CellsInMaze.Find(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ - 1)).mazeCellGO);
-            }
-              
+           // if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ - 1)) == false)
+                //positionWall(cell.cellLocationX, cell.cellLocationZ, false, true, true, true, cell.mazeCellGO);
 
             //Generates East Borders in maze
-         if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX + 1) && (x.cellLocationZ == cell.cellLocationZ) == true) )
-         {
-               // Debug.Log("East Wall");
-                ActivateWall("East Wall", HMMM.CellsInMaze.Find(x => (x.cellLocationX == cell.cellLocationX + 1) && (x.cellLocationZ == cell.cellLocationZ)).mazeCellGO);
-         }      
+            //if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX + 1) && (x.cellLocationZ == cell.cellLocationZ)) == false)
+                //positionWall(cell.cellLocationX, cell.cellLocationZ, true, false, true, true, cell.mazeCellGO);
 
             //Generates South Borders in maze
-         if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ + 1) == true) )
-         {
-                //Debug.Log("South Wall");
-                ActivateWall("South Wall", HMMM.CellsInMaze.Find(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ + 1)).mazeCellGO);
-         }     
+            //if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX) && (x.cellLocationZ == cell.cellLocationZ + 1)) == false)
+                //positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, false, true, cell.mazeCellGO);
 
             //Generates West Borders in maze
-         if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX - 1) && (x.cellLocationZ == cell.cellLocationZ) == true) )
-         {
-               // Debug.Log("West Wall");
-                ActivateWall("West Wall", HMMM.CellsInMaze.Find(x => (x.cellLocationX == cell.cellLocationX - 1) && (x.cellLocationZ == cell.cellLocationZ)).mazeCellGO);
-            }   
+            //if (HMMM.CellsInMaze.Exists(x => (x.cellLocationX == cell.cellLocationX - 1) && (x.cellLocationZ == cell.cellLocationZ)) == false)
+               // positionWall(cell.cellLocationX, cell.cellLocationZ, true, true, true, false, cell.mazeCellGO);
             
 
 
-     }
-
-        private void ActivateWall(string wall, GameObject MazeCellGO)
-        {
-            MazeCellGO.SetActive(true);
-            switch (wall)
-            {
-                case "North Wall" :
-                    if(MazeCellGO.transform.FindChild("South Wall") != null )
-                        MazeCellGO.transform.FindChild("South Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
-                    break;
-
-                case "East Wall":
-                    if (MazeCellGO.transform.FindChild("West Wall") != null)
-                        MazeCellGO.transform.FindChild("West Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
-                    break;
-
-                case "South Wall":
-                    if (MazeCellGO.transform.FindChild("North Wall") != null)
-                        MazeCellGO.transform.FindChild("North Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
-                    break;
-
-                case "West Wall":
-                    if (MazeCellGO.transform.FindChild("East Wall") != null)
-                        MazeCellGO.transform.FindChild("East Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
-                    break;
-
-                default: break;   
-            }
-
-            
         }
+
+
+
     }
 }

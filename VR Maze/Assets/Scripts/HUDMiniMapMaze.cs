@@ -17,7 +17,6 @@ namespace Assets.Scripts
         {
             base.IntializeMaze("MiniMap Maze");
             createMiniMapMaze(mazeToDuplicate);
-            AssignGameObjectRef();
         }
 
         public Maze returnMaze()
@@ -28,23 +27,15 @@ namespace Assets.Scripts
         private void createMiniMapMaze(Maze mazeToDuplicate)
         {
             base.MazeGO = GameObject.Instantiate(mazeToDuplicate.MazeGO);
-            base.CellsInMaze = mazeToDuplicate.CellsInMaze;
             base.SetXYZPosition(0, 20, 0);
             base.SetXYZScale(.05f, .01f, .05f);
             base.updateMazeGOProperties();
         }
 
-        private void AssignGameObjectRef()
+        private void OnTriggerEnter(Collider collider)
         {
-            for(int i = 0; i< base.CellsInMaze.Count; i++)
-            {
-                base.CellsInMaze[i].mazeCellGO = base.MazeGO.transform.GetChild(i).gameObject; 
-            }
+
         }
-
-        
-
-       
 
     }
 }

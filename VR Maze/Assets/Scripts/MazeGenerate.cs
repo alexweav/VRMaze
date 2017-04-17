@@ -57,8 +57,6 @@ namespace Assets.Scripts
             MazeGenerator generator = new HUDMiniMapMazeGenerator(mazeToDuplicate);
             Maze maze = generator.Generate();
             HMM = new HUDMiniMap(maze);
-           
-            
 
         }
 

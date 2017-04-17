@@ -12,15 +12,10 @@ namespace Assets.Scripts
     public class MazeCell
     {
         public GameObject mazeCellGO;
-   
+
         private bool southPath;
         private bool eastPath;
         private int[] cellLocation = new int[2];
-
-        public MazeCell()
-        {
-
-        }
 
         /// <summary>
         /// Constructor 4 arguments
@@ -31,8 +26,6 @@ namespace Assets.Scripts
             eastPath = EastPath;
             cellLocation[0] = x;
             cellLocation[1] = z;
-            mazeCellGO = (GameObject)GameObject.Instantiate(Resources.Load("Maze Cell Templet"));
-            //mazeCellGO.AddComponent<this> as MazeCell;
         }
 
         /// <summary>
