@@ -1,58 +1,94 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
-	public class FreeRoamTut: MonoBehaviour {
+	public class FreeRoamTut: MonoBehaviour{
 
-		public Text promptText;
-		public Image promptBox;
-
-		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!","Great!\nTo move forward, look down!","To stop, look up towards the sky.\nYou don't need to look all the way up.","Well done!\nNow, find your way out of this maze."};
+		private string[] msgState = {"Welcome to Free Roam!\nLook around using your VR headset!",
+									 "Great!\n Now to move forward, look down.",
+									 "Perfect! Now start walking, then look up to stop.\nNotice, you don't need to look all\n the way up to stop.",
+									 "Well done!\nNow, find your way out of this maze!\nGood Luck!"};
 		private int msgIndex = 0;
-		private bool taskCompleted = false;
+		public bool taskComplete = false;
+		public bool allowTasksToBeCompleted = false;
 
-		void Start(){
-			displayPrompt (false);
-			StartCoroutine (prompt (3.0f));
-		}
+		Stopwatch s = new Stopwatch ();
 
-		void Update(){
-			
-			if (taskCompleted) {
-				msgIndex++;	
+
+		public void checkState(){
+			if (allowTasksToBeCompleted) {
+				taskComplete = false;
+				switch (msgIndex) {
+				case 0:
+					taskOne ();
+					break;
+				case 1:
+					taskTwo ();
+					break;
+				case 2:
+					taskThree ();
+					break;
+				case 3:
+					taskFour ();
+					break;
+				}
 			}
 		}
-			
+
+		public string getMsg(){
+			return msgState [msgIndex];
+		}
+
+		public void taskCompleted(){
+			taskComplete = true;
+			msgIndex++;
+		}
 		/// <summary>
-		/// IEnumberator works in conjunction with StartCoroutine()
-		/// Creates typewriter effect for displaying dialog.
+		/// Task One: Player look left or right, directly behind them.
 		/// </summary>
-		/// <returns>Edits promptBox</returns>
-		IEnumerator prompt(float delay){
-			yield return new WaitForSeconds(delay);
-			displayPrompt (true);
-			for (int i = 0; i < (msgState[msgIndex].Length+1); i++)
-			{
-				promptText.text = msgState[msgIndex].Substring(0, i);
-				yield return new WaitForSeconds(.03f);
-			}
-		}
-
-		public void displayPrompt(bool status){
-			promptBox.enabled = status;
-			promptText.enabled = status;
-			disableWalking (status);
-		}
-
-		public void disableWalking(bool status){
+		public void taskOne(){
 			GameObject player = GameObject.Find ("MainPlayer");
 			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
-			walkingController.freezePlayer = status;
+			if (walkingController.camViewRotY > 240 && walkingController.camViewRotY < 300) {
+				taskCompleted ();
+			}
+		}
+		/// <summary>
+		/// Task Two: Player walkings forward by looking down for 4 seconds.
+		/// </summary>
+		public void taskTwo(){
+			GameObject player = GameObject.Find ("MainPlayer");
+			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
+			if (walkingController.currentSpeed() > 0) {
+				s.Start ();
+				print (s.ElapsedMilliseconds);
+				if (s.ElapsedMilliseconds > 200) {
+					taskCompleted ();
+				}
+			}
+			s.Stop ();
+		}
+		/// <summary>
+		/// Tasks Four: Player stops movement by looking up.
+		/// </summary>
+		public void taskThree(){
+			GameObject player = GameObject.Find ("MainPlayer");
+			WalkingScript walkingController = player.GetComponent<WalkingScript> ();
+			if (walkingController.camViewRotX > 270) {
+				taskCompleted ();
+			}
+		}
+		/// <summary>
+		/// Task Five: Player completed the maze.
+		/// Not sure if this is necessary. Depends how maze compeletion is handled.
+		/// </summary>
+		public void taskFour(){
+			
 		}
 	}
 }
-
