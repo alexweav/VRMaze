@@ -19,7 +19,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-            HMM.UpdateIconPOS();
+           HMM.UpdateIconPOS();
         }
 
         /// <summary>
@@ -60,9 +60,6 @@ namespace Assets.Scripts
             MazeGenerator generator = new HUDMiniMapMazeGenerator(mazeToDuplicate);
             Maze maze = generator.Generate();
             HMM = new HUDMiniMap(maze);
-           
-            
-
         }
 
     }

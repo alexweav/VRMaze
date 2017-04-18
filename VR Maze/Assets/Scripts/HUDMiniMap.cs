@@ -12,14 +12,15 @@ namespace Assets.Scripts
 
     public class HUDMiniMap  
     {
-
+        private int count = 0;
         private Maze HMMM;
-        GameObject HUDMiniMapGO, MainPlayerGO;
+        GameObject HUDMiniMapGO, MainPlayerGO, cameraGO;
         GameObject Icon;
         GameObject collidingGO;
         Vector3 INTiconPOS;
         Vector3 INTmainplayerPOS;
         GameObject winMen;
+        bool cameraNeedsToMove;
 
         public HUDMiniMap(Maze MiniMapMaze)
         {
@@ -35,33 +36,45 @@ namespace Assets.Scripts
         // Update is called once per frame
         public void UpdateIconPOS()
         {
-            Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
+           Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
             Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x)/10, 0, (MPPosition.z - INTmainplayerPOS.z)/10) ;
             MainPlayerCollision();      
         }
 
         private void IntializeHUDMiniMap(Maze MiniMapMaze)
         {
+
+            count++;
             HUDMiniMapGO = (GameObject)GameObject.Instantiate(Resources.Load("HUDMiniMap"));
             HUDMiniMapGO.name = "HUDMiniMap";
-            
+
+            cameraGO = GameObject.Find("HUDMiniMap").transform.FindChild("Minimap Camera").gameObject;
 
             HMMM = MiniMapMaze;
-            CreateIcon();
+            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);
+            CreateIcon();      
+            
             HMMM.updateMazeGOProperties();
+            Icon.transform.SetParent(HUDMiniMapGO.transform);
             INTiconPOS = Icon.transform.position;
             INTmainplayerPOS = GameObject.Find("MainPlayer").transform.position;
-            Icon.transform.SetParent(HUDMiniMapGO.transform);
-            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);
 
+            DetermineCameraMotion();
+            
         }
 
+        private void DetermineCameraMotion()
+        {
+            if(HMMM.MazeSize.First > 5 || HMMM.MazeSize.Second > 5 )
+            {
+                cameraNeedsToMove = true;
+            }
+        }
 
         private void CreateIcon()
         {
             Icon = (GameObject)GameObject.Instantiate(Resources.Load("Icon"));
             Icon.name = "Icon";
-            
             HMMM.AddSpawnGO(0, 0, Icon);
       
         }
@@ -88,6 +101,11 @@ namespace Assets.Scripts
 
             HUDMiniMapCellActivation(collidingGO, cell);
             InFinishCell(cell);
+
+            if(cameraNeedsToMove)
+            {
+                cameraGO.transform.position = new Vector3(Icon.transform.position.x, cameraGO.transform.position.y, Icon.transform.position.z);
+            }
             
         }
 

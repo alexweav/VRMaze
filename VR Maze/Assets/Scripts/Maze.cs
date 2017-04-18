@@ -11,12 +11,14 @@ namespace Assets.Scripts
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>();
         public GameObject MazeGO;
+        private Pair<int, int> mazeSize;
         private Vector3 ThisMazeScale,ThisMazePosition;
         private MazeDrawer Drawer;
         private string mazeName;
         private MazeSpawnGOManager MSPM; 
         private MazeCell startCell;
         private MazeCell finishCell;
+       
 
         /// <summary>
         /// adds a maze cell to a list to of maze cells to form a maze mazecells called DrawbleFormat to form a maze  
@@ -30,6 +32,8 @@ namespace Assets.Scripts
             //GameObject mazeCellGO = (GameObject)GameObject.Instantiate(Resources.Load("Maze Cell Templet"));
             MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
             CellsInMaze.Add(currentCell);      //Adds mazeCell to list
+
+            MazeSize = new Pair<int, int>(x + 1, z + 1);
         }
 
         /// <summary>
@@ -105,6 +109,21 @@ namespace Assets.Scripts
                 cell.FinishCell = true;
             }
         }
+
+        public Pair<int, int> MazeSize
+        {
+            get
+            {
+                return mazeSize;
+            }
+
+            set
+            {
+                mazeSize = value;
+            }
+        }
+
+
 
         /// <summary>
         /// Allows Maze Scale to be change in the X,Y, and Z directions
@@ -186,6 +205,7 @@ namespace Assets.Scripts
         /// </summary>
         public void updateMazeGOProperties()
         {
+            MazeSize = new Pair<int, int>(CellsInMaze[CellsInMaze.Count - 1].cellLocationX + 1, CellsInMaze[CellsInMaze.Count - 1].cellLocationZ + 1);
             MazeGO.transform.localScale = ThisMazeScale;
             MazeGO.transform.position = ThisMazePosition;
             MazeGO.name = mazeName;
