@@ -73,6 +73,7 @@ namespace Assets.Scripts
                     throw new ArgumentException("The start cell cannot be the same as the finish cell.");
                 }
                 startCell = cell;
+                cell.StartCell = true;
             }
         }
 
@@ -101,6 +102,7 @@ namespace Assets.Scripts
                     throw new ArgumentException("The finish cell cannot be the same as the start cell.");
                 }
                 finishCell = cell;
+                cell.FinishCell = true;
             }
         }
 

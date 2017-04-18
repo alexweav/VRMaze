@@ -24,14 +24,16 @@ using UnityEngine;
         {
         if (other.gameObject.name == "Cell Floor")
             currentCollidingGO = other.gameObject.transform.parent.gameObject;
-        Debug.Log(currentCollidingGO.name);
-            
+        Debug.Log(currentCollidingGO.name);    
         }
+
 
         public GameObject GetCollidingObject()
         {
             return currentCollidingGO;
         }
+
+       
         
         
 

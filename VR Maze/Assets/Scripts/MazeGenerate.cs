@@ -33,6 +33,9 @@ namespace Assets.Scripts
             Maze maze = generator.Generate();
             maze.SetXYZScale(.5f, 6, .5f);
             maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
+            maze.StartCell = new Pair<int, int>(0, 0);
+            maze.FinishCell = new Pair<int, int>(4, 4);
+
             maze.Draw();
             DrawMiniMapMaze(maze);
             

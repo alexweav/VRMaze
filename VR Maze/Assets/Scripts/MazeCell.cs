@@ -13,8 +13,8 @@ namespace Assets.Scripts
     {
         public GameObject mazeCellGO;
    
-        private bool southPath;
-        private bool eastPath;
+        private bool southPath ,eastPath;
+        private bool finishCell, startCell;
         private int[] cellLocation = new int[2];
 
         public MazeCell()
@@ -93,6 +93,32 @@ namespace Assets.Scripts
             set
             {
                 eastPath = EastPath;
+            }
+        }
+
+        public bool FinishCell
+        {
+            get
+            {
+                return finishCell;
+            }
+
+            set
+            {
+                finishCell = value;
+            }
+        }
+
+        public bool StartCell
+        {
+            get
+            {
+                return startCell;
+            }
+
+            set
+            {
+                startCell = value;
             }
         }
 
