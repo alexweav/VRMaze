@@ -10,12 +10,13 @@ public class WinMenu : MonoBehaviour
     public Transform loading;
     public Canvas c;
     public Camera player;
-
+    
     public float timer = 3f;//length of gaze required before action is taken
     private float lookTimer = 0f;//length of time the user has looked at an object
     private Renderer myRenderer;
     private BoxCollider myCollider;
     private bool isLookedAt = false;//set if an object is currently being looked at
+    private Transform parent;
 
     /*********************************************************
      variables are set when the corresponding button is pressed 
@@ -28,6 +29,7 @@ public class WinMenu : MonoBehaviour
         myCollider = GetComponent<BoxCollider>();
         myRenderer = GetComponent<Renderer>();
         myRenderer.material.SetFloat("cutoff", 0f);
+        parent = c.transform.parent;
     }
     /****************************************************************************************************
      * Update()
@@ -79,8 +81,14 @@ public class WinMenu : MonoBehaviour
             resetVars();
         }
 
-        float rotation = player.transform.eulerAngles.y - c.transform.eulerAngles.y;
-        c.transform.Rotate(0, rotation, 0, Space.Self);
+        if(c.gameObject.activeSelf)
+        {
+            c.transform.parent = parent;
+        }
+        else
+        {
+            c.transform.parent = player.transform;
+        }
 
     }
 
