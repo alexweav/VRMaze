@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WinMenu : MonoBehaviour
-{
-
-    public Transform winMenu;
+public class LoseMenu : MonoBehaviour {
+    public Transform loseMenu;
     public Transform loading;
     public Canvas c;
     public Camera player;
@@ -58,14 +56,14 @@ public class WinMenu : MonoBehaviour
                 {
                     //Debug.Log("load "+scene);
                     loading.gameObject.SetActive(true);
-                    winMenu.gameObject.SetActive(false);
+                    loseMenu.gameObject.SetActive(false);
                     SceneManager.LoadScene("MainMenu");
                 }
                 else if (playAgain == true) //switch to options menu
                 {
                     //Debug.Log("options");
                     loading.gameObject.SetActive(true);
-                    winMenu.gameObject.SetActive(false);
+                    loseMenu.gameObject.SetActive(false);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
 
@@ -115,6 +113,4 @@ public class WinMenu : MonoBehaviour
         // Debug.Log("new scene");
         mainMenu = pick;
     }
-
 }
-

@@ -7,16 +7,18 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 
-    public abstract class Maze
+    public abstract class Maze  
     {
         public List<MazeCell> CellsInMaze = new List<MazeCell>();
         public GameObject MazeGO;
+        private Pair<int, int> mazeSize;
         private Vector3 ThisMazeScale,ThisMazePosition;
         private MazeDrawer Drawer;
         private string mazeName;
         private MazeSpawnGOManager MSPM; 
         private MazeCell startCell;
         private MazeCell finishCell;
+       
 
         /// <summary>
         /// adds a maze cell to a list to of maze cells to form a maze mazecells called DrawbleFormat to form a maze  
@@ -25,10 +27,13 @@ namespace Assets.Scripts
         /// <param name="z"> z cell position </param>
         /// <param name="eastPath"> bool value if an east path exist to another cell  </param>
         /// <param name="southPath"> bool value if a south path exist to another cell </param>
-        public void addMazeCell(int x, int z, bool eastPath, bool southPath)
+        public void addMazeCell(int x, int z, bool eastPath, bool southPath)  
         {
+            //GameObject mazeCellGO = (GameObject)GameObject.Instantiate(Resources.Load("Maze Cell Templet"));
             MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
             CellsInMaze.Add(currentCell);      //Adds mazeCell to list
+
+            MazeSize = new Pair<int, int>(x + 1, z + 1);
         }
 
         /// <summary>
@@ -72,6 +77,7 @@ namespace Assets.Scripts
                     throw new ArgumentException("The start cell cannot be the same as the finish cell.");
                 }
                 startCell = cell;
+                cell.StartCell = true;
             }
         }
 
@@ -100,8 +106,24 @@ namespace Assets.Scripts
                     throw new ArgumentException("The finish cell cannot be the same as the start cell.");
                 }
                 finishCell = cell;
+                cell.FinishCell = true;
             }
         }
+
+        public Pair<int, int> MazeSize
+        {
+            get
+            {
+                return mazeSize;
+            }
+
+            set
+            {
+                mazeSize = value;
+            }
+        }
+
+
 
         /// <summary>
         /// Allows Maze Scale to be change in the X,Y, and Z directions
@@ -183,6 +205,7 @@ namespace Assets.Scripts
         /// </summary>
         public void updateMazeGOProperties()
         {
+            MazeSize = new Pair<int, int>(CellsInMaze[CellsInMaze.Count - 1].cellLocationX + 1, CellsInMaze[CellsInMaze.Count - 1].cellLocationZ + 1);
             MazeGO.transform.localScale = ThisMazeScale;
             MazeGO.transform.position = ThisMazePosition;
             MazeGO.name = mazeName;
@@ -202,6 +225,8 @@ namespace Assets.Scripts
             holder.XCellposition = z;            
             MSPM.addObjectToSpawn(holder);		
         }
+
+        
   
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
@@ -218,3 +243,5 @@ namespace Assets.Scripts
         }
     }
 }
+
+
