@@ -7,6 +7,7 @@ namespace Assets.Scripts
 
 		public GameObject menuObject;
 		public GameObject player;
+		public GameObject pcamera;
 
 		// How long to look at Menu Item before taking action
 		public float timerDuration = 2f;
@@ -52,6 +53,7 @@ namespace Assets.Scripts
 					menuObject.SetActive (false);
 					WalkingScript WalkingController = player.GetComponent<WalkingScript> ();
 					WalkingController.enabled = true;
+					menuObject.transform.parent = pcamera.transform;
 
 				}     
 			}  else {
