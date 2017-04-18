@@ -66,9 +66,7 @@ public class WinMenu : MonoBehaviour
                     //Debug.Log("options");
                     loading.gameObject.SetActive(true);
                     winMenu.gameObject.SetActive(false);
-                    SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-                    int index = SceneManager.GetActiveScene().buildIndex;
-                    SceneManager.LoadScene(index);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
 
                 resetVars();
