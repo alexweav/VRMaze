@@ -16,7 +16,7 @@ namespace Assets.Scripts
 
 		Speed speed = new Speed ();
 
-        private Vector3 INTIconPOS = GameObject.Find("Icon").transform.position;
+        
 
         void Update(){
 			if (!freezePlayer) {
@@ -35,9 +35,13 @@ namespace Assets.Scripts
 			} else {
 				stopPlayer ();	
 			}
-             
+
+            Vector3 INTIconPOS = GameObject.Find("Icon").transform.position;
+            
             Vector3 MainPlayerPOS = playerCollider.transform.position;
             GameObject.Find("Icon").transform.position = new Vector3(MainPlayerPOS.x / 10 + INTIconPOS.x, 20.001f, MainPlayerPOS.z / 10 + INTIconPOS.z);
+
+            GameObject.Find("HUDMiniMap").transform.FindChild("Icon").transform.rotation =Quaternion.Euler(0, GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("Head").rotation.eulerAngles.y + 143.25f,0);
 
     	}
 
