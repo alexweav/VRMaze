@@ -33,7 +33,7 @@ namespace Assets.Scripts
             MazeCell currentCell = new MazeCell(x, z, eastPath, southPath);  //Creates new mazeCell
             CellsInMaze.Add(currentCell);      //Adds mazeCell to list
 
-            MazeSize = new Pair<int, int>(x + 1, z + 1);
+            MazeSize = new Pair<int, int>(x , z );
         }
 
         /// <summary>
@@ -119,7 +119,8 @@ namespace Assets.Scripts
 
             set
             {
-                mazeSize = value;
+                mazeSize = new Pair<int,int>(value.First ,value.Second );
+                Debug.Log(mazeSize.First + " " + mazeSize.Second);
             }
         }
 
@@ -192,8 +193,12 @@ namespace Assets.Scripts
                 throw new InvalidOperationException("The maze has no defined finish cell.");
             }
 
+            setStartandFinishCells();
+
             MazeGO = new GameObject(mazeName);
             Drawer = new MazeDrawer(this);
+
+           
 
             Drawer.drawMaze();
             updateMazeGOProperties();
@@ -209,6 +214,7 @@ namespace Assets.Scripts
             MazeGO.transform.localScale = ThisMazeScale;
             MazeGO.transform.position = ThisMazePosition;
             MazeGO.name = mazeName;
+            
             MSPM.SpawnAllGO();
         }
 
@@ -220,10 +226,19 @@ namespace Assets.Scripts
         /// <param name ="objectToSpawn"></param>
         public void AddSpawnGO(int x, int z, GameObject objectToSpawn)
         {          
-            MazeSpawnGO holder = new MazeSpawnGO(objectToSpawn);
+            MazeSpawnGO holder = new MazeSpawnGO(x,z,objectToSpawn);
             holder.XCellposition = x;
             holder.XCellposition = z;            
             MSPM.addObjectToSpawn(holder);		
+        }
+
+
+        public void setStartandFinishCells()
+        {
+            this.StartCell = new Pair<int, int>(0, 0);
+            this.FinishCell = new Pair<int, int>(this.MazeSize.First, this.MazeSize.Second);
+            Debug.Log(this.StartCell);
+            Debug.Log(this.finishCell);
         }
 
         
@@ -238,7 +253,7 @@ namespace Assets.Scripts
      
             ThisMazeScale = new Vector3(.5f, 10f, .5f);
             ThisMazePosition = new Vector3(0f, 0f, 0f);
-            MSPM = new MazeSpawnGOManager(mazeName);
+            MSPM = new MazeSpawnGOManager(this);
 
         }
     }
