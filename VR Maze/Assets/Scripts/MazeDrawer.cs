@@ -7,9 +7,9 @@ namespace Assets.Scripts
 
     public class MazeDrawer
     {
+        Maze currentMaze;
         List<MazeCell> mazeCellList = new List<MazeCell>();
         private GameObject currentMazeGO;
-
         private string CurrentMazeName;
         
         
@@ -17,9 +17,12 @@ namespace Assets.Scripts
 
         public MazeDrawer(Maze MazeToDraw)
         {
+          
+            currentMaze = MazeToDraw;
             mazeCellList = MazeToDraw.CellsInMaze;
             CurrentMazeName = MazeToDraw.MazeName;
             currentMazeGO = MazeToDraw.MazeGO;
+            currentMaze.setStartandFinishCells();
         }
 
         //Generates the Maze: Generates Interior of Maze, then the remaining borders
@@ -49,7 +52,12 @@ namespace Assets.Scripts
                 //Generates the Floor for the current cell and passes the cell game object the floor walls are associated with
                 generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), cell.mazeCellGO);
 
-
+                if(cell.FinishCell == true)
+                {
+                    AddFinishCellMarker(cell);
+                    //Debug.Log(cell.cellLocationX + "," + cell.cellLocationZ);
+                    //Debug.Log(cell.mazeCellGO.name);
+                }
                 
             }
         }
@@ -154,6 +162,14 @@ namespace Assets.Scripts
             mazeFloor.transform.localScale = new Vector3(1, 1, 1);
             mazeFloor.transform.parent = cell.transform;
             cell.transform.SetParent(currentMazeGO.transform);
+        }
+
+        private void AddFinishCellMarker(MazeCell cell)
+        {
+           GameObject FinishMarkerGO = (GameObject)GameObject.Instantiate(Resources.Load("FinishCellMarker"));
+            FinishMarkerGO.name = "Finish Cell Marker"; ;
+            currentMaze.AddSpawnGO(cell.cellLocationX, cell.cellLocationZ, FinishMarkerGO);
+            
         }
     }
 }

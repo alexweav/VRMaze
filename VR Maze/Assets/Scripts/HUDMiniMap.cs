@@ -16,7 +16,7 @@ namespace Assets.Scripts
         private Maze HMMM;
         GameObject HUDMiniMapGO, MainPlayerGO, cameraGO;
         GameObject Icon;
-        GameObject collidingGO;
+        //GameObject collidingGO;
         Vector3 INTiconPOS;
         Vector3 INTmainplayerPOS;
         GameObject winMen;

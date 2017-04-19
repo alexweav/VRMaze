@@ -11,9 +11,11 @@ namespace Assets.Scripts
         private int zCellposition;
         
 
-        public MazeSpawnGO(GameObject ObjectToSpawn)
+        public MazeSpawnGO(int x, int z, GameObject ObjectToSpawn)
         {
             SpawnObject = ObjectToSpawn;
+            xCellposition = x;
+            zCellposition = z;
         }
 
         public int XCellposition
