@@ -65,7 +65,7 @@ namespace Assets.Scripts
 
         private void DetermineCameraMotion()
         {
-            if(HMMM.MazeSize.First > 5 || HMMM.MazeSize.Second > 5 )
+            if(HMMM.MazeSize.First > 4 || HMMM.MazeSize.Second > 4 )
             {
                 cameraNeedsToMove = true;
             }
