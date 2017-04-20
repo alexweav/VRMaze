@@ -8,6 +8,7 @@ namespace Assets.Scripts
     {
 		public int height = 15;
 		public int width = 15;
+        private HUDMiniMap HMM;
         // Use this for initialization
         void Start()
         {
@@ -18,7 +19,8 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-
+           HMM.UpdateIconPOS();
+           //GameObject.Find("Maze Particle System").GetComponent<ParticleSystem>().Simulate(1f, false, false);
         }
 
         /// <summary>
@@ -32,6 +34,7 @@ namespace Assets.Scripts
             Maze maze = generator.Generate();
             maze.SetXYZScale(.5f, 6, .5f);
             maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
+    
             maze.Draw();
             DrawMiniMapMaze(maze);
             
@@ -53,9 +56,9 @@ namespace Assets.Scripts
 
         void DrawMiniMapMaze(Maze mazeToDuplicate)
         {
-            MazeGenerator generator = new HUDMiniMapGenerator(mazeToDuplicate);
+            MazeGenerator generator = new HUDMiniMapMazeGenerator(mazeToDuplicate);
             Maze maze = generator.Generate();
-
+            HMM = new HUDMiniMap(maze);
         }
 
     }

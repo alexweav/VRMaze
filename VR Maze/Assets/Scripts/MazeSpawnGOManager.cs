@@ -7,11 +7,10 @@ namespace Assets.Scripts
     class MazeSpawnGOManager
     {
         List<MazeSpawnGO> ListMazeSpawnGO;
-        private string MazeName;
-
-        public MazeSpawnGOManager(string mazeName)
+        Maze m;
+        public MazeSpawnGOManager(Maze currentMaze)
         {
-            MazeName = mazeName;
+            m = currentMaze;
             ListMazeSpawnGO = new List<Scripts.MazeSpawnGO>();
         }
 
@@ -24,10 +23,12 @@ namespace Assets.Scripts
         {
             foreach (MazeSpawnGO objectToSpawn in ListMazeSpawnGO)
             {
-                string CellGOtoFind = "Maze Cell (" + objectToSpawn.XCellposition.ToString() + "," + objectToSpawn.ZCellposition.ToString() + ")";
-                Vector3 CellPosition = GameObject.Find(MazeName).transform.FindChild(CellGOtoFind).FindChild("Cell Floor").transform.position;
-                GameObject.Find(objectToSpawn.SpawnObject.transform.name).transform.position = new Vector3(CellPosition.x, (CellPosition.y + objectToSpawn.SpawnObject.transform.localScale.y), CellPosition.z);
-                
+
+                string CellGOtoFind = "Maze Cell (" + objectToSpawn.XCellposition + "," + objectToSpawn.ZCellposition + ")"; 
+                Vector3 CellPosition = GameObject.Find(m.MazeGO.name).transform.FindChild(CellGOtoFind).FindChild("Cell Floor").transform.position;
+                objectToSpawn.SpawnObject.transform.position = new Vector3(CellPosition.x, (CellPosition.y + objectToSpawn.SpawnObject.transform.localScale.y), CellPosition.z);
+                Debug.Log(objectToSpawn.SpawnObject.name + " " + new Vector3(CellPosition.x, (CellPosition.y + objectToSpawn.SpawnObject.transform.localScale.y), CellPosition.z));
+                Debug.Log(CellGOtoFind);
             }
         }
 
