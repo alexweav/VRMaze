@@ -8,10 +8,7 @@ namespace Assets.Scripts
 {
     class HUDMiniMapMaze : Maze
     {
-        void Update()
-        {
-
-        }
+        
 
         public HUDMiniMapMaze(Maze mazeToDuplicate)
         {
@@ -20,6 +17,7 @@ namespace Assets.Scripts
             AssignGameObjectRef();
         }
 
+       
         public Maze returnMaze()
         {
             return this;
@@ -31,7 +29,7 @@ namespace Assets.Scripts
             base.CellsInMaze = mazeToDuplicate.CellsInMaze;
             base.SetXYZPosition(0, 20, 0);
             base.SetXYZScale(.05f, .01f, .05f);
-            base.updateMazeGOProperties();
+            //base.updateMazeGOProperties();
         }
 
         private void AssignGameObjectRef()
