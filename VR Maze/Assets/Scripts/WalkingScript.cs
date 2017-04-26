@@ -16,7 +16,7 @@ namespace Assets.Scripts
 
 		Speed speed = new Speed ();
 
-        
+        public bool Teleported = false;
 
         void Update(){
 			if (!freezePlayer) {

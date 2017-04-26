@@ -36,7 +36,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         public void UpdateIconPOS()
         {
-           Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
+            Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
             Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x)/10, 0, (MPPosition.z - INTmainplayerPOS.z)/10) ;
             MainPlayerCollision();      
         }
@@ -60,6 +60,8 @@ namespace Assets.Scripts
             INTmainplayerPOS = GameObject.Find("MainPlayer").transform.position;
 
             DetermineCameraMotion();
+
+            MiniMapMaze.SpawnAllGO();
             
         }
 
@@ -155,29 +157,29 @@ namespace Assets.Scripts
                 case "North Wall" :
                     if(MazeCellGO.transform.FindChild("South Wall") != null )
                         MazeCellGO.transform.FindChild("South Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 case "East Wall":
                     if (MazeCellGO.transform.FindChild("West Wall") != null)
                         MazeCellGO.transform.FindChild("West Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 case "South Wall":
                     if (MazeCellGO.transform.FindChild("North Wall") != null)
                         MazeCellGO.transform.FindChild("North Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 case "West Wall":
                     if (MazeCellGO.transform.FindChild("East Wall") != null)
                         MazeCellGO.transform.FindChild("East Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 default: break;   
