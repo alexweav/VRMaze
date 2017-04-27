@@ -120,7 +120,7 @@ namespace Assets.Scripts
             set
             {
                 mazeSize = new Pair<int,int>(value.First ,value.Second );
-                Debug.Log(mazeSize.First + " " + mazeSize.Second);
+                //Debug.Log(mazeSize.First + " " + mazeSize.Second);
             }
         }
 
@@ -202,7 +202,8 @@ namespace Assets.Scripts
 
             Drawer.drawMaze();
             updateMazeGOProperties();
-            
+            SpawnAllGO();
+
         }
 
         /// <summary>
@@ -214,8 +215,8 @@ namespace Assets.Scripts
             MazeGO.transform.localScale = ThisMazeScale;
             MazeGO.transform.position = ThisMazePosition;
             MazeGO.name = mazeName;
+            SpawnAllGO();
             
-            MSPM.SpawnAllGO();
         }
 
         /// <summary>
@@ -237,11 +238,14 @@ namespace Assets.Scripts
         {
             this.StartCell = new Pair<int, int>(0, 0);
             this.FinishCell = new Pair<int, int>(this.MazeSize.First, this.MazeSize.Second);
-            Debug.Log(this.StartCell);
-            Debug.Log(this.finishCell);
+           // Debug.Log(this.StartCell);
+            //Debug.Log(this.finishCell);
         }
 
-        
+        public void SpawnAllGO()
+        {
+            MSPM.SpawnAllGO();
+        }
   
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
