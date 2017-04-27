@@ -5,8 +5,14 @@ using UnityEditor;
 
 namespace Assets.EditorTools
 {
+    /// <summary>
+    /// Makes a public property readonly in the Unity editor
+    /// </summary>
     public class ReadOnlyAttribute : PropertyAttribute { };
 
+    /// <summary>
+    /// Unity Editor property drawer for ReadOnly properties
+    /// </summary>
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
     public class ReadOnlyDrawer : PropertyDrawer
     {
