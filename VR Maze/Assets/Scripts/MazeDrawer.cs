@@ -52,12 +52,7 @@ namespace Assets.Scripts
                 //Generates the Floor for the current cell and passes the cell game object the floor walls are associated with
                 generateFloor((cell.cellLocationX * 10) - 25, 25 - (cell.cellLocationZ * 10), cell.mazeCellGO);
 
-                if(cell.FinishCell == true)
-                {
-                    AddFinishCellMarker(cell);
-                    //Debug.Log(cell.cellLocationX + "," + cell.cellLocationZ);
-                    //Debug.Log(cell.mazeCellGO.name);
-                }
+               
                 
             }
         }
@@ -164,12 +159,6 @@ namespace Assets.Scripts
             cell.transform.SetParent(currentMazeGO.transform);
         }
 
-        private void AddFinishCellMarker(MazeCell cell)
-        {
-           GameObject FinishMarkerGO = (GameObject)GameObject.Instantiate(Resources.Load("FinishCellMarker"));
-            FinishMarkerGO.name = "Finish Cell Marker"; ;
-            currentMaze.AddSpawnGO(cell.cellLocationX, cell.cellLocationZ, FinishMarkerGO);
-            
-        }
+       
     }
 }
