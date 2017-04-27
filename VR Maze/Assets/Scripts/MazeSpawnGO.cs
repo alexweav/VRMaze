@@ -9,6 +9,8 @@ namespace Assets.Scripts
         public GameObject SpawnObject;
         private int xCellposition;
         private int zCellposition;
+        private bool isIcon;
+        private bool isMazeGO;
         
 
         public MazeSpawnGO(int x, int z, GameObject ObjectToSpawn)
@@ -16,6 +18,8 @@ namespace Assets.Scripts
             SpawnObject = ObjectToSpawn;
             xCellposition = x;
             zCellposition = z;
+            IsIcon = false;
+            IsMazeGO = false;
         }
 
         public int XCellposition
@@ -41,6 +45,32 @@ namespace Assets.Scripts
             set
             {
                 zCellposition = value;
+            }
+        }
+
+        public bool IsIcon
+        {
+            get
+            {
+                return isIcon;
+            }
+
+            set
+            {
+                isIcon = value;
+            }
+        }
+
+        public bool IsMazeGO
+        {
+            get
+            {
+                return isMazeGO;
+            }
+
+            set
+            {
+                isMazeGO = value;
             }
         }
     }

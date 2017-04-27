@@ -12,15 +12,13 @@ namespace Assets.Scripts
 
     public class HUDMiniMap  
     {
-        private int count = 0;
-        private Maze HMMM;
-        GameObject HUDMiniMapGO, MainPlayerGO, cameraGO;
-        GameObject Icon;
+      
+        public Maze HMMM;
+        GameObject HUDMiniMapGO, MainPlayerGO;
+        
         //GameObject collidingGO;
-        Vector3 INTiconPOS;
-        Vector3 INTmainplayerPOS;
         GameObject winMen;
-        bool cameraNeedsToMove;
+        
 
         public HUDMiniMap(Maze MiniMapMaze)
         {
@@ -34,50 +32,30 @@ namespace Assets.Scripts
         // Use this for initialization
        
         // Update is called once per frame
-        public void UpdateIconPOS()
-        {
-           Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
-            Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x)/10, 0, (MPPosition.z - INTmainplayerPOS.z)/10) ;
-            MainPlayerCollision();      
+        public void UpdateCollisionInfo()
+        {        
+            MainPlayerCollision();
+            HMMM.UpdateMainPlayerIconPOS();
         }
+
+        
 
         private void IntializeHUDMiniMap(Maze MiniMapMaze)
         {
 
-            count++;
+           
             HUDMiniMapGO = (GameObject)GameObject.Instantiate(Resources.Load("HUDMiniMap"));
             HUDMiniMapGO.name = "HUDMiniMap";
-
-            cameraGO = GameObject.Find("HUDMiniMap").transform.FindChild("Minimap Camera").gameObject;
-
             HMMM = MiniMapMaze;
-            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);
-            CreateIcon();      
-            
+            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);         
             HMMM.updateMazeGOProperties();
-            Icon.transform.SetParent(HUDMiniMapGO.transform);
-            INTiconPOS = Icon.transform.position;
-            INTmainplayerPOS = GameObject.Find("MainPlayer").transform.position;
-
-            DetermineCameraMotion();
+            MiniMapMaze.SpawnAllGO();
             
         }
 
-        private void DetermineCameraMotion()
-        {
-            if(HMMM.MazeSize.First > 4 || HMMM.MazeSize.Second > 4 )
-            {
-                cameraNeedsToMove = true;
-            }
-        }
-
-        private void CreateIcon()
-        {
-            Icon = (GameObject)GameObject.Instantiate(Resources.Load("Icon"));
-            Icon.name = "Icon";
-            HMMM.AddSpawnGO(0, 0, Icon);
       
-        }
+
+       
 
         private void hideAllCellsParts()
         {
@@ -102,10 +80,6 @@ namespace Assets.Scripts
             HUDMiniMapCellActivation(collidingGO, cell);
             InFinishCell(cell);
 
-            if(cameraNeedsToMove)
-            {
-                cameraGO.transform.position = new Vector3(Icon.transform.position.x, cameraGO.transform.position.y, Icon.transform.position.z);
-            }
             
         }
 
@@ -155,29 +129,29 @@ namespace Assets.Scripts
                 case "North Wall" :
                     if(MazeCellGO.transform.FindChild("South Wall") != null )
                         MazeCellGO.transform.FindChild("South Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 case "East Wall":
                     if (MazeCellGO.transform.FindChild("West Wall") != null)
                         MazeCellGO.transform.FindChild("West Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 case "South Wall":
                     if (MazeCellGO.transform.FindChild("North Wall") != null)
                         MazeCellGO.transform.FindChild("North Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 case "West Wall":
                     if (MazeCellGO.transform.FindChild("East Wall") != null)
                         MazeCellGO.transform.FindChild("East Wall").gameObject.SetActive(true);
-                    Debug.Log(wall);
-                    Debug.Log(MazeCellGO);
+                    //Debug.Log(wall);
+                    //Debug.Log(MazeCellGO);
                     break;
 
                 default: break;   
