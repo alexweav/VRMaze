@@ -59,8 +59,8 @@ public class GameTimer : MonoBehaviour
         }
 
         //update canvas rotation
-        float rotation = player.transform.eulerAngles.y - c.transform.eulerAngles.y;
-        c.transform.Rotate( 0, 0, rotation, Space.Self);
+        //float rotation = player.transform.eulerAngles.y - c.transform.eulerAngles.y;
+        //c.transform.Rotate( 0, 0, rotation, Space.Self);
     }
 
     public void pauseTImer(bool pause)
