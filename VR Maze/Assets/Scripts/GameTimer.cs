@@ -10,7 +10,7 @@ public class GameTimer : MonoBehaviour
 {
     public Canvas gameOver;
 
-    public float MaxGameTime = 15; //equivalent of 5 minutes
+    public float MaxGameTime = 300; //equivalent of 5 minutes
     public Camera player; //camera -- allows timer to match rotation
     public Transform pauseMenu;
 
