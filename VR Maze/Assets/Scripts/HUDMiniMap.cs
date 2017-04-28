@@ -26,7 +26,7 @@ namespace Assets.Scripts
             winMen = GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("WinMenu").gameObject;
             IntializeHUDMiniMap(MiniMapMaze);
             MainPlayerGO = GameObject.Find("MainPlayer");
-            hideAllCellsParts();
+            
         }
 
         // Use this for initialization
@@ -53,24 +53,6 @@ namespace Assets.Scripts
             
         }
 
-      
-
-       
-
-        private void hideAllCellsParts()
-        {
-            foreach (Transform MazeCellChild in HMMM.MazeGO.transform)
-            {
-                foreach(Transform MazeCellPartChild in MazeCellChild.transform)
-                {
-                    MazeCellPartChild.gameObject.SetActive(false);
-                }
-
-                MazeCellChild.gameObject.SetActive(false);
-            }
-               
-        }
-
         
         public void MainPlayerCollision()
         {
@@ -90,9 +72,11 @@ namespace Assets.Scripts
             childGO.SetActive(true);
 
             //Activates all MazeCell Children(Walls,Floor)
-            foreach (Transform ChildGOT in collidingGO.transform)
+            foreach (Transform ChildGOT in childGO.transform)
             {
                 childGO.transform.FindChild(ChildGOT.gameObject.name).gameObject.SetActive(true);
+                
+                Debug.Log(ChildGOT.name);
             }
 
             //Generates North Borders in maze
