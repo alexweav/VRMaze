@@ -18,7 +18,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
-            HMM.UpdateIconPOS();
+            HMM.UpdateCollisionInfo();
         }
 
         /// <summary>
@@ -29,7 +29,6 @@ namespace Assets.Scripts
             MazeGenerator generator = new TimeTrialMazeGenerator();
             Maze maze = generator.Generate();
             maze.SetXYZScale(.5f, 6, .5f);
-            maze.AddSpawnGO(0, 0, GameObject.Find("MainPlayer"));
             maze.Draw();
             DrawMiniMapMaze(maze);
         }
