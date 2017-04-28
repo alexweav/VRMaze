@@ -36,7 +36,7 @@ namespace Assets.Scripts
 
             if(CameraMotion)
             {
-                //cameraGO.transform.position = Icon.transform.position + new Vector3(0, 20, 0);
+                cameraGO.transform.position = new Vector3(Icon.transform.position.x, cameraGO.transform.position.y, Icon.transform.position.z);
             }
 
 
@@ -98,7 +98,7 @@ namespace Assets.Scripts
 
         private void DetermineCameraMotion()
         {
-            if (m.MazeSize.First > 4 && m.MazeSize.Second > 4)
+            if (m.MazeSize.First > 5 && m.MazeSize.Second > 5)
             {
                 CameraMotion = true;
             }

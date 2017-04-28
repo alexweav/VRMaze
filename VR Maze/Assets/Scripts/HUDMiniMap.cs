@@ -36,6 +36,7 @@ namespace Assets.Scripts
         {        
             MainPlayerCollision();
             HMMM.UpdateMainPlayerIconPOS();
+            
         }
 
         
