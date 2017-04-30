@@ -42,7 +42,6 @@ public class LevelManager : MonoBehaviour
      ***************************************************************************************************/
     private void Update()
     {
-
         if (isLookedAt) //iff an item is being looked at by the user
         {
             lookTimer += Time.deltaTime; //get length of look
