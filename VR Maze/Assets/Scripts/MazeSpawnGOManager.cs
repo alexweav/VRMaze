@@ -32,11 +32,11 @@ namespace Assets.Scripts
             Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
             Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x) / 10, 0, (MPPosition.z - INTmainplayerPOS.z) / 10);
            
-            Debug.Log(MPPosition);
+            //Debug.Log(MPPosition);
 
             if(CameraMotion)
             {
-                //cameraGO.transform.position = Icon.transform.position + new Vector3(0, 20, 0);
+                cameraGO.transform.position = new Vector3(Icon.transform.position.x, cameraGO.transform.position.y, Icon.transform.position.z);
             }
 
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts
                 FirstTimeMazeUpdate = false;
 
                 
-                Debug.Log(m.GetType().Name);
+                //Debug.Log(m.GetType().Name);
             }    
             
             if(m.GetType().Name == "HUDMiniMapMaze" && FirstTimeHUDUpdate == true)
@@ -65,7 +65,7 @@ namespace Assets.Scripts
                 
                 AddHUDMapIcons();
                 FirstTimeHUDUpdate = false;
-                Debug.Log(m.GetType().Name);
+                //Debug.Log(m.GetType().Name);
             }   
 
             foreach (MazeSpawnGO objectToSpawn in ListMazeSpawnGO)
@@ -82,6 +82,8 @@ namespace Assets.Scripts
                     newYPOS = 0;
                 }
                 objectToSpawn.SpawnObject.transform.position = new Vector3(CellPosition.x, newYPOS, CellPosition.z);
+
+                
                 //Debug.Log(objectToSpawn.SpawnObject.name + " " + new Vector3(CellPosition.x, (CellPosition.y + objectToSpawn.SpawnObject.transform.localScale.y), CellPosition.z));
                 //Debug.Log(CellGOtoFind);
             }
@@ -90,12 +92,13 @@ namespace Assets.Scripts
             {
                 INTiconPOS = Icon.transform.position;
                 INTmainplayerPOS = GameObject.Find("MainPlayer").transform.position;
+                m.hideAllCellsParts();
             }
         }
 
         private void DetermineCameraMotion()
         {
-            if (m.MazeSize.First > 4 && m.MazeSize.Second > 4)
+            if (m.MazeSize.First > 5 && m.MazeSize.Second > 5)
             {
                 CameraMotion = true;
             }
@@ -122,8 +125,9 @@ namespace Assets.Scripts
 
         private void AddHUDMapIcons()
         {
-            AddTeleportorIcons();
             AddPlayerIcon();
+            AddTeleportorIcons();
+            AddIconsToMazeCellGO();
         }
 
         /**************************************************************************************************************************************************************************************/
@@ -198,7 +202,7 @@ namespace Assets.Scripts
             MazeSpawnGO tempSGO = new MazeSpawnGO(0, 0, Icon);
             tempSGO.IsIcon = true;
             addObjectToSpawn(tempSGO);
-            //IntializeMiniMapVars();
+            IntializeMiniMapVars();
 
 
         }
@@ -237,7 +241,17 @@ namespace Assets.Scripts
         }
 
         
-
+        private void AddIconsToMazeCellGO()
+        {
+            foreach (MazeSpawnGO MSGO in ListMazeSpawnGO)
+            {
+                if(MSGO.SpawnObject.name != "Icon")
+                {
+                    MSGO.SpawnObject.transform.SetParent((m.CellsInMaze.Find(x => ((x.cellLocationX == MSGO.XCellposition) && (x.cellLocationZ == MSGO.ZCellposition)))).mazeCellGO.transform);
+                }
+               
+            }
+        }
 
     }
 }
