@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Detects if the game is sent to background
-/// </summary>
-public class BackgroundDetector : MonoBehaviour
+namespace Assets.Scripts
 {
-    /// <inheritdoc>
-    private void OnApplicationFocus(bool focus)
+    /// <summary>
+    /// Detects if the game is sent to background
+    /// </summary>
+    public class BackgroundDetector : MonoBehaviour
     {
-        if (focus)
+        public GameObject menuObject;
+        public GameObject player;
+
+        /// <inheritdoc>
+        private void OnApplicationFocus(bool focus)
         {
-            Debug.Log("Game brought back to foreground.");
-        }
-        else
-        {
-            Debug.Log("Game sent to background.");
-            //TODO: Go to pause menu when it exists
+            if (focus)
+            {
+                Debug.Log("Game brought back to foreground.");
+            }
+            else
+            {
+                Debug.Log("Game sent to background.");
+                menuObject.SetActive(true);
+                WalkingScript WalkingController = player.GetComponent<WalkingScript>();
+                WalkingController.enabled = false;
+                menuObject.transform.parent = null;
+            }
         }
     }
 }
