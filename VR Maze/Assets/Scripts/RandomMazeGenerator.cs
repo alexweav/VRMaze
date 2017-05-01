@@ -68,12 +68,13 @@ namespace Assets.Scripts
             List<Pair<int, int>> inMaze = new List<Pair<int, int>>();
             inMaze.Add(startCell);
             var random = new Random(this.seed);
+            List<GridEdge> candidateEdges = FindCandidateEdges(graph, inMaze);
             while (inMaze.Count < graph.Count)
             {
-                List<GridEdge> candidateEdges = FindCandidateEdges(graph, inMaze);
                 int chosenIndex = random.Next(candidateEdges.Count);
                 graph.AddEdge(candidateEdges[chosenIndex].Cell1, candidateEdges[chosenIndex].Cell2);
                 inMaze.Add(candidateEdges[chosenIndex].Cell2);
+                candidateEdges = FindCandidateEdges(graph, inMaze);
             }
             return graph;
         }
