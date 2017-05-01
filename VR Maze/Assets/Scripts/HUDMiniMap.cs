@@ -23,7 +23,7 @@ namespace Assets.Scripts
         public HUDMiniMap(Maze MiniMapMaze)
         {
             GameObject.Find("MainPlayer").AddComponent<MainPlayerColliderInfo>();
-            winMen = GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("WinMenu").gameObject;
+            winMen = GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("Head").transform.FindChild("Main Camera").transform.FindChild("WinMenu").gameObject;
             IntializeHUDMiniMap(MiniMapMaze);
             MainPlayerGO = GameObject.Find("MainPlayer");
             
