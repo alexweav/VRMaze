@@ -66,11 +66,11 @@ namespace Assets.Scripts
                    colGO.transform.position = colGO.transform.position + (new Vector3(0, 3f, 0) * Time.deltaTime);
                     if (GameObject.Find("MainPlayer").transform.position.y >= (colINTPOS.y + 4))
                     {
-                        colFLYPOS = colGO.transform.position;
+                        colFLYPOS = colGO.transform.position + new Vector3(1,0,1);
                         moveUp = false;
                        
                         GameObject.Find("MainPlayer").GetComponent<WalkingScript>().Teleported = true;
-                        colGO.transform.position = TelTo;
+                        colGO.transform.position = TelTo + new Vector3(1.5f, 0, 1.5f);
                     }
 
                 }
@@ -78,7 +78,7 @@ namespace Assets.Scripts
                 else
                 {
                     Debug.Log("Moveing Down");
-                    colGO.transform.position = colGO.transform.position - (new Vector3(0, 3f, 0) * Time.deltaTime);
+                    colGO.transform.position = colGO.transform.position - (new Vector3(0f, 3f, 0) * Time.deltaTime);
                     if (colGO.transform.position.y <= (colINTPOS.y))
                     {
                        

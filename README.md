@@ -23,6 +23,13 @@ Using Unity 5.5.1, we are developing a Virtual Reality(VR) Maze game. Unity is a
 - Select the build you want to test
 - Allow the app to download to device
 ### Release Notes
+- [VRMaze 4-18-17 (COMING VERY SOON)]()
+	- In game pause menu is now added. Allows player to pause current game with the option to return to the main menu.
+	- Minimap is now displayed in the upper right hand corner. Maze appears based on which cells the player has walked over.
+	- Add Time Trials game mode.
+	- VRMaze detects is the game has been sent to the background. Will later automatically pause the game.
+	- Live timer has been added to track how long the player has been in the maze.
+	- Tutorial mode has been updated. User now has to complete tasks that help them learn VRMaze controls.
 - [VRMaze 4-2-17 (187MB)](https://drive.google.com/open?id=0B62QyooVl2uabjBmb09VcUpodzA)
     - Game no longer has a white screen when coming back from background
 - [VRMaze 3-19-17](https://drive.google.com/open?id=0B62QyooVl2uadkxWblRYc3dTRTQ)
