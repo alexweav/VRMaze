@@ -68,18 +68,29 @@ namespace Assets.Scripts
             List<Pair<int, int>> inMaze = new List<Pair<int, int>>();
             inMaze.Add(startCell);
             var random = new Random(this.seed);
-            List<GridEdge> candidateEdges = FindCandidateEdges(graph, inMaze);
-            while (inMaze.Count < graph.Count)
+            List<GridEdge> candidateEdges = new List<GridEdge>();
+            candidateEdges.Add(new GridEdge(startCell, new Pair<int, int>(0, 1)));
+            candidateEdges.Add(new GridEdge(startCell, new Pair<int, int>(1, 0)));
+            while (candidateEdges.Count > 0)
             {
                 int chosenIndex = random.Next(candidateEdges.Count);
                 GridEdge chosenEdge = candidateEdges[chosenIndex];
-                graph.AddEdge(chosenEdge.Cell1, chosenEdge.Cell2);
-                //candidateEdges = UpdateCandidateEdges(candidateEdges, graph, inMaze, candidateEdges[chosenIndex].Cell2);
-                inMaze.Add(chosenEdge.Cell2);
+                bool cell1InMaze = inMaze.Contains(chosenEdge.Cell1);
+                bool cell2InMaze = inMaze.Contains(chosenEdge.Cell2);
+                if (cell1InMaze ^ cell2InMaze)
+                {
+                    graph.AddEdge(chosenEdge.Cell1, chosenEdge.Cell2);
+                    if (cell1InMaze)
+                    {
+                        inMaze.Add(chosenEdge.Cell2);
+                        candidateEdges.AddRange(FindSurroundingEdges(graph,chosenEdge.Cell2));
+                    }
+                    if (cell2InMaze) {
+                        inMaze.Add(chosenEdge.Cell1);
+                        candidateEdges.AddRange(FindSurroundingEdges(graph, chosenEdge.Cell1));
+                    }
+                }
                 candidateEdges.Remove(chosenEdge);
-                candidateEdges.AddRange(FindCandidateEdges(graph, inMaze, chosenEdge.Cell2));
-                //update instead of remake
-                //candidateEdges = FindCandidateEdges(graph, inMaze);
             }
             return graph;
         }
@@ -95,31 +106,31 @@ namespace Assets.Scripts
             List<GridEdge> candidates = new List<GridEdge>();
             foreach (var node in inMaze)
             {
-                candidates.AddRange(FindCandidateEdges(graph, inMaze, node));
+                //candidates.AddRange(FindCandidateEdges(graph, inMaze, node));
             }
             return candidates;
         }
 
-        private List<GridEdge> FindCandidateEdges(UndirectedGraph<Pair<int, int>> graph, List<Pair<int, int>> inMaze, Pair<int, int> node)
+        private List<GridEdge> FindSurroundingEdges(UndirectedGraph<Pair<int, int>> graph, Pair<int, int> node)
         {
             List<GridEdge> candidates = new List<GridEdge>();
             Pair<int, int> upNode = new Pair<int, int>(node.First - 1, node.Second);
             Pair<int, int> downNode = new Pair<int, int>(node.First + 1, node.Second);
             Pair<int, int> leftNode = new Pair<int, int>(node.First, node.Second - 1);
             Pair<int, int> rightNode = new Pair<int, int>(node.First, node.Second + 1);
-            if (IsValidEdgeAddition(node, upNode, graph, inMaze))
+            if (IsValidEdgeAddition(node, upNode, graph))
             {
                 candidates.Add(new GridEdge(node, upNode));
             }
-            if (IsValidEdgeAddition(node, downNode, graph, inMaze))
+            if (IsValidEdgeAddition(node, downNode, graph))
             {
                 candidates.Add(new GridEdge(node, downNode));
             }
-            if (IsValidEdgeAddition(node, leftNode, graph, inMaze))
+            if (IsValidEdgeAddition(node, leftNode, graph))
             {
                 candidates.Add(new GridEdge(node, leftNode));
             }
-            if (IsValidEdgeAddition(node, rightNode, graph, inMaze))
+            if (IsValidEdgeAddition(node, rightNode, graph))
             {
                 candidates.Add(new GridEdge(node, rightNode));
             }
@@ -134,13 +145,13 @@ namespace Assets.Scripts
         /// <param name="graph">The graph</param>
         /// <param name="inMaze">Nodes of the graph which are already part of the spanning tree</param>
         /// <returns></returns>
-        private bool IsValidEdgeAddition(Pair<int, int> from, Pair<int, int> to, UndirectedGraph<Pair<int, int>> graph, List<Pair<int, int>> inMaze)
+        private bool IsValidEdgeAddition(Pair<int, int> from, Pair<int, int> to, UndirectedGraph<Pair<int, int>> graph)
         {
             if (!graph.Contains(from) || !graph.Contains(to))
             {
                 return false;
             }
-            return inMaze.Contains(from) && !inMaze.Contains(to);
+            return true;
         }
 
         /// <summary>
