@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Assets.EditorTools;
 
 public class LevelManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class LevelManager : MonoBehaviour
     private Renderer myRenderer;
     private BoxCollider myCollider;
     private bool isLookedAt = false;//set if an object is currently being looked at
+
+    [ReadOnly]
+    public bool isLoading = false;
 
     /*********************************************************
      variables are set when the corresponding button is pressed 
@@ -59,10 +63,14 @@ public class LevelManager : MonoBehaviour
                  * **********************************************************/
                 if (startScene == true) //switch scenes
                 {
-                    //Debug.Log("load "+scene);
+                    Debug.Log("Loading scene " + scene);
                     loading.gameObject.SetActive(true);
                     optionMenu.gameObject.SetActive(false);
-                    SceneManager.LoadScene(scene);
+                    if(!isLoading)
+                    {
+                        isLoading = true;
+                        StartCoroutine(LoadSceneAsync());
+                    }
                 }
                 else if (showOptions == true) //switch to options menu
                 {
@@ -130,27 +138,43 @@ public class LevelManager : MonoBehaviour
    
     public void optionsMenu(bool pick)
     {
-       // Debug.Log("show opt");
         showOptions = pick;
     }
 
     public void setScene(string name)
     {
-       // Debug.Log("new scene");
         scene = name;
         startScene = true;
     }
 
     public void InstructMenu(bool pick)
     {
-       // Debug.Log("show inst");
         showInstruct = pick;
     }
 
     public void backMenu(bool pick)
     {
-      //  Debug.Log("go back");
         goBack = pick;
     }
 
+    /// <summary>
+    /// Coroutine which loads a scene asynchronously
+    /// </summary>
+    IEnumerator LoadSceneAsync()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AsyncOperation loadTask = SceneManager.LoadSceneAsync(1);
+        loadTask.allowSceneActivation = false;
+        yield return loadTask.isDone;
+        yield return new WaitForSeconds(1.0f);
+        SwitchScene(loadTask);
+    }
+
+    private void SwitchScene(AsyncOperation loadTask)
+    {
+        if (loadTask != null)
+        {
+            loadTask.allowSceneActivation = true;
+        }
+    }
 }
