@@ -163,6 +163,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator LoadSceneAsync()
     {
         yield return new WaitForSeconds(0.5f);
+        Application.backgroundLoadingPriority = ThreadPriority.Low;
         AsyncOperation loadTask = SceneManager.LoadSceneAsync(1);
         loadTask.allowSceneActivation = false;
         yield return loadTask.isDone;
