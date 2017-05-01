@@ -77,8 +77,9 @@ namespace Assets.Scripts
                 //candidateEdges = UpdateCandidateEdges(candidateEdges, graph, inMaze, candidateEdges[chosenIndex].Cell2);
                 inMaze.Add(chosenEdge.Cell2);
                 candidateEdges.Remove(chosenEdge);
+                candidateEdges.AddRange(FindCandidateEdges(graph, inMaze, chosenEdge.Cell2));
                 //update instead of remake
-                candidateEdges = FindCandidateEdges(graph, inMaze);
+                //candidateEdges = FindCandidateEdges(graph, inMaze);
             }
             return graph;
         }
@@ -94,26 +95,33 @@ namespace Assets.Scripts
             List<GridEdge> candidates = new List<GridEdge>();
             foreach (var node in inMaze)
             {
-                Pair<int, int> upNode = new Pair<int, int>(node.First - 1, node.Second);
-                Pair<int, int> downNode = new Pair<int, int>(node.First + 1, node.Second);
-                Pair<int, int> leftNode = new Pair<int, int>(node.First, node.Second - 1);
-                Pair<int, int> rightNode = new Pair<int, int>(node.First, node.Second + 1);
-                if (IsValidEdgeAddition(node, upNode, graph, inMaze))
-                {
-                    candidates.Add(new GridEdge(node, upNode));
-                }
-                if (IsValidEdgeAddition(node, downNode, graph, inMaze))
-                {
-                    candidates.Add(new GridEdge(node, downNode));
-                }
-                if (IsValidEdgeAddition(node, leftNode, graph, inMaze))
-                {
-                    candidates.Add(new GridEdge(node, leftNode));
-                }
-                if (IsValidEdgeAddition(node, rightNode, graph, inMaze))
-                {
-                    candidates.Add(new GridEdge(node, rightNode));
-                }
+                candidates.AddRange(FindCandidateEdges(graph, inMaze, node));
+            }
+            return candidates;
+        }
+
+        private List<GridEdge> FindCandidateEdges(UndirectedGraph<Pair<int, int>> graph, List<Pair<int, int>> inMaze, Pair<int, int> node)
+        {
+            List<GridEdge> candidates = new List<GridEdge>();
+            Pair<int, int> upNode = new Pair<int, int>(node.First - 1, node.Second);
+            Pair<int, int> downNode = new Pair<int, int>(node.First + 1, node.Second);
+            Pair<int, int> leftNode = new Pair<int, int>(node.First, node.Second - 1);
+            Pair<int, int> rightNode = new Pair<int, int>(node.First, node.Second + 1);
+            if (IsValidEdgeAddition(node, upNode, graph, inMaze))
+            {
+                candidates.Add(new GridEdge(node, upNode));
+            }
+            if (IsValidEdgeAddition(node, downNode, graph, inMaze))
+            {
+                candidates.Add(new GridEdge(node, downNode));
+            }
+            if (IsValidEdgeAddition(node, leftNode, graph, inMaze))
+            {
+                candidates.Add(new GridEdge(node, leftNode));
+            }
+            if (IsValidEdgeAddition(node, rightNode, graph, inMaze))
+            {
+                candidates.Add(new GridEdge(node, rightNode));
             }
             return candidates;
         }
