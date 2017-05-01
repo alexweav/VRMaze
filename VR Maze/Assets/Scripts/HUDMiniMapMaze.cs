@@ -34,15 +34,12 @@ namespace Assets.Scripts
 
         private void AssignGameObjectRef()
         {
-            for(int i = 0; i< base.CellsInMaze.Count; i++)
+            for (int i = 0; i < base.CellsInMaze.Count; i++)
             {
-                base.CellsInMaze[i].mazeCellGO = base.MazeGO.transform.GetChild(i).gameObject; 
+                base.CellsInMaze[i].mazeCellGO = base.MazeGO.transform.GetChild(i).gameObject;
             }
         }
 
-        
-
-       
 
     }
 }

@@ -244,7 +244,21 @@ namespace Assets.Scripts
         {
             this.MSPM.SpawnAllGO();
         }
-  
+
+        public void hideAllCellsParts()
+        {
+            foreach (Transform MazeCellChild in this.MazeGO.transform)
+            {
+                foreach (Transform MazeCellPartChild in MazeCellChild.transform)
+                {
+                    MazeCellPartChild.gameObject.SetActive(false);
+                }
+
+                MazeCellChild.gameObject.SetActive(false);
+            }
+
+        }
+
         /// <summary>
         /// Method for Intializing a maze.  Sets the hieght, scale, and name for the maze.
         /// </summary>
