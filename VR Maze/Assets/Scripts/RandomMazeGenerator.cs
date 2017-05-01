@@ -72,8 +72,12 @@ namespace Assets.Scripts
             while (inMaze.Count < graph.Count)
             {
                 int chosenIndex = random.Next(candidateEdges.Count);
-                graph.AddEdge(candidateEdges[chosenIndex].Cell1, candidateEdges[chosenIndex].Cell2);
-                inMaze.Add(candidateEdges[chosenIndex].Cell2);
+                GridEdge chosenEdge = candidateEdges[chosenIndex];
+                graph.AddEdge(chosenEdge.Cell1, chosenEdge.Cell2);
+                //candidateEdges = UpdateCandidateEdges(candidateEdges, graph, inMaze, candidateEdges[chosenIndex].Cell2);
+                inMaze.Add(chosenEdge.Cell2);
+                candidateEdges.Remove(chosenEdge);
+                //update instead of remake
                 candidateEdges = FindCandidateEdges(graph, inMaze);
             }
             return graph;
