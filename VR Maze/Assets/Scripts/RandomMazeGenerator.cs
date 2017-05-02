@@ -95,22 +95,6 @@ namespace Assets.Scripts
             return graph;
         }
 
-        /// <summary>
-        /// Finds candidate edges to be added in randomized prim's algorithm
-        /// </summary>
-        /// <param name="graph">The graph</param>
-        /// <param name="inMaze">Nodes in the graph that are already connected to the spanning tree</param>
-        /// <returns>All edges that can be added such that the graph remains acyclic</returns>
-        private List<GridEdge> FindCandidateEdges(UndirectedGraph<Pair<int, int>> graph, List<Pair<int, int>> inMaze)
-        {
-            List<GridEdge> candidates = new List<GridEdge>();
-            foreach (var node in inMaze)
-            {
-                //candidates.AddRange(FindCandidateEdges(graph, inMaze, node));
-            }
-            return candidates;
-        }
-
         private List<GridEdge> FindSurroundingEdges(UndirectedGraph<Pair<int, int>> graph, Pair<int, int> node)
         {
             List<GridEdge> candidates = new List<GridEdge>();
