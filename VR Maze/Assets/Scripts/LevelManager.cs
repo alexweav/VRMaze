@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
      ***************************************************************************************************/
     private void Update()
     {
-        if (isLookedAt) //iff an item is being looked at by the user
+        if (isLookedAt && !isLoading) //iff an item is being looked at by the user
         {
             lookTimer += Time.deltaTime; //get length of look
 
@@ -63,14 +63,10 @@ public class LevelManager : MonoBehaviour
                  * **********************************************************/
                 if (startScene == true) //switch scenes
                 {
-                    Debug.Log("Loading scene " + scene);
                     loading.gameObject.SetActive(true);
                     optionMenu.gameObject.SetActive(false);
-                    if(!isLoading)
-                    {
-                        isLoading = true;
-                        StartCoroutine(LoadSceneAsync());
-                    }
+                    isLoading = true;
+                    StartCoroutine(LoadSceneAsync());
                 }
                 else if (showOptions == true) //switch to options menu
                 {
@@ -125,15 +121,17 @@ public class LevelManager : MonoBehaviour
 
     private void resetVars()
     {
-       // Debug.Log("reset");
-        lookTimer = 0f;
-        myRenderer.material.SetFloat("cutoff", 0f);
-        startScene = false;
-        showInstruct = false;
-        goBack = false;
-        showOptions = false;
-        scene = "MainMenu";
-        myCollider.enabled = false;
+        if (!isLoading)
+        {
+            lookTimer = 0f;
+            myRenderer.material.SetFloat("cutoff", 0f);
+            startScene = false;
+            showInstruct = false;
+            goBack = false;
+            showOptions = false;
+            scene = "MainMenu";
+            myCollider.enabled = false;
+        }
     }
    
     public void optionsMenu(bool pick)
@@ -164,12 +162,14 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Application.backgroundLoadingPriority = ThreadPriority.Low;
-        AsyncOperation loadTask = SceneManager.LoadSceneAsync(1);
+        Debug.Log("Scene: " + scene);
+        AsyncOperation loadTask = SceneManager.LoadSceneAsync(scene);
         loadTask.allowSceneActivation = false;
         yield return loadTask.isDone;
         yield return new WaitForSeconds(1.0f);
         SwitchScene(loadTask);
     }
+
 
     private void SwitchScene(AsyncOperation loadTask)
     {
