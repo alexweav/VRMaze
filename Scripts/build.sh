@@ -7,9 +7,13 @@ echo "Building $project for Windows"
   -batchmode \
   -nographics \
   -silent-crashes \
+  -logFile $(pwd)/unity.log \
   -projectPath $(pwd)/VR\ Maze \
   -buildWindowsPlayer "$(pwd)/Build/windows/$project.exe" \
   -quit
+
+echo "Logs:"
+cat $(pwd)/unity.log
 
 echo "Running all editor tests"
 /Applications/Unity/Unity.app/Contents/MacOS/Unity \
