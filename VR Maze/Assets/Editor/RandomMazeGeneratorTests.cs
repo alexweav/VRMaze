@@ -28,8 +28,8 @@ namespace Assets.Scripts.Tests
             RandomMaze maze = generator.Generate() as RandomMaze;
             foreach (var node in maze.Graph)
             {
-                Assert.IsTrue(maze.Graph.Neighbors(node).Count > 0);
-                Assert.IsTrue(maze.Graph.Neighbors(node).Count < 5);
+                Assert.IsTrue(maze.Graph.Neighbors(node).Count > 0, "Actual count: "+ maze.Graph.Neighbors(node).Count);
+                Assert.IsTrue(maze.Graph.Neighbors(node).Count < 5, "Actual count: "+ maze.Graph.Neighbors(node).Count);
             }
         }
 
