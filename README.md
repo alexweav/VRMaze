@@ -13,8 +13,8 @@ Using Unity 5.5.1, we are developing a Virtual Reality(VR) Maze game. Unity is a
 - **Google Drive/Docs/Sheet**,  documentation management
 - **Google VR DevKit**, Google development kit for Google Cardboard VR
 
-# Installation Instructions for Andriod Devices
-### Requirements
+# Installation Instructions for Mobile Devices
+## Android Requirements
 - Android Device
 - Android 4.4 ‘KitKat’ +
 - VR Headset for mobile phones
@@ -22,8 +22,23 @@ Using Unity 5.5.1, we are developing a Virtual Reality(VR) Maze game. Unity is a
 - Open up the download file from release notes below, from your Android device.
 - Select the build you want to test
 - Allow the app to download to device
-### Release Notes
-- [VRMaze 4-29-17 (188MB)](https://drive.google.com/open?id=0B89D1zEkAyAIYVdHZUV6NlRyOXM)
+## iOS Requirements
+- iPhone 5+
+- iOS 9+ (Apple TestFlight App Requirement)
+- VR Headset for mobile phones (Google Cardboard)
+### Installation
+- Sumbit a Beta Request form below
+- Wait for an acceptance email
+- Follow the instructions from the email (only a couple buttons)
+## Download Links
+### Android
+- [[LATEST]VRMaze 4-29-17 (188MB)](https://drive.google.com/open?id=0B89D1zEkAyAIYVdHZUV6NlRyOXM)
+- [VRMaze 4-2-17 (187MB)](https://drive.google.com/open?id=0B62QyooVl2uabjBmb09VcUpodzA)
+- [VRMaze 3-19-17](https://drive.google.com/open?id=0B62QyooVl2uadkxWblRYc3dTRTQ)
+### iOS
+- [[REQUEST FORM] VRMaze 4-29-17 (131MB)](https://goo.gl/forms/lHQVtI04ONB6boNi1)
+## Release Notes
+- VRMaze 4-29-17
 	- In game pause menu is now added. Allows player to pause current game with the option to return to the main menu.
 	- Minimap is now displayed in the upper right hand corner. Maze appears based on which cells the player has walked over.
 	- Add Time Trials game mode.
@@ -31,9 +46,9 @@ Using Unity 5.5.1, we are developing a Virtual Reality(VR) Maze game. Unity is a
 	- Live timer has been added to track how long the player has been in the maze.
 	- Tutorial mode has been updated. User now has to complete tasks that help them learn VRMaze controls.
 	- Teleport collectable if currently working and detectable on the minimap. Only in Free Roam Mode.
-- [VRMaze 4-2-17 (187MB)](https://drive.google.com/open?id=0B62QyooVl2uabjBmb09VcUpodzA)
+- VRMaze 4-2-17
     - Game no longer has a white screen when coming back from background
-- [VRMaze 3-19-17](https://drive.google.com/open?id=0B62QyooVl2uadkxWblRYc3dTRTQ)
+- VRMaze 3-19-17
     - Maze now generates randomly, no more static maze
     - Textures have been added
     - Movement speed holds its current state unless player looks up to stop
