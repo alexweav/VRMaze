@@ -79,4 +79,16 @@ public class GameTimer : MonoBehaviour
             walkScript.freezePlayer = false;
         }
     }
+
+    public void reduceTime(float amount)
+    {
+        if(duration > amount)
+        {
+            duration -= amount;
+        }
+        else
+        {
+            duration = 0;
+        }
+    }
 }
