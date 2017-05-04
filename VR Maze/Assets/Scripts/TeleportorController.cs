@@ -6,6 +6,8 @@ namespace Assets.Scripts
 {
     public class TeleportorController : MonoBehaviour
     {
+        public AudioClip audio_clip;
+
         private GameObject colGO;
         private bool moveUpDown = false;
         private bool moveUp = false;
@@ -35,11 +37,16 @@ namespace Assets.Scripts
                 Debug.Log(other.name);
                 if (other.name == "MainPlayer")
                 {
+
+                    this.GetComponent<AudioSource>().clip = audio_clip;
+                    this.GetComponent<AudioSource>().Play();
+
                     moveUpDown = true;
                     other.gameObject.GetComponent<WalkingScript>().freezePlayer = true;
                     moveUp = true;
                     colGO = other.transform.gameObject;
                     colINTPOS = other.transform.position;
+
                     if (gameObject.name == "TeleportorA")
                     {
                         TelTo = GameObject.Find("TeleportorB").transform.position;
