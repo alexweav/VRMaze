@@ -186,7 +186,7 @@ namespace Assets.Scripts{
 				Debug.Log ("Difficulty selection is not properly setup.");
 			}
 			setScene ("FreeRoam");
-			Debug.Log (mazeSize.height);
+			//Debug.Log (mazeSize.height);
 		}
 
 	    /// <summary>
