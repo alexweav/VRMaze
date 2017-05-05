@@ -14,6 +14,8 @@ namespace Assets.Scripts{
 	    public Transform loading;
 		public Transform freeRoamOptionMenu;
 
+		public GameObject emptyStart;
+
 	    public float timer = 3f;//length of gaze required before action is taken
 	    private float lookTimer = 0f;//length of time the user has looked at an object
 	    private Renderer myRenderer;
@@ -162,15 +164,29 @@ namespace Assets.Scripts{
 	        goBack = pick;
 	    }
 		public void setFreeRoamDifficulty(string difficulty){
-			GameObject maze = GameObject.Find("/Assets/ResourcesEmptyStart");
-			//MazeGenerate mazeSize = maze.GetComponent<MazeGenerate> ();
-			MazeGenerate mazeSize = maze.GetComponent <MazeGenerate>();
-			if (difficulty == "Medium"){
+			MazeGenerate mazeSize = emptyStart.GetComponent <MazeGenerate>();
+			var noob = 5; 
+			var normal = 15;
+			var expert = 25;
+			if (difficulty == "Beginner"){
 				Debug.Log (mazeSize.height);
-
+				mazeSize.height = noob;
+				mazeSize.width = noob;
 			}
-			scene = "FreeRoam";
-			startScene = true;
+			else if (difficulty == "Normal"){
+				Debug.Log (mazeSize.height);
+				mazeSize.height = normal;
+				mazeSize.width = normal;
+			}
+			if (difficulty == "Expert") {
+				Debug.Log (mazeSize.height);
+				mazeSize.height = expert;
+				mazeSize.width = expert;
+			} else {
+				Debug.Log ("Difficulty selection is not properly setup.");
+			}
+			setScene ("FreeRoam");
+			Debug.Log (mazeSize.height);
 		}
 
 	    /// <summary>
