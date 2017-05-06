@@ -12,87 +12,46 @@ namespace Assets.Scripts
 
     public class HUDMiniMap  
     {
-        private int count = 0;
-        private Maze HMMM;
-        GameObject HUDMiniMapGO, MainPlayerGO, cameraGO;
-        GameObject Icon;
+      
+        public Maze HMMM;
+        GameObject HUDMiniMapGO, MainPlayerGO;
+        
         //GameObject collidingGO;
-        Vector3 INTiconPOS;
-        Vector3 INTmainplayerPOS;
         GameObject winMen;
-        bool cameraNeedsToMove;
+        
 
         public HUDMiniMap(Maze MiniMapMaze)
         {
             GameObject.Find("MainPlayer").AddComponent<MainPlayerColliderInfo>();
-            winMen = GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("WinMenu").gameObject;
+            winMen = GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("Head").transform.FindChild("Main Camera").transform.FindChild("WinMenu").gameObject;
             IntializeHUDMiniMap(MiniMapMaze);
             MainPlayerGO = GameObject.Find("MainPlayer");
-            hideAllCellsParts();
+            
         }
 
         // Use this for initialization
        
         // Update is called once per frame
-        public void UpdateIconPOS()
-        {
-            Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
-            Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x)/10, 0, (MPPosition.z - INTmainplayerPOS.z)/10) ;
-            MainPlayerCollision();      
+        public void UpdateCollisionInfo()
+        {        
+            MainPlayerCollision();
+            HMMM.UpdateMainPlayerIconPOS();
+            
         }
+
+        
 
         private void IntializeHUDMiniMap(Maze MiniMapMaze)
         {
 
-            count++;
+           
             HUDMiniMapGO = (GameObject)GameObject.Instantiate(Resources.Load("HUDMiniMap"));
             HUDMiniMapGO.name = "HUDMiniMap";
-
-            cameraGO = GameObject.Find("HUDMiniMap").transform.FindChild("Minimap Camera").gameObject;
-
             HMMM = MiniMapMaze;
-            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);
-            CreateIcon();      
-            
+            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);         
             HMMM.updateMazeGOProperties();
-            Icon.transform.SetParent(HUDMiniMapGO.transform);
-            INTiconPOS = Icon.transform.position;
-            INTmainplayerPOS = GameObject.Find("MainPlayer").transform.position;
-
-            DetermineCameraMotion();
-
             MiniMapMaze.SpawnAllGO();
             
-        }
-
-        private void DetermineCameraMotion()
-        {
-            if(HMMM.MazeSize.First > 4 || HMMM.MazeSize.Second > 4 )
-            {
-                cameraNeedsToMove = true;
-            }
-        }
-
-        private void CreateIcon()
-        {
-            Icon = (GameObject)GameObject.Instantiate(Resources.Load("Icon"));
-            Icon.name = "Icon";
-            HMMM.AddSpawnGO(0, 0, Icon);
-      
-        }
-
-        private void hideAllCellsParts()
-        {
-            foreach (Transform MazeCellChild in HMMM.MazeGO.transform)
-            {
-                foreach(Transform MazeCellPartChild in MazeCellChild.transform)
-                {
-                    MazeCellPartChild.gameObject.SetActive(false);
-                }
-
-                MazeCellChild.gameObject.SetActive(false);
-            }
-               
         }
 
         
@@ -104,10 +63,6 @@ namespace Assets.Scripts
             HUDMiniMapCellActivation(collidingGO, cell);
             InFinishCell(cell);
 
-            if(cameraNeedsToMove)
-            {
-                cameraGO.transform.position = new Vector3(Icon.transform.position.x, cameraGO.transform.position.y, Icon.transform.position.z);
-            }
             
         }
 
@@ -118,9 +73,11 @@ namespace Assets.Scripts
             childGO.SetActive(true);
 
             //Activates all MazeCell Children(Walls,Floor)
-            foreach (Transform ChildGOT in collidingGO.transform)
+            foreach (Transform ChildGOT in childGO.transform)
             {
                 childGO.transform.FindChild(ChildGOT.gameObject.name).gameObject.SetActive(true);
+                
+                Debug.Log(ChildGOT.name);
             }
 
             //Generates North Borders in maze
