@@ -34,6 +34,8 @@ public class WinMenu : MonoBehaviour
         parent = c.transform.parent;
 
     }
+
+
     /****************************************************************************************************
      * Update()
      * 
@@ -65,6 +67,7 @@ public class WinMenu : MonoBehaviour
                     loading.gameObject.SetActive(true);
                     winMenu.gameObject.SetActive(false);
                     SceneManager.LoadScene("MainMenu");
+
                 }
                 else if (playAgain == true) //switch to options menu
                 {
