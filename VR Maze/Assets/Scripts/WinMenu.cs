@@ -16,11 +16,9 @@ public class WinMenu : MonoBehaviour
     private Renderer myRenderer;
     private BoxCollider myCollider;
     private bool isLookedAt = false;//set if an object is currently being looked at
-<<<<<<< HEAD
+
     private Transform parent;
-=======
-    private GameObject parent;
->>>>>>> refs/remotes/origin/TimerPickUp
+
 
     /*********************************************************
      variables are set when the corresponding button is pressed 
@@ -33,11 +31,8 @@ public class WinMenu : MonoBehaviour
         myCollider = GetComponent<BoxCollider>();
         myRenderer = GetComponent<Renderer>();
         myRenderer.material.SetFloat("cutoff", 0f);
-<<<<<<< HEAD
         parent = c.transform.parent;
-=======
-        parent = c.transform.parent.gameObject;
->>>>>>> refs/remotes/origin/TimerPickUp
+
     }
     /****************************************************************************************************
      * Update()
@@ -91,24 +86,16 @@ public class WinMenu : MonoBehaviour
 
         if(c.gameObject.activeSelf)
         {
-<<<<<<< HEAD
             c.transform.parent = parent;
         }
         else
         {
-            c.transform.parent = player.transform;
-        }
-=======
             c.transform.SetParent(parent.transform.parent.transform.parent);
         }
-        else
-        {
-            c.transform.SetParent(parent.transform);
-        }
+
 
         //float rotation = player.transform.eulerAngles.y - c.transform.eulerAngles.y;
        // c.transform.Rotate(0, rotation, 0, Space.Self);
->>>>>>> refs/remotes/origin/TimerPickUp
 
     }
 
