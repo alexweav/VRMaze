@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour
         myRenderer = GetComponent<Renderer>();
         myRenderer.material.SetFloat("cutoff", 0f);
     }
+
     /****************************************************************************************************
      * Update()
      * 

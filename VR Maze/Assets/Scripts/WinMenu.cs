@@ -31,6 +31,8 @@ public class WinMenu : MonoBehaviour
         myRenderer.material.SetFloat("cutoff", 0f);
         parent = c.transform.parent.gameObject;
     }
+
+
     /****************************************************************************************************
      * Update()
      * 
@@ -62,6 +64,7 @@ public class WinMenu : MonoBehaviour
                     loading.gameObject.SetActive(true);
                     winMenu.gameObject.SetActive(false);
                     SceneManager.LoadScene("MainMenu");
+
                 }
                 else if (playAgain == true) //switch to options menu
                 {
