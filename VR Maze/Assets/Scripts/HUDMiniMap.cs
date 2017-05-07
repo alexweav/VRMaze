@@ -77,7 +77,7 @@ namespace Assets.Scripts
             {
                 childGO.transform.FindChild(ChildGOT.gameObject.name).gameObject.SetActive(true);
                 
-                Debug.Log(ChildGOT.name);
+                //Debug.Log(ChildGOT.name);
             }
 
             //Generates North Borders in maze
