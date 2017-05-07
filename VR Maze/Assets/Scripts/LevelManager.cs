@@ -44,12 +44,14 @@ namespace Assets.Scripts
             myRenderer.material.SetFloat("cutoff", 0f);
         }
         /****************************************************************************************************
+
 	     * Update()
 	     * 
 	     * This function checks continuously to determine if the user is looking at any interactive object
 	     * on the screen, if the use looks at any one interactive item for at least the length required by 
 	     * timer then an action is taken based on the object being looked at.
 	     ***************************************************************************************************/
+
         private void Update()
         {
             if (isLookedAt && !isLoading) //iff an item is being looked at by the user
