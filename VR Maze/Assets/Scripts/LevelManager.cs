@@ -109,6 +109,11 @@ namespace Assets.Scripts
                             mainMenu.gameObject.SetActive(true);
                             optionMenu.gameObject.SetActive(false);
                         }
+                        else if(freeRoamOptionMenu.gameObject.activeSelf)
+                        {
+                            optionMenu.gameObject.SetActive(true);
+                            freeRoamOptionMenu.gameObject.SetActive(false);
+                        }
                     }
 
                     resetVars();
@@ -143,6 +148,7 @@ namespace Assets.Scripts
                 showInstruct = false;
                 goBack = false;
                 showOptions = false;
+                showFreeRoamOptions = false; //switch to Free Roam Difficulty menu
                 scene = "MainMenu";
                 myCollider.enabled = false;
             }
