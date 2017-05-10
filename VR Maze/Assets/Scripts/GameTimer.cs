@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class GameTimer : MonoBehaviour
 {
     public Canvas gameOver;
-
-    public float MaxGameTime = 300; //equivalent of 5 minutes
+	// public float MaxGameTime = 300; //equivalent of 5 minutes
+	public static float MaxGameTime;
     public Camera player; //camera -- allows timer to match rotation
     public Transform pauseMenu;
 

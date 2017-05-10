@@ -78,6 +78,7 @@ namespace Assets.Scripts
                         freeRoamOptionMenu.gameObject.SetActive(false);
                         isLoading = true;
                         StartCoroutine(LoadSceneAsync());
+						//GameTimer.MaxGameTime = 300;
                     }
                     else if (showOptions == true)//switch to options menu
                     { 
@@ -169,6 +170,22 @@ namespace Assets.Scripts
         public void setScene(string name) //new scene is to be loaded
         {
             scene = name;
+			if (scene == "TimeTrialEasy") 
+			{
+				scene = "TimeTrial";
+				GameTimer.MaxGameTime = 300;
+			}
+			else if (scene == "TimeTrialMedium")
+			{
+				scene = "TimeTrial";
+				GameTimer.MaxGameTime = 600;
+			}
+			else if (scene == "TimeTrialHard")
+			{
+				scene = "TimeTrial";
+				GameTimer.MaxGameTime = 300;
+			}
+
             startScene = true;
         }
 
