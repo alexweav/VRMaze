@@ -59,6 +59,7 @@ namespace Assets.Scripts
             MazeGenerator generator = new HUDMiniMapMazeGenerator(mazeToDuplicate);
             Maze maze = generator.Generate();
             HMM = new HUDMiniMap(maze);
+            GameObject.Find("HUDMiniMap").transform.position = new Vector3(0, -100, 0);
         }
 
     }
