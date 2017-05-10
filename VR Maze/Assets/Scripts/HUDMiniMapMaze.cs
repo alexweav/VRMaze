@@ -27,9 +27,9 @@ namespace Assets.Scripts
         {
             base.MazeGO = GameObject.Instantiate(mazeToDuplicate.MazeGO);
             base.CellsInMaze = mazeToDuplicate.CellsInMaze;
-            base.SetXYZPosition(0, 20, 0);
+            base.SetXYZPosition(0, 0, 0);
             base.SetXYZScale(.05f, .01f, .05f);
-            //base.updateMazeGOProperties();
+            base.updateMazeGOProperties();
         }
 
         private void AssignGameObjectRef()
