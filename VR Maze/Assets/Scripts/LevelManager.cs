@@ -14,6 +14,7 @@ namespace Assets.Scripts
         public Transform optionMenu;
         public Transform loading;
         public Transform freeRoamOptionMenu;
+        public Transform timeTrialOptionMenu;
 
         public GameObject emptyStart;
 
@@ -34,6 +35,7 @@ namespace Assets.Scripts
         private bool goBack = false; //returns to previous menu
         private bool showOptions = false; //switches to game options menu
         private bool showFreeRoamOptions = false; //switch to Free Roam Difficulty menu
+        private bool showTimeTrialOptions = false; //switch to Time Trial Difficulty menu
 
         private string scene = "MainMenu"; //initially set to load itself if no other scene is designated
 
@@ -69,23 +71,21 @@ namespace Assets.Scripts
 	                 * depending on which action is to be taken, the proper
 	                 * function will be called
 	                 * **********************************************************/
-                    if (startScene == true)
-                    { //switch scenes
+                    if (startScene == true)//switch scenes
+                    { 
                         loading.gameObject.SetActive(true);
                         optionMenu.gameObject.SetActive(false);
                         freeRoamOptionMenu.gameObject.SetActive(false);
                         isLoading = true;
                         StartCoroutine(LoadSceneAsync());
                     }
-                    else if (showOptions == true)
-                    { //switch to options menu
-                      //Debug.Log("options");
+                    else if (showOptions == true)//switch to options menu
+                    { 
                         optionMenu.gameObject.SetActive(true);
                         mainMenu.gameObject.SetActive(false);
                     }
-                    else if (showInstruct == true)
-                    { //show instructions menu
-                      //Debug.Log("instructions");
+                    else if (showInstruct == true)//show instructions menu
+                    { 
                         instructMenu.gameObject.SetActive(true);
                         mainMenu.gameObject.SetActive(false);
                     }
@@ -94,25 +94,32 @@ namespace Assets.Scripts
                         freeRoamOptionMenu.gameObject.SetActive(true);
                         optionMenu.gameObject.SetActive(false);
                     }
+                    else if(showTimeTrialOptions == true) //show time trial difficulty menu
+                    {
+                        timeTrialOptionMenu.gameObject.SetActive(true);
+                        optionMenu.gameObject.SetActive(false);
+                    }
                     else if (goBack == true) //return to previous menu
                     {
-                        //Debug.Log("back");
-                        if (instructMenu.gameObject.activeSelf)
+                        if (instructMenu.gameObject.activeSelf) //return from instruction menu
                         {
-                            // Debug.Log("inst");
                             mainMenu.gameObject.SetActive(true);
                             instructMenu.gameObject.SetActive(false);
                         }
-                        else if (optionMenu.gameObject.activeSelf)
+                        else if (optionMenu.gameObject.activeSelf) //return from options menu
                         {
-                            //Debug.Log("opt");
                             mainMenu.gameObject.SetActive(true);
                             optionMenu.gameObject.SetActive(false);
                         }
-                        else if(freeRoamOptionMenu.gameObject.activeSelf)
+                        else if(freeRoamOptionMenu.gameObject.activeSelf) //return from freeRoam option menu
                         {
                             optionMenu.gameObject.SetActive(true);
                             freeRoamOptionMenu.gameObject.SetActive(false);
+                        }
+                        else if(timeTrialOptionMenu.gameObject.activeSelf) //return from time trial option menu
+                        {
+                            optionMenu.gameObject.SetActive(true);
+                            timeTrialOptionMenu.gameObject.SetActive(false);
                         }
                     }
 
@@ -122,7 +129,6 @@ namespace Assets.Scripts
             }
             else //iff user stops gaze before threshold time is reached
             {
-                // Debug.Log("Stop gaze");
                 resetVars();
             }
 
@@ -133,12 +139,12 @@ namespace Assets.Scripts
             isLookedAt = true;
         }
 
-        public void StopGaze()
+        public void StopGaze() //called once the user moves their reticle off of an interactible object
         {
             isLookedAt = false;
         }
 
-        private void resetVars()
+        private void resetVars() //resets all variables to false -- called if the user stops their gaze
         {
             if (!isLoading)
             {
@@ -148,37 +154,44 @@ namespace Assets.Scripts
                 showInstruct = false;
                 goBack = false;
                 showOptions = false;
-                showFreeRoamOptions = false; //switch to Free Roam Difficulty menu
+                showFreeRoamOptions = false;
+                showTimeTrialOptions = false;
                 scene = "MainMenu";
                 myCollider.enabled = false;
             }
         }
 
-        public void optionsMenu(bool pick)
+        public void optionsMenu(bool pick) //user wants to view the game options
         {
             showOptions = pick;
         }
 
-        public void setScene(string name)
+        public void setScene(string name) //new scene is to be loaded
         {
             scene = name;
             startScene = true;
         }
 
-        public void InstructMenu(bool pick)
+        public void InstructMenu(bool pick) //user wants to see the game instructions
         {
             showInstruct = pick;
         }
 
-        public void FreeRoamMenu(bool pick)
+        public void FreeRoamMenu(bool pick) //user wants to see the freeRoam game options
         {
             showFreeRoamOptions = pick;
         }
 
-        public void backMenu(bool pick)
+        public void TimeTrialMenu(bool pick) //user wants to see the time trial options
+        {
+            showTimeTrialOptions = pick;
+        }
+
+        public void backMenu(bool pick) //user wants to return to the previous menu panel
         {
             goBack = pick;
         }
+
         public void setFreeRoamDifficulty(string difficulty)
         {
             MazeGenerate mazeSize = emptyStart.GetComponent<MazeGenerate>();
