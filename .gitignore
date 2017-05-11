@@ -28,6 +28,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.main.obb
+*.obb
 
 # Mac files
 *.DS_Store

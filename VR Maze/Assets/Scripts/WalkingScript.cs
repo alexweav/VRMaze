@@ -22,13 +22,15 @@ namespace Assets.Scripts
 			if (!freezePlayer) {
 				camViewRotX = cameraView.transform.eulerAngles.x; //Angel of the camer >0 is looking down <0 looking up
 				camViewRotY = cameraView.transform.eulerAngles.y; 
-				playerSpeed = (float)Math.Pow (camViewRotX, 2) / 540;
+				playerSpeed = (float)Math.Pow (camViewRotX, 2) / 310;
+
 
 				if (playerSpeed > 0 && playerSpeed < 15) {
+					//speed.testPrint ();
 					if (playerSpeed > speed.getCurrentSpeed ()) {
 						increaseSpeed (playerSpeed);
 					}
-				} else if (camViewRotX > 270 && camViewRotX < 350) {
+				} else if (camViewRotX > 270 && camViewRotX < 320) {
 					stopPlayer ();
 				}
 				walk (currentSpeed());

@@ -19,7 +19,8 @@ Using Unity 5.5.1, we are developing a Virtual Reality(VR) Maze game. Unity is a
 - Android 4.4 ‘KitKat’ +
 - VR Headset for mobile phones
 ### Installation
-- Open up the download file from release notes below, from your Android device.
+- App is now on Google Play Store, link below
+- **Alterante** open up the download file from release notes below, from your Android device.
 - Select the build you want to test
 - Allow the app to download to device
 ## iOS Requirements
@@ -32,12 +33,22 @@ Using Unity 5.5.1, we are developing a Virtual Reality(VR) Maze game. Unity is a
 - Follow the instructions from the email (only a couple buttons)
 ## Download Links
 ### Android
-- [[LATEST]VRMaze 4-29-17 (188MB)](https://drive.google.com/open?id=0B89D1zEkAyAIYVdHZUV6NlRyOXM)
+- [Now on Google Play](https://play.google.com/store/apps/details?id=com.CasualVRers.VRMaze)
+- [VRMaze 5-10-17](88MB)[https://drive.google.com/file/d/0B62QyooVl2uaQTE2YkNXNy1DUUk/view?usp=sharing]
+- [VRMaze 4-29-17 (188MB)](https://drive.google.com/open?id=0B89D1zEkAyAIYVdHZUV6NlRyOXM)
 - [VRMaze 4-2-17 (187MB)](https://drive.google.com/open?id=0B62QyooVl2uabjBmb09VcUpodzA)
 - [VRMaze 3-19-17](https://drive.google.com/open?id=0B62QyooVl2uadkxWblRYc3dTRTQ)
 ### iOS
-- [[REQUEST FORM] VRMaze 4-29-17 (131MB)](https://goo.gl/forms/lHQVtI04ONB6boNi1)
+- [[REQUEST FORM] VRMaze 5-10-17 (131MB)](https://goo.gl/forms/lHQVtI04ONB6boNi1)
 ## Release Notes
+- VRMaze 5-10-17
+	- Free Roam mode now has selectable difficulty options that determine the size of the maze.
+	- Time Trials Mode now has selectable difficulty options that determine the time required to complete the maze.
+	- Time Reduction collectable has been added in Time Trials. Current time gets reduced by 10 seconds.
+	- Sky is now visible for a very appealing atmosphere.
+	- Sound has been added in background as well as object interaction.
+	- Maze loads in the background. Mobile performance loading screen run very smooth.
+	- Removed unused files that are not need for the build. Reduced the size of the game by over 50%!
 - VRMaze 4-29-17
 	- In game pause menu is now added. Allows player to pause current game with the option to return to the main menu.
 	- Minimap is now displayed in the upper right hand corner. Maze appears based on which cells the player has walked over.

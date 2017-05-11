@@ -227,7 +227,7 @@ namespace Assets.Scripts
                 mazeSize.height = normal;
                 mazeSize.width = normal;
             }
-            if (difficulty == "Expert")
+            else if (difficulty == "Expert")
             {
                 Debug.Log(mazeSize.height);
                 mazeSize.height = expert;
