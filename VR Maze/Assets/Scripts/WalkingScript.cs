@@ -26,7 +26,7 @@ namespace Assets.Scripts
 
 
 				if (playerSpeed > 0 && playerSpeed < 15) {
-					speed.testPrint ();
+					//speed.testPrint ();
 					if (playerSpeed > speed.getCurrentSpeed ()) {
 						increaseSpeed (playerSpeed);
 					}
