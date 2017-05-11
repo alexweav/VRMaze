@@ -24,6 +24,7 @@ namespace Assets.Scripts
         {
             GameObject.Find("MainPlayer").AddComponent<MainPlayerColliderInfo>();
             winMen = GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("Head").transform.FindChild("Main Camera").transform.FindChild("WinMenu").gameObject;
+            //GameObject.Find("HUDMiniMap").transform.position = new Vector3(0, 35, 0);
             IntializeHUDMiniMap(MiniMapMaze);
             MainPlayerGO = GameObject.Find("MainPlayer");
             
@@ -47,11 +48,15 @@ namespace Assets.Scripts
            
             HUDMiniMapGO = (GameObject)GameObject.Instantiate(Resources.Load("HUDMiniMap"));
             HUDMiniMapGO.name = "HUDMiniMap";
+           
             HMMM = MiniMapMaze;
-            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);         
+            HMMM.MazeGO.transform.SetParent(HUDMiniMapGO.transform);
+            HUDMiniMapGO.transform.position = new Vector3(0, -60, 0);
             HMMM.updateMazeGOProperties();
             MiniMapMaze.SpawnAllGO();
-            
+
+           
+
         }
 
         

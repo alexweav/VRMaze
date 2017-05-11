@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -28,15 +29,19 @@ namespace Assets.Scripts
         public void UpdateMainPlayerIconPOS()
         {
             GameObject.Find("HUDMiniMap").transform.FindChild("Icon").transform.rotation = Quaternion.Euler(0, GameObject.Find("MainPlayer").transform.FindChild("GvrMain").transform.FindChild("Head").rotation.eulerAngles.y + 143.25f, 0);
-
+            GameObject HMMM = GameObject.Find("HUDMiniMap").transform.FindChild("MiniMap Maze").transform.gameObject;
             Vector3 MPPosition = GameObject.Find("MainPlayer").transform.position;
-            Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x) / 10, 0, (MPPosition.z - INTmainplayerPOS.z) / 10);
+            Icon.transform.position = INTiconPOS + new Vector3((MPPosition.x - INTmainplayerPOS.x) / 10, HMMM.transform.position.y, (MPPosition.z - INTmainplayerPOS.z) / 10);
            
             //Debug.Log(MPPosition);
 
             if(CameraMotion)
             {
-                cameraGO.transform.position = new Vector3(Icon.transform.position.x, cameraGO.transform.position.y, Icon.transform.position.z);
+                cameraGO.transform.position = new Vector3(Icon.transform.position.x, HMMM.transform.position.y + 3.5f, Icon.transform.position.z);
+            }
+            else
+            {
+                cameraGO.transform.position = new Vector3(0, HMMM.transform.position.y + 3.5f, 0);
             }
 
 
@@ -79,7 +84,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    newYPOS = 0;
+                    newYPOS = objectToSpawn.YOffsett;
                 }
                 objectToSpawn.SpawnObject.transform.position = new Vector3(CellPosition.x, newYPOS, CellPosition.z);
 
@@ -105,7 +110,7 @@ namespace Assets.Scripts
         }
 
         private void IntializeMiniMapVars()
-        {     
+        {
             cameraGO = GameObject.Find("HUDMiniMap").transform.FindChild("Minimap Camera").gameObject;
         }
 
@@ -117,9 +122,17 @@ namespace Assets.Scripts
 
         private void AddMazeGameObjects()
         {
+            Scene scene = SceneManager.GetActiveScene();
+
             AddMainPlayer();
             AddFinishCellMarker();
             AddTeleportors();
+           
+            
+            if (scene.name == "TimeTrial")
+            {
+                addClockPickUp();
+            }
 
         }
 
@@ -146,7 +159,7 @@ namespace Assets.Scripts
         {
             GameObject FinishMarkerGO = (GameObject)GameObject.Instantiate(Resources.Load("FinishCellMarker"));
             FinishMarkerGO.name = "Finish Cell Marker"; ;
-            MazeSpawnGO tempSGO = new MazeSpawnGO(m.MazeSize.First - 1, m.MazeSize.Second - 1, FinishMarkerGO);
+            MazeSpawnGO tempSGO = new MazeSpawnGO(m.MazeSize.First - 1, m.MazeSize.Second - 1,1.26f, FinishMarkerGO);
             addObjectToSpawn(tempSGO);
         }
 
@@ -186,6 +199,16 @@ namespace Assets.Scripts
             }
 
             
+        }
+
+        private void addClockPickUp()
+        {
+            int i;
+            for (i = 0; i < m.MazeSize.Second; i++)
+            {
+                GameObject ClockPickUp = (GameObject)GameObject.Instantiate(Resources.Load("ClockPickUp"));
+                addObjectToSpawn(new MazeSpawnGO(i, (int)Random.Range(0, (m.MazeSize.Second)), 1.05f, ClockPickUp));
+            }
         }
 
         /**************************************************************************************************************************************************************************************/
